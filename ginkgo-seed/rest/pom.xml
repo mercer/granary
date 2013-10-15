@@ -21,24 +21,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.kelveden</groupId>
-                <artifactId>maven-karma-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unit</id>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                        <configuration>
-                            <singleRun>true</singleRun>
-                            <browsers>${test.browsers}</browsers>
-                            <configFile>src/test/config/karma.conf.js</configFile>
-                            <reporters>dots,junit</reporters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
             </plugin>
