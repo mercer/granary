@@ -3,7 +3,7 @@
 /* jasmine specs for services go here */
 
 describe('service', function () {
-    beforeEach(module('rechtwijzerAdmin.services'));
+    beforeEach(module('userAdmin.services'));
 
 
     describe('version', function () {

@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('rechtwijzerAdmin.controllers', [])
+angular.module('userAdmin.controllers', [])
     .controller('HomeCtrl', [function () {
     }])
     .controller('UsersCtrl', [function () {
