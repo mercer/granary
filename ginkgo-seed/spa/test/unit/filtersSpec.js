@@ -3,7 +3,7 @@
 /* jasmine specs for filters go here */
 
 describe('filter', function () {
-    beforeEach(module('rechtwijzerAdmin.filters'));
+    beforeEach(module('userAdmin.filters'));
 
 
     describe('interpolate', function () {

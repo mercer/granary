@@ -1,16 +1,38 @@
 'use strict';
 
-/* jasmine specs for controllers go here */
-
 describe('controllers', function () {
-    beforeEach(module('rechtwijzerAdmin.controllers'));
+    beforeEach(module('userAdmin.controllers'));
 
+    describe('UsersController', function () {
+        var scope, usersMock, passedInSuccesCallback,UsersController;
 
-    it('should ....', inject(function () {
-        //spec body
-    }));
+        beforeEach(function () {
+            module(function ($provide) {
+                $provide.value('Users', {});
+            });
 
-    it('should ....', inject(function () {
-        //spec body
-    }));
+            inject(function ($controller, $rootScope) {
+                scope = $rootScope.$new();
+                usersMock = jasmine.createSpyObj('Users',['getUsers']);
+
+                UsersController = $controller('UsersController', {$scope: scope, Users: usersMock});
+            });
+
+        });
+
+        it('should get users from User factory', function () {
+            expect(usersMock.getUsers).toHaveBeenCalled();
+        });
+
+        it('success callback should put users on scope', function(){
+            var success = usersMock.getUsers.mostRecentCall.args[0];
+            var users = [{id: 1, name: 'name'}];
+
+            success(users);
+
+            expect(scope.users).toBe(users);
+        });
+
+    });
+
 });

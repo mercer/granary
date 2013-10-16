@@ -2,7 +2,7 @@
 
 /* Filters */
 
-angular.module('rechtwijzerAdmin.filters', []).
+angular.module('userAdmin.filters', []).
     filter('interpolate', ['version', function (version) {
         return function (text) {
             return String(text).replace(/\%VERSION\%/mg, version);

@@ -3,7 +3,7 @@
 /* jasmine specs for directives go here */
 
 describe('directives', function () {
-    beforeEach(module('rechtwijzerAdmin.directives'));
+    beforeEach(module('userAdmin.directives'));
     beforeEach(module('rechtwijzerAdmin.services'));
     beforeEach(module('rechtwijzerAdmin.controllers'));
     beforeEach(module('ngMockE2E'));
