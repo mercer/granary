@@ -4,8 +4,8 @@
 
 describe('directives', function () {
     beforeEach(module('userAdmin.directives'));
-    beforeEach(module('rechtwijzerAdmin.services'));
-    beforeEach(module('rechtwijzerAdmin.controllers'));
+    beforeEach(module('userAdmin.services'));
+    beforeEach(module('userAdmin.controllers'));
     beforeEach(module('ngMockE2E'));
 
     describe('app-version', function () {
