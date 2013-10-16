@@ -15,5 +15,5 @@ angular.module('userAdmin.controllers', [])
             });
     }])
     .controller('UserCtrl', [function () {
-    }])
+    }]);
 ;
