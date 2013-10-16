@@ -1,23 +1,23 @@
 package com.cegeka.ginkgo.domain.confirmation;
 
+import com.cegeka.ginkgo.application.TokenNotFoundException;
 import com.cegeka.ginkgo.domain.users.UserEntity;
 import com.cegeka.ginkgo.domain.users.UserRepository;
 import com.cegeka.ginkgo.infrastructure.ConfirmationEmailCommand;
-import com.cegeka.ginkgo.application.TokenNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
-/*
-Responsible for generating confirmation token and emailing an user this token
-Also responsible for confirming an user based on a token
+/**
+ * Responsible for generating confirmation token and emailing an user this token
+ * Also responsible for confirming an user based on a token
  */
 @Service
 public class ConfirmationService {
 
     @Resource
-    ConfirmationTokenRepository confirmationTokenRepository;
+    private ConfirmationTokenRepository confirmationTokenRepository;
     @Resource
     private ConfirmationEmailCommand confirmationEmailCommand;
     @Resource
@@ -35,7 +35,7 @@ public class ConfirmationService {
     public void confirmToken(String token) throws TokenNotFoundException {
         ConfirmationToken confirmationToken = confirmationTokenRepository.findOne(token);
         if (confirmationToken != null && !confirmationToken.getUser().isConfirmed()) {
-            confirmationToken.getUser().setConfirmed(true);
+            confirmationToken.getUser().setConfirmed(true);  //TODO: feature envy, fix it
             userRepository.saveAndFlush(confirmationToken.getUser());
         } else {
             throw new TokenNotFoundException("Could not find your token: " + token);

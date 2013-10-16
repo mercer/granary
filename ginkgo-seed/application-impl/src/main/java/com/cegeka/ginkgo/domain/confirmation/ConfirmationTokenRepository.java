@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.NoResultException;
 
 @Repository
-public class ConfirmationTokenRepository  extends DelegatingRepository<ConfirmationToken, String> {
+public class ConfirmationTokenRepository extends DelegatingRepository<ConfirmationToken, String> {
 
     public ConfirmationToken findByUser(UserEntity userEntity) {
         ConfirmationToken confirmationToken = null;
