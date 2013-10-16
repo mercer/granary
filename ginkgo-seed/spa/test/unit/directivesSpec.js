@@ -37,7 +37,7 @@ describe('directives', function () {
 
         it('should make call to LOGIN_REST_URL with username and password', inject(function ($httpBackend, LOGIN_REST_URL, $compile, $rootScope) {
 
-            var formElement = angular.element('<login></login>');
+            var formElement = angular.element("<login url='login-url-parameter'></login>");
             var element = $compile(formElement)($rootScope);
             $rootScope.$digest();
             console.log(element);

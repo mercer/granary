@@ -14,20 +14,21 @@ angular.module('userAdmin.directives', []).
         return {
             restrict: 'E',
             replace : true,
+            templateUrl: 'directive/login.html',
+
+            scope : {
+                url : "@"
+            },
+
             controller: ['$http', '$scope', 'LOGIN_REST_URL', function ($http, $scope, LOGIN_REST_URL) {
                 $scope.login = function(){
-                    $http.post(LOGIN_REST_URL,{username: $scope.username, password: $scope.password});
+                    $http.post($scope.url ,{username: $scope.username, password: $scope.password});
                 };
-
-                console.log('controller: ' + $scope);
             }],
-            templateUrl: 'directive/login.html',
+
             link : function(scope, elem, attr, controller){
-                console.log('Link: ' + scope);
-                scope.test = function (){
-                    console.log(elem);
-                }
             }
+
         }
     }
 );
