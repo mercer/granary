@@ -32,6 +32,11 @@
             <groupId>ginkgo-seed</groupId>
             <artifactId>application-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ginkgo-seed</groupId>
+            <artifactId>application-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
