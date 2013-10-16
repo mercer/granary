@@ -1,4 +1,4 @@
-package com.cegeka.ginkgo.email;
+package com.cegeka.ginkgo.infrastructure;
 
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationToken;
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationTokenRepository;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class ConfirmationEmailCommand {
 
     private static final String CONFIRMATION_TOKEN_VARIABLE_NAME = "confirmation_token";
-    private final static Logger logger = LoggerFactory.getLogger(ConfirmationEmailCommand.class);
+    private final static Logger  logger = LoggerFactory.getLogger(ConfirmationEmailCommand.class);
     @Resource
     private EmailComposer emailComposer;
     @Resource

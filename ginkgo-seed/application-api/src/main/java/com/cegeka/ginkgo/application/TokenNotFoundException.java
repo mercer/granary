@@ -1,4 +1,4 @@
-package com.cegeka.ginkgo.domain.confirmation;
+package com.cegeka.ginkgo.application;
 
 public class TokenNotFoundException extends RuntimeException {
 

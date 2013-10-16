@@ -1,9 +1,8 @@
 package com.cegeka.ginkgo.rest.user;
 
-import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
-import com.cegeka.ginkgo.domain.confirmation.TokenNotFoundException;
-import com.ginkgo.application.facade.UserFacade;
-import com.ginkgo.application.facade.UserTo;
+import com.cegeka.ginkgo.application.TokenNotFoundException;
+import com.cegeka.ginkgo.application.UserFacade;
+import com.cegeka.ginkgo.application.UserTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ public class RegisterUserRestService {
     private static Logger logger = LoggerFactory.getLogger(RegisterUserRestService.class);
     @Autowired
     private UserFacade userFacade;
-    @Autowired
-    private ConfirmationService confirmationService;
 
     @RequestMapping(value = "/register_user")
     @ResponseBody
@@ -39,7 +36,7 @@ public class RegisterUserRestService {
     @ResponseBody
     public ResponseEntity confirmRegistration(@PathVariable(value = "token") String token) {
         try {
-            confirmationService.confirmToken(token);
+            userFacade.confirmToken(token);
         } catch (TokenNotFoundException e) {
             logger.error("The confirmation token is invalid or the email is already confirmed.", e);
             return new ResponseEntity<String>("The confirmation token is invalid or the email is already confirmed.", HttpStatus.BAD_REQUEST);
@@ -49,9 +46,5 @@ public class RegisterUserRestService {
 
     public void setUserFacade(UserFacade userFacade) {
         this.userFacade = userFacade;
-    }
-
-    public void setConfirmationService(ConfirmationService confirmationService) {
-        this.confirmationService = confirmationService;
     }
 }

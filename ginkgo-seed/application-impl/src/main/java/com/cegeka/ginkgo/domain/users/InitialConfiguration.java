@@ -1,6 +1,6 @@
 package com.cegeka.ginkgo.domain.users;
 
-import com.ginkgo.application.facade.UserProfileTo;
+import com.cegeka.ginkgo.application.UserProfileTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

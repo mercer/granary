@@ -1,4 +1,4 @@
-package com.ginkgo.application.facade;
+package com.cegeka.ginkgo.application;
 
 import java.util.Collection;
 import java.util.Locale;

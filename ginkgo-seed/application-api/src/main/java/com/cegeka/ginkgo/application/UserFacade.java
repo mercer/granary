@@ -1,4 +1,4 @@
-package com.ginkgo.application.facade;
+package com.cegeka.ginkgo.application;
 
 public interface UserFacade {
     void registerUser(UserTo user);
@@ -6,4 +6,7 @@ public interface UserFacade {
     UserTo findByEmail(String email);
 
     UserProfileTo getProfile(Long userId);
+    void confirmToken(String token);
+
+    
 }

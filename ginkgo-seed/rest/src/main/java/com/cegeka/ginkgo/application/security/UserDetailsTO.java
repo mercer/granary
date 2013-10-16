@@ -1,4 +1,4 @@
-package com.cegeka.ginkgo.infrastructure.security;
+package com.cegeka.ginkgo.application.security;
 
 import com.google.common.collect.Sets;
 import org.springframework.security.core.GrantedAuthority;

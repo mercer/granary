@@ -1,4 +1,4 @@
-package com.cegeka.ginkgo.infrastructure.security;
+package com.cegeka.ginkgo.application.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

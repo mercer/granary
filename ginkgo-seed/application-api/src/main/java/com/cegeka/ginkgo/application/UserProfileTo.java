@@ -1,20 +1,9 @@
-package com.cegeka.ginkgo.domain.users;
+package com.cegeka.ginkgo.application;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "USER_PROFILE")
-@SequenceGenerator(sequenceName = "user_prof_seq", name = "user_prof_seq", allocationSize = 1)
-public class UserProfileEntity {
-    @Id
-    @GeneratedValue(generator = "user_prof_seq", strategy = GenerationType.SEQUENCE)
-    private Long id;
-
+public class UserProfileTo {
     private String pictureUrl;
     private String firstName;
     private String lastName;
-
-    public UserProfileEntity(){}
 
     public String getPictureUrl() {
         return pictureUrl;
@@ -38,9 +27,5 @@ public class UserProfileEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getFullName() {
-        return firstName + " " + lastName;
     }
 }

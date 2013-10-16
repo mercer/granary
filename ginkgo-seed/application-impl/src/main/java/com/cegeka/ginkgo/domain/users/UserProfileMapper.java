@@ -1,7 +1,7 @@
 package com.cegeka.ginkgo.domain.users;
 
 
-import com.ginkgo.application.facade.UserProfileTo;
+import com.cegeka.ginkgo.application.UserProfileTo;
 
 public class UserProfileMapper {
     private UserProfileMapper() {

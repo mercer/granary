@@ -1,6 +1,6 @@
-package com.cegeka.ginkgo.infrastructure.security;
+package com.cegeka.ginkgo.application.security;
 
-import com.ginkgo.application.facade.UserTo;
+import com.cegeka.ginkgo.application.UserTo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

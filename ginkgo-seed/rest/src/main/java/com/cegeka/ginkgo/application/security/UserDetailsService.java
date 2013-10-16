@@ -1,8 +1,7 @@
-package com.cegeka.ginkgo.infrastructure.security;
+package com.cegeka.ginkgo.application.security;
 
-
-import com.ginkgo.application.facade.UserFacade;
-import com.ginkgo.application.facade.UserTo;
+import com.cegeka.ginkgo.application.UserFacade;
+import com.cegeka.ginkgo.application.UserTo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

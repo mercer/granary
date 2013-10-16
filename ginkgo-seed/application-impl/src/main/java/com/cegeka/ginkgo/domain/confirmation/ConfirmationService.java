@@ -2,7 +2,8 @@ package com.cegeka.ginkgo.domain.confirmation;
 
 import com.cegeka.ginkgo.domain.users.UserEntity;
 import com.cegeka.ginkgo.domain.users.UserRepository;
-import com.cegeka.ginkgo.email.ConfirmationEmailCommand;
+import com.cegeka.ginkgo.infrastructure.ConfirmationEmailCommand;
+import com.cegeka.ginkgo.application.TokenNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
