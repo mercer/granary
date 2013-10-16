@@ -18,7 +18,7 @@
     </http>
 
 
-    <beans:bean id="restAuthenticationEntryPoint" class="com.cegeka.rechtwijzer.infrastructure.security.RestAuthenticationEntryPoint"/>
+    <beans:bean id="restAuthenticationEntryPoint" class="com.cegeka.ginkgo.infrastructure.security.RestAuthenticationEntryPoint"/>
 
     <beans:bean id="loginFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
         <beans:property name="authenticationManager" ref="restAuthenticationManager"/>
@@ -30,14 +30,14 @@
         <beans:property name="postOnly" value="true"/>
     </beans:bean>
 
-    <beans:bean id="restAuthenticationFailureHandler" class="com.cegeka.rechtwijzer.infrastructure.security.RestAuthenticationFailureHandler"/>
-    <beans:bean id="restAuthenticationSuccessHandler" class="com.cegeka.rechtwijzer.infrastructure.security.RestAuthenticationSuccessHandler"/>
-    <beans:bean id="restLogoutSuccessHandler" class="com.cegeka.rechtwijzer.infrastructure.security.RestLogoutSuccessHandler"/>
+    <beans:bean id="restAuthenticationFailureHandler" class="com.cegeka.ginkgo.infrastructure.security.RestAuthenticationFailureHandler"/>
+    <beans:bean id="restAuthenticationSuccessHandler" class="com.cegeka.ginkgo.infrastructure.security.RestAuthenticationSuccessHandler"/>
+    <beans:bean id="restLogoutSuccessHandler" class="com.cegeka.ginkgo.infrastructure.security.RestLogoutSuccessHandler"/>
 
 
     <authentication-manager alias="restAuthenticationManager">
         <authentication-provider user-service-ref="userDetailService" />
     </authentication-manager>
 
-    <beans:bean id="userDetailService" class="com.cegeka.rechtwijzer.infrastructure.security.UserDetailsService"/>
+    <beans:bean id="userDetailService" class="com.cegeka.ginkgo.infrastructure.security.UserDetailsService"/>
 </beans:beans>
