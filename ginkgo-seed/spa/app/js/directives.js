@@ -9,6 +9,7 @@ angular.module('userAdmin.directives', []).
             elm.text(version);
         };
     }])
+
     .directive('login', function () {
         return {
             restrict: 'E',

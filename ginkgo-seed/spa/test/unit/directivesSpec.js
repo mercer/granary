@@ -4,8 +4,8 @@
 
 describe('directives', function () {
     beforeEach(module('userAdmin.directives'));
-    beforeEach(module('rechtwijzerAdmin.services'));
-    beforeEach(module('rechtwijzerAdmin.controllers'));
+    beforeEach(module('userAdmin.services'));
+    beforeEach(module('userAdmin.controllers'));
     beforeEach(module('ngMockE2E'));
 
     describe('app-version', function () {
@@ -20,46 +20,29 @@ describe('directives', function () {
         });
     });
 
-    describe('login', function(){
-        var scope;
-        var USERNAME = 'username';
-        var PASSWORD = 'password';
+    describe('login directive', function () {
 
-        beforeEach(inject(function($rootScope,$httpBackend){
-            scope = $rootScope.$new();
-            $httpBackend.whenGET('directive/login.html').passThrough();
+        var $compile, $rootScope, template;
+
+        beforeEach(module('app/directive/login.html'));
+        beforeEach(inject(function ($templateCache, _$compile_, _$rootScope_) {
+            //assign the template to the expected url called by the directive and put it in the cache
+            template = $templateCache.get('app/directive/login.html');
+            $templateCache.put('directive/login.html', template);
+
+            $compile = _$compile_;
+            $rootScope = _$rootScope_;
         }));
 
-        it('should make call to LOGIN_REST_URL with username and password', inject(function($httpBackend, LOGIN_REST_URL, $compile, $rootScope){
 
-//            $httpBackend.expectPOST(LOGIN_REST_URL,{username: USERNAME, password: PASSWORD}).respond({});
+        it('should make call to LOGIN_REST_URL with username and password', inject(function ($httpBackend, LOGIN_REST_URL, $compile, $rootScope) {
 
-            var link = $compile("<login></login>");
+            var formElement = angular.element('<login></login>');
+            var element = $compile(formElement)($rootScope);
+            $rootScope.$digest();
+            console.log(element);
 
-            console.log(link)
-            var element = link(scope);
-            console.log(scope);
-            console.log(element.html());
 
-//            scope.login(USERNAME, PASSWORD);
-
-//            $httpBackend.flush();
-
-//            $httpBackend.verifyNoOutstandingExpectation();
-//            $httpBackend.verifyNoOutstandingRequest();
         }));
-
-        it('pressing login button should get values from username/password inputs and make call with them', inject(function($compile){
-                var element = $compile('<login></login>')(scope);
-//                var scopeSpy = spyOn(scope, 'login');
-
-                var usernameInput = element.children()[0];
-                var passwordInput = element.children()[1];
-
-//                scope.login(usernameInput.text(),passwordInput.text());
-
-//                expect(scopeSpy).toHaveBeenCalledWith(USERNAME, PASSWORD);
-           }
-        ));
     })
 });
