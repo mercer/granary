@@ -8,5 +8,5 @@ angular.module('rechtwijzerAdmin.controllers', [])
     .controller('UsersCtrl', [function () {
     }])
     .controller('UserCtrl', [function () {
-    }])
+    }]);
 ;
