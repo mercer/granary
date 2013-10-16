@@ -4,7 +4,30 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>ginkgo-seed</display-name>
+    <display-name>Rechtwijzer</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/rest-servlet.xml</param-value>
+    </context-param>
+
+    <!-- These params are needed to exclude Jboss's RestEasy which clashes with our JAX-RS impl -->
+    <context-param>
+        <param-name>resteasy.scan</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resteasy.scan.providers</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resteasy.scan.resources</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <filter>
         <filter-name>springSecurityFilterChain</filter-name>
@@ -15,10 +38,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <listener>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-
     <servlet>
         <servlet-name>rest</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -28,5 +47,8 @@
         <servlet-name>rest</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
 
 </web-app>
