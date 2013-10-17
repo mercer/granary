@@ -3,13 +3,14 @@ package com.cegeka.ginkgo.application;
 
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
 import com.cegeka.ginkgo.domain.users.*;
-import com.cegeka.ginkgo.application.UserFacade;
-import com.cegeka.ginkgo.application.UserProfileTo;
-import com.cegeka.ginkgo.application.UserTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.cegeka.ginkgo.application.UserRolesConstants.ADMIN_ROLE;
 
 @Service
 public class UserFacadeImpl implements UserFacade {
@@ -32,7 +33,7 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserTo findByEmail(String email) {
-        return UserToMapper.toTo(userRepository.findByEmail(email));
+        return UserToMapper.toToWithPassword(userRepository.findByEmail(email));
     }
 
     @Override
@@ -47,6 +48,8 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+//    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Secured(ADMIN_ROLE)
     public List<UserTo> getUsers() {
         return UserToMapper.from(userRepository.findAll());
     }

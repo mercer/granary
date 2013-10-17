@@ -1,6 +1,8 @@
 package com.cegeka.ginkgo.domain.users;
 
 import com.cegeka.ginkgo.application.UserProfileTo;
+import com.cegeka.ginkgo.application.UserRolesConstants;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -9,12 +11,17 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import java.util.List;
+
+import static com.cegeka.ginkgo.application.UserRolesConstants.*;
+import static com.google.common.collect.Lists.newArrayList;
+
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class InitialConfiguration {
     public static final String TEST_USER_PASSWORD = "test";
-    public static final String USER_ROLE_NAME = "user";
     private static String[] emails = {"romeo@mailinator.com", "juliet@mailinator.com"};
+    private static String adminEmail = "admin@mailinator.com";
     @Resource
     private UserRepository userRepository;
     @Resource
@@ -26,30 +33,38 @@ public class InitialConfiguration {
     public void configure() {
         InitialConfiguration proxyBean = applicationContext.getBean(this.getClass());
         proxyBean.createTestUsersIfNeeded();
+        proxyBean.createAdminUserIfNeeded();
     }
 
     public void createTestUsersIfNeeded() {
         for (String email : emails) {
             if (!userExists(email)) {
-                createUserAndRoles(email);
+                createUserWithRole(email, newArrayList(USER_ROLE));
             }
         }
     }
 
+    public void createAdminUserIfNeeded() {
+        if (!userExists(adminEmail)) {
+            createUserWithRole(adminEmail, newArrayList(ADMIN_ROLE, USER_ROLE));
+        }
+    }
 
-
-    private void createUserAndRoles(String email) {
+    private void createUserWithRole(String email, List<String> roles) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(email);
         setProfileForEmail(email, userEntity);
         userEntity.setPassword(TEST_USER_PASSWORD);
-        userEntity.addRole(createOrFindRole(USER_ROLE_NAME));
+
+        for(String role: roles){
+            userEntity.addRole(createOrFindRole(role));
+        }
         userEntity.setConfirmed(true);
         userRepository.saveAndFlush(userEntity);
     }
 
     private void setProfileForEmail(String email, UserEntity userEntity) {
-        UserProfileTo userProfileTo = email.contains(emails[0]) ? getRomeoProfile(): getJulietProfile();
+        UserProfileTo userProfileTo = email.contains(emails[0]) ? getRomeoProfile() : getJulietProfile();
         userEntity.getProfile().setFirstName(userProfileTo.getFirstName());
         userEntity.getProfile().setLastName(userProfileTo.getLastName());
         userEntity.getProfile().setPictureUrl(userProfileTo.getPictureUrl());
@@ -67,7 +82,6 @@ public class InitialConfiguration {
     private boolean userExists(String email) {
         return userRepository.findByEmail(email) != null;
     }
-
 
     private UserProfileTo getJulietProfile() {
         UserProfileTo julietProfile = new UserProfileTo();
