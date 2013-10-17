@@ -2,11 +2,32 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security.xsd
+
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="classpath*:persistence-context.xml"/>
     <context:property-placeholder location="classpath:project-test.properties"/>
     <context:component-scan base-package="com.cegeka.ginkgo">
         <context:exclude-filter type="regex" expression="(.*)InitialConfiguration(.*)"/>
     </context:component-scan>
+
+    <security:global-method-security secured-annotations="enabled" />
+
+    <!--<security:global-method-security pre-post-annotations="enabled" />-->
+
+
+
+    <bean id="userDetailService" class="com.cegeka.ginkgo.application.security.UserDetailsService"/>
+
+    <security:authentication-manager alias="restAuthenticationManager">
+        <security:authentication-provider user-service-ref="userDetailService" />
+    </security:authentication-manager>
+
 </beans>

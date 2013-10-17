@@ -40,4 +40,15 @@ function UsersController(Users, $scope) {
 }
 
 
+function UserController(Users, $scope, $routeParams) {
+    Users.getUser($routeParams.id,
+        function success(responseData) {
+            $scope.user = responseData;
+        },
+        function error(error) {
+            var x = 0;
+            // for now do nothing. feel free to add here error messages on scope if you want/need to
+        });
+}
+
 

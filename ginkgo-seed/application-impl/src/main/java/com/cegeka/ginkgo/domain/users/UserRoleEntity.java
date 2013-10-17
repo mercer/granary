@@ -1,14 +1,19 @@
 package com.cegeka.ginkgo.domain.users;
 
-import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="ROLES")
-@SequenceGenerator(name = "role_seq_gen", sequenceName = "role_seq_gen")
+@Table(name = "ROLES")
 public class UserRoleEntity {
     @Id
-    @GeneratedValue(generator = "role_seq_gen", strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
     private String name;
 
     public UserRoleEntity(String roleName) {
@@ -26,11 +31,16 @@ public class UserRoleEntity {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

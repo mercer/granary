@@ -6,6 +6,7 @@ import com.cegeka.ginkgo.application.security.UserDetailsTO;
 import com.cegeka.ginkgo.application.UserFacade;
 import com.cegeka.ginkgo.application.UserProfileTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,7 @@ public class UserRestService {
 
     @RequestMapping("/user/profile/{userId}")
     @ResponseBody
-    public UserProfileTo getProfile(@PathVariable("userId") Long userId) {
+    public UserProfileTo getProfile(@PathVariable("userId") String userId) {
         return userFacade.getProfile(userId);
     }
 
@@ -39,5 +40,11 @@ public class UserRestService {
     @ResponseBody
     public List<UserTo> getUsers(){
         return userFacade.getUsers();
+    }
+
+    @RequestMapping("/user/{id}")
+    @ResponseBody
+    public UserTo getUser(@PathVariable("id") String userId){
+        return userFacade.getUser(userId);
     }
 }

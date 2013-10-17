@@ -6,6 +6,6 @@ angular.module('userAdmin', ['ngRoute','userAdmin.filters', 'userAdmin.services'
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});
     $routeProvider.when('/users', {templateUrl: 'partials/users.html', controller: 'UsersController'});
-    $routeProvider.when('/user/:id', {templateUrl: 'partials/user.html', controller: 'UserCtrl'});
+    $routeProvider.when('/user/:id', {templateUrl: 'partials/user.html', controller: 'UserController'});
     $routeProvider.otherwise({redirectTo: '/'});
   }]);

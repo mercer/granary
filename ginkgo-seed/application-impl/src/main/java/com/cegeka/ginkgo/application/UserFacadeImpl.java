@@ -3,24 +3,24 @@ package com.cegeka.ginkgo.application;
 
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
 import com.cegeka.ginkgo.domain.users.*;
-import com.cegeka.ginkgo.application.UserFacade;
-import com.cegeka.ginkgo.application.UserProfileTo;
-import com.cegeka.ginkgo.application.UserTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.cegeka.ginkgo.application.UserRolesConstants.ADMIN_ROLE;
+import static com.cegeka.ginkgo.application.UserRolesConstants.USER_ROLE;
+
 @Service
 public class UserFacadeImpl implements UserFacade {
-    public static final String USER_ROLE = "user";
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private ConfirmationService confirmationService;
     @Autowired
     private UserRoleRepository userRoleRepository;
-
 
     @Override
     public void registerUser(UserTo user) {
@@ -32,11 +32,11 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserTo findByEmail(String email) {
-        return UserToMapper.toTo(userRepository.findByEmail(email));
+        return UserToMapper.toToWithPassword(userRepository.findByEmail(email));
     }
 
     @Override
-    public UserProfileTo getProfile(Long userId) {
+    public UserProfileTo getProfile(String userId) {
         UserEntity userEntity = userRepository.findOne(userId);
         return UserProfileMapper.fromUserProfileEntity(userEntity.getProfile());
     }
@@ -47,8 +47,15 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
+//    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
+    @Secured(ADMIN_ROLE)
     public List<UserTo> getUsers() {
         return UserToMapper.from(userRepository.findAll());
+    }
+
+    @Override
+    public UserTo getUser(String userId) {
+        return UserToMapper.toTo(userRepository.findOne(userId));
     }
 
     public void setUserRepository(UserRepository userRepository) {
