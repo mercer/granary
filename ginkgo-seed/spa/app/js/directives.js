@@ -1,8 +1,5 @@
 'use strict';
 
-/* Directives */
-
-
 angular.module('userAdmin.directives', []).
     directive('appVersion', ['version', function (version) {
         return function (scope, elm, attrs) {
@@ -13,18 +10,12 @@ angular.module('userAdmin.directives', []).
     .directive('login', function () {
         return {
             restrict: 'E',
-            replace : true,
+            replace: true,
             templateUrl: 'directive/login.html',
-
-            scope : {
-                url : "@"
-            },
-
-            controller: ['$http', '$scope', function ($http, $scope) {
-                $scope.login = function(){
-                    $http.post($scope.url ,{username: $scope.username, password: $scope.password});
-                };
-            }]
+            scope: {
+                url: "@restUrl",
+                afterLogin: '&afterLogin'
+            }
         }
     }
 );
