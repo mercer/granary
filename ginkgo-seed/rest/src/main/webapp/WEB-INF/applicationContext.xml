@@ -10,8 +10,8 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:rechtwijzer.properties</value>
-                <value>file:${user.home}/rechtwijzer.properties</value>
+                <value>classpath:project.properties</value>
+                <value>file:${user.home}/project.properties</value>
             </list>
         </property>
         <property name="ignoreResourceNotFound" value="true"/>
