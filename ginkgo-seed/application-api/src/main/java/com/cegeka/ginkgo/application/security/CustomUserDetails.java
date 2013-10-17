@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Locale;
 
 public class CustomUserDetails implements UserDetails {
-    private Long userId;
+    private String userId;
     private String password;
     private String username;
     private boolean enabled;
@@ -70,7 +70,7 @@ public class CustomUserDetails implements UserDetails {
         return enabled;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 

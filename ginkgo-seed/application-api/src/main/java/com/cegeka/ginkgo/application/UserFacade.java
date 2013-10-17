@@ -7,7 +7,8 @@ public interface UserFacade {
 
     UserTo findByEmail(String email);
 
-    UserProfileTo getProfile(Long userId);
+    UserProfileTo getProfile(String userId);
+
     void confirmToken(String token);
 
 

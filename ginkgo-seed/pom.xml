@@ -93,6 +93,11 @@
                 <version>${hibernate.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.jolbox</groupId>
+                <artifactId>bonecp</artifactId>
+                <version>0.8.0-rc3</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derby</artifactId>
                 <version>10.10.1.1</version>

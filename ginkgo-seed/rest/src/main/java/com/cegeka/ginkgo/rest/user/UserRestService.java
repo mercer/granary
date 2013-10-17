@@ -32,7 +32,7 @@ public class UserRestService {
 
     @RequestMapping("/user/profile/{userId}")
     @ResponseBody
-    public UserProfileTo getProfile(@PathVariable("userId") Long userId) {
+    public UserProfileTo getProfile(@PathVariable("userId") String userId) {
         return userFacade.getProfile(userId);
     }
 

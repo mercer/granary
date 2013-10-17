@@ -22,7 +22,6 @@ public class UserFacadeImpl implements UserFacade {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
-
     @Override
     public void registerUser(UserTo user) {
         UserEntity userEntity = UserToMapper.toEntity(user);
@@ -37,7 +36,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserProfileTo getProfile(Long userId) {
+    public UserProfileTo getProfile(String userId) {
         UserEntity userEntity = userRepository.findOne(userId);
         return UserProfileMapper.fromUserProfileEntity(userEntity.getProfile());
     }

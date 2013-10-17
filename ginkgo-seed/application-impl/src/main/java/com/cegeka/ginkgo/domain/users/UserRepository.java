@@ -4,9 +4,10 @@ import com.cegeka.ginkgo.domain.DelegatingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public class UserRepository extends DelegatingRepository<UserEntity, Long> {
+public class UserRepository extends DelegatingRepository<UserEntity, String> {
 
     public UserEntity findByEmail(String email) {
         List<UserEntity> resultList = entityManager.createQuery("select u from UserEntity u where u.email = :email", UserEntity.class)

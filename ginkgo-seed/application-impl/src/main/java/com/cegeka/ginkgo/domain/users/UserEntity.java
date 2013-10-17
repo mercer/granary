@@ -1,6 +1,7 @@
 package com.cegeka.ginkgo.domain.users;
 
 import com.google.common.collect.Sets;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Locale;
@@ -10,36 +11,33 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
-@SequenceGenerator(name = "user_seq_gen", sequenceName = "user_seq_gen")
 @Table(name = "USERS")
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
     private String password;
     @ManyToMany(fetch = EAGER, cascade = ALL)
     @JoinTable(name = "USER_ROLES",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<UserRoleEntity> roles = Sets.newHashSet();
-
     @Column(unique = true)
     private String email;
     @Transient
     private Locale locale = Locale.ENGLISH; //TODO: who should provide this?
-
     private boolean confirmed;
-
     @OneToOne(cascade = ALL)
-    @JoinColumn(referencedColumnName = "ID")
+    @JoinColumn(referencedColumnName = "ID", nullable = false)
     private UserProfileEntity profile = new UserProfileEntity();
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
