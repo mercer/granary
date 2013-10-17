@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.Set;
 
 public class UserDetailsTO {
-    private Long userId;
+    private String userId;
     private String username;
     private Set<String> roles;
     private Locale locale;
@@ -34,7 +34,7 @@ public class UserDetailsTO {
         return roles;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
