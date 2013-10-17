@@ -5,7 +5,6 @@ import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
 import com.cegeka.ginkgo.domain.users.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +57,6 @@ public class UserFacadeImpl implements UserFacade {
         return UserToMapper.toTo(userRepository.findOne(userId));
     }
 
-
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -74,17 +72,22 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     @Transactional
     public void updateUser(UserTo userTO) {
-        UserEntity userEntity = userRepository.findOne(userTO.getId());
-        if(userEntity != null){
-            userEntity.setEmail(userTO.getEmail());
-            userEntity.getProfile().setFirstName(userTO.getFirstName());
-            userEntity.getProfile().setLastName(userTO.getLastName());
-            userEntity.setConfirmed(userTO.getConfirmed());
-
-            userRepository.save(userEntity);
-        }else{
-            throw new IllegalArgumentException("invalid user id");
+        UserEntity userEntity = null;
+        if (userTO.getId() == null) {
+            userEntity = UserToMapper.toEntity(userTO);
+        } else {
+            userEntity = userRepository.findOne(userTO.getId());
+            if (userEntity != null) {
+                userEntity.setEmail(userTO.getEmail());
+                userEntity.getProfile().setFirstName(userTO.getFirstName());
+                userEntity.getProfile().setLastName(userTO.getLastName());
+                userEntity.setConfirmed(userTO.getConfirmed());
+            } else {
+                throw new IllegalArgumentException("invalid user id");
+            }
         }
+        userRepository.save(userEntity);
+
     }
 
 }
