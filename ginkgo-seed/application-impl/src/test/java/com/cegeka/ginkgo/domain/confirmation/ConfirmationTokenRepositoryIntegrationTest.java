@@ -4,8 +4,6 @@ import com.cegeka.ginkgo.IntegrationTest;
 import com.cegeka.ginkgo.domain.users.UserEntity;
 import com.cegeka.ginkgo.domain.users.UserRepository;
 import org.fest.assertions.Assertions;
-import org.h2.tools.Server;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +24,6 @@ public class ConfirmationTokenRepositoryIntegrationTest extends IntegrationTest 
 
     @Before
     public void setup() throws Exception {
-        //Server webServer = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082").start();
-        //Server server = Server.createTcpServer("-tcp", "-tcpAllowOthers").start();
-
         userEntity = aUserEntity();
         userEntity = userRepository.saveAndFlush(userEntity);
 
@@ -52,10 +47,5 @@ public class ConfirmationTokenRepositoryIntegrationTest extends IntegrationTest 
         confirmationTokenRepository.saveAndFlush(confirmationToken);
 
         Assertions.assertThat(confirmationTokenRepository.findByUser(userEntity)).isNotNull();
-    }
-
-    @After
-    public void tearDown() {
-
     }
 }
