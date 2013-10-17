@@ -24,6 +24,6 @@ angular.module('userAdmin.services', []).
     })
 
     .constant('URL_ALL_USERS', '../rest/users')
-    .constant('LOGIN_REST_URL','rest/login');
+    .constant('LOGIN_REST_URL','j_spring_security_check');
 ;
 
