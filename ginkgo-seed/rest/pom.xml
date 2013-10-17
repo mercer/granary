@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-   <parent>
+    <parent>
         <groupId>ginkgo-seed</groupId>
         <artifactId>ginkgo-seed</artifactId>
         <version>1.0-SNAPSHOT</version>
@@ -29,14 +29,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.cegeka.rechtwijzer</groupId>
-            <artifactId>com.cegeka.rechtwijzer.application</artifactId>
+            <groupId>ginkgo-seed</groupId>
+            <artifactId>application-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.cegeka.rechtwijzer</groupId>
-            <artifactId>com.cegeka.rechtwijzer.application</artifactId>
-            <classifier>tests</classifier>
-            <scope>test</scope>
+            <groupId>ginkgo-seed</groupId>
+            <artifactId>application-impl</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

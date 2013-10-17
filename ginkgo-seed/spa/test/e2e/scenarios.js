@@ -2,7 +2,7 @@
 
 /* http://docs.angularjs.org/guide/dev_guide.e2e-testing */
 
-describe('rechtwijzer admin app', function () {
+describe('ginkgo admin app', function () {
 
     beforeEach(function () {
         browser().navigateTo('../../app/index.html');

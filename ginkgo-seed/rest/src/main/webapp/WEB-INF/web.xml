@@ -8,7 +8,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>WEB-INF/rechtwijzer-rest-servlet.xml, WEB-INF/applicationContext-security.xml, classpath*:applicationContext.xml</param-value>
+        <param-value>WEB-INF/rest-servlet.xml</param-value>
     </context-param>
 
     <!-- These params are needed to exclude Jboss's RestEasy which clashes with our JAX-RS impl -->
@@ -39,12 +39,12 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>rechtwijzer-rest</servlet-name>
+        <servlet-name>rest</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>rechtwijzer-rest</servlet-name>
+        <servlet-name>rest</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
