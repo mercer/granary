@@ -27,7 +27,7 @@ function LoginDirectiveController($http, $scope) {
                 $scope.loginErrorMessage = error;
             });
     };
-};
+}
 
 function UsersController(Users, $scope) {
     Users.getUsers(
@@ -35,8 +35,7 @@ function UsersController(Users, $scope) {
             $scope.users = responseData;
         },
         function error(error) {
-            var x = 0;
-            // for now do nothing. feel free to add here error messages on scope if you want/need to
+            $scope.alerts.push({ type: 'danger', msg: 'There was an error: ' + error });
         });
 }
 
