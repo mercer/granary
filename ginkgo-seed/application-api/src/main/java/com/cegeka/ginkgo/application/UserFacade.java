@@ -15,4 +15,6 @@ public interface UserFacade {
     List<UserTo> getUsers();
 
     UserTo getUser(String userId);
+
+    void updateUser(UserTo userTO);
 }

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="page-header">
-        <h1 id="tables">Romeo Waldenhuis</h1>
+        <h1 id="tables">{{user.firstName +' '+ user.lastName}}</h1>
     </div>
 </div>
 
@@ -45,7 +45,7 @@
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
                             <a class="btn btn-default" href="#/users">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary" ng-click="updateUser()">Save</button>
                         </div>
                     </div>
                 </fieldset>
