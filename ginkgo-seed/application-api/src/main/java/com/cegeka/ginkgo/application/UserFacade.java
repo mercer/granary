@@ -13,4 +13,6 @@ public interface UserFacade {
 
 
     List<UserTo> getUsers();
+
+    UserTo getUser(String userId);
 }

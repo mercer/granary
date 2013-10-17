@@ -7,7 +7,7 @@ angular.module('userAdmin.controllers', [])
     }])
     .controller('LoginController', ['$scope', LoginController])
     .controller('LoginDirectiveController', ['$http', '$scope', 'LOGIN_REST_URL', LoginDirectiveController])
-    .controller('UsersController', ['Users', '$scope', UserController]);
+    .controller('UsersController', ['Users', '$scope', UsersController]);
 
 
 function LoginController($scope, $location) {
@@ -25,7 +25,7 @@ function LoginDirectiveController($http, $scope, LOGIN_REST_URL) {
     };
 };
 
-function UserController(Users, $scope) {
+function UsersController(Users, $scope) {
     Users.getUsers(
         function success(responseData) {
             $scope.users = responseData;
@@ -36,5 +36,16 @@ function UserController(Users, $scope) {
         });
 }
 
+
+function UserController(Users, $scope, $routeParams) {
+    Users.getUser($routeParams.id,
+        function success(responseData) {
+            $scope.user = responseData;
+        },
+        function error(error) {
+            var x = 0;
+            // for now do nothing. feel free to add here error messages on scope if you want/need to
+        });
+}
 
 

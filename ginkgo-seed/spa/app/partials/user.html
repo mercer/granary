@@ -14,14 +14,14 @@
                         <label for="inputEmail" class="col-lg-2 control-label">Email</label>
 
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="user.email">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-lg-2 control-label">Password</label>
 
                         <div class="col-lg-10">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password">
                         </div>
                     </div>
                     <div class="form-group">
@@ -33,6 +33,13 @@
                                 <option>MEDIATOR</option>
                                 <option>JUDGE</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputEnabled" class="col-lg-2 control-label">Confirmed</label>
+                        <div class="col-lg-1">
+                            <input type="checkbox" class="form-control" id="inputEnabled" ng-model= "user.confirmed">
                         </div>
                     </div>
                     <div class="form-group">

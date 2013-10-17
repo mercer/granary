@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.cegeka.ginkgo.application.UserRolesConstants.ADMIN_ROLE;
+import static com.cegeka.ginkgo.application.UserRolesConstants.USER_ROLE;
 
 @Service
 public class UserFacadeImpl implements UserFacade {
-    public static final String USER_ROLE = "user";
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -51,6 +51,11 @@ public class UserFacadeImpl implements UserFacade {
     @Secured(ADMIN_ROLE)
     public List<UserTo> getUsers() {
         return UserToMapper.from(userRepository.findAll());
+    }
+
+    @Override
+    public UserTo getUser(String userId) {
+        return UserToMapper.toTo(userRepository.findOne(userId));
     }
 
     public void setUserRepository(UserRepository userRepository) {

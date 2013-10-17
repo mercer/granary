@@ -41,4 +41,10 @@ public class UserRestService {
     public List<UserTo> getUsers(){
         return userFacade.getUsers();
     }
+
+    @RequestMapping("/user/{id}")
+    @ResponseBody
+    public UserTo getUser(@PathVariable("id") String userId){
+        return userFacade.getUser(userId);
+    }
 }
