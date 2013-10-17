@@ -20,6 +20,7 @@ function LoginController($scope, $location) {
 
 function LoginDirectiveController($http, $scope) {
     $scope.login = function () {
+        //TODO: should we do rest calls from controller?
         $http.post($scope.url, {username: $scope.username, password: $scope.password})
             .success($scope.redirectTo)
             .error(function(error){
