@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "USER_PROFILE")
-@SequenceGenerator(sequenceName = "user_prof_seq", name = "user_prof_seq", allocationSize = 1)
+@SequenceGenerator(sequenceName = "user_prof_seq", name = "user_prof_seq")
 public class UserProfileEntity {
     @Id
     @GeneratedValue(generator = "user_prof_seq", strategy = GenerationType.SEQUENCE)

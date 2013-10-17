@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="ROLES")
-@SequenceGenerator(name = "role_seq_gen", sequenceName = "role_seq_gen", allocationSize = 1)
+@SequenceGenerator(name = "role_seq_gen", sequenceName = "role_seq_gen")
 public class UserRoleEntity {
     @Id
     @GeneratedValue(generator = "role_seq_gen", strategy = GenerationType.SEQUENCE)

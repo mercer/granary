@@ -10,7 +10,7 @@ import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
-@SequenceGenerator(name = "user_seq_gen", sequenceName = "user_seq_gen", allocationSize = 1)
+@SequenceGenerator(name = "user_seq_gen", sequenceName = "user_seq_gen")
 @Table(name = "USERS")
 public class UserEntity {
 
