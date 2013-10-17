@@ -2,11 +2,9 @@
 
 /* Services */
 
+angular.module('userAdmin.services', [])
+    .value('version', '0.1')
 
-// Demonstrate how to register services
-// In this case it is a simple value service.
-angular.module('userAdmin.services', []).
-    value('version', '0.1')
     .factory('Users', function ($http, URL_ALL_USERS,URL_USER) {
         function getUsers(successCallback, errorCallback) {
             $http.post(URL_ALL_USERS)

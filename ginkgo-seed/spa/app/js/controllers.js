@@ -7,7 +7,9 @@ angular.module('userAdmin.controllers', [])
     }])
     .controller('LoginController', ['$scope', LoginController])
     .controller('LoginDirectiveController', ['$http', '$scope', 'LOGIN_REST_URL', LoginDirectiveController])
-    .controller('UsersController', ['Users', '$scope', UsersController]);
+    .controller('UsersController', ['Users', '$scope', UsersController])
+    .controller('UserCtrl', [function () {
+    }]);
 
 
 function LoginController($scope, $location) {
@@ -16,11 +18,12 @@ function LoginController($scope, $location) {
     }
 }
 
-function LoginDirectiveController($http, $scope, LOGIN_REST_URL) {
+function LoginDirectiveController($http, $scope) {
     $scope.login = function () {
-        $http.post(LOGIN_REST_URL, {username: $scope.username, password: $scope.password})
-            .then(function () {
-                $scope.afterLogin();
+        $http.post($scope.url, {username: $scope.username, password: $scope.password})
+            .success($scope.redirectTo)
+            .error(function(error){
+                $scope.loginErrorMessage = error;
             });
     };
 };
