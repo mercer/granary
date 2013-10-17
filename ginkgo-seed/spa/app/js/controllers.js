@@ -11,6 +11,7 @@ angular.module('userAdmin.controllers', [])
                 $scope.users =  responseData;
             },
             function error(error) {
+                var x=0;
                 // for now do nothing. feel free to add here error messages on scope if you want/need to
             });
     }])

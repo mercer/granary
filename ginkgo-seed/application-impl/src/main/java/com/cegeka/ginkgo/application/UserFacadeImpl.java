@@ -9,6 +9,8 @@ import com.cegeka.ginkgo.application.UserTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserFacadeImpl implements UserFacade {
     public static final String USER_ROLE = "user";
@@ -42,6 +44,11 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     public void confirmToken(String token) {
         confirmationService.confirmToken(token);
+    }
+
+    @Override
+    public List<UserTo> getUsers() {
+        return UserToMapper.from(userRepository.findAll());
     }
 
     public void setUserRepository(UserRepository userRepository) {

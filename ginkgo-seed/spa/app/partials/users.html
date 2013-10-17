@@ -16,41 +16,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>Romeo Waldenhuis</td>
-            <td>romeo@mailinator.com</td>
-            <td>USER</td>
-            <td><a href="#/user/1">edit</a></td>
+        <tr ng-repeat="user in users">
+            <td>{{user.id}}</td>
+            <td>{{user.firstName + user.lastname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.roles}}</td>
+            <td><a href="#/user/{{user.id}}">edit</a></td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Julia Waldenhuis</td>
-            <td>julia@mailinator.com</td>
-            <td>USER</td>
-            <td><a href="#/user/2">edit</a></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Vasile Dumitru</td>
-            <td>vasile@mailinator.com</td>
-            <td>USER</td>
-            <td><a href="#/user/3">edit</a></td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Robert Strong</td>
-            <td>robert@mailinator.com</td>
-            <td>MEDIATOR</td>
-            <td><a href="#/user/4">edit</a></td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>Florence Grasp</td>
-            <td>florence@mailinator.com</td>
-            <td>JUDGE</td>
-            <td><a href="#/user/5">edit</a></td>
-        </tr>
+
         </tbody>
     </table>
 </div>

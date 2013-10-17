@@ -9,6 +9,7 @@ public class UserEntityTestFixture {
     public static final long TEST_USER_ENTITY_ID = 123L;
     public static final String TEST_USER_EMAIL = "test@mailinator.com";
     public static final String TEST_ROLE = "testRole";
+    public static final String TEST_PASSWORD = "testPassword";
 
     private UserEntityTestFixture() {
     }
@@ -16,7 +17,7 @@ public class UserEntityTestFixture {
     public static UserEntity aUserEntity() {
         UserEntity entity = new UserEntity();
         entity.setId(TEST_USER_ENTITY_ID);
-        entity.setPassword("testPassword");
+        entity.setPassword(TEST_PASSWORD);
         entity.setEmail(TEST_USER_EMAIL);
         entity.addRole(new UserRoleEntity(TEST_ROLE));
         return entity;
