@@ -4,6 +4,8 @@
 
         <p>to User Administration pages.</p>
 
-        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+        <div ng-controller='LoginController'>
+            <login rest-url='rest/login' after-login='redirectTo("users")'></login>
+        </div>
     </div>
 </div>

@@ -1,6 +1,15 @@
 package com.cegeka.ginkgo.domain.users;
 
 import com.cegeka.ginkgo.application.UserTo;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+
+import javax.annotation.Nullable;
+import java.util.List;
+
+import static com.google.common.collect.Collections2.transform;
+import static com.google.common.collect.Lists.newArrayList;
 
 public class UserToMapper {
     private UserToMapper() {
@@ -10,7 +19,7 @@ public class UserToMapper {
         UserTo userTo = new UserTo();
         userTo.setId(userEntity.getId());
         userTo.setEmail(userEntity.getEmail());
-        userTo.setPassword(userEntity.getPassword());
+        //userTo.setPassword(userEntity.getPassword());
         userTo.setRoles(userEntity.getRoles());
         userTo.setConfirmed(userEntity.isConfirmed());
         userTo.setFirstName(userEntity.getProfile().getFirstName());
@@ -26,5 +35,18 @@ public class UserToMapper {
         userEntity.getProfile().setFirstName(userTo.getFirstName());
         userEntity.getProfile().setLastName(userTo.getLastName());
         return userEntity;
+    }
+
+    public static List<UserTo> from(List<UserEntity> all) {
+        return newArrayList(transform(all, userEntityToUserToTransform()));
+    }
+
+    private static Function<UserEntity, UserTo> userEntityToUserToTransform() {
+        return new Function<UserEntity, UserTo>() {
+            @Override
+            public UserTo apply(@Nullable UserEntity input) {
+                return toTo(input);
+            }
+        };
     }
 }

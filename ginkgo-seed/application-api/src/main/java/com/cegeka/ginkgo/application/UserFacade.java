@@ -1,5 +1,7 @@
 package com.cegeka.ginkgo.application;
 
+import java.util.List;
+
 public interface UserFacade {
     void registerUser(UserTo user);
 
@@ -10,4 +12,5 @@ public interface UserFacade {
     void confirmToken(String token);
 
 
+    List<UserTo> getUsers();
 }

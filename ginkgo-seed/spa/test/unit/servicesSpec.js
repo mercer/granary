@@ -45,7 +45,7 @@ describe('service', function () {
 
     describe('CONSTANTS DEFINITIONS', function(){
         it('URL_ALL_USERS shuold point to "rest/users"', inject(function(URL_ALL_USERS){
-            expect(URL_ALL_USERS).toBe('rest/users');
+            expect(URL_ALL_USERS).toBe('../rest/users');
         }));
     });
 });
