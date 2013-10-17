@@ -5,24 +5,31 @@ import com.cegeka.ginkgo.application.security.LoggedInUser;
 import com.cegeka.ginkgo.application.security.UserDetailsTO;
 import com.cegeka.ginkgo.application.UserFacade;
 import com.cegeka.ginkgo.application.UserProfileTo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 @Controller
 public class UserRestService {
 
+
+    public static final String THERE_WAS_AN_ERROR_SAVING_THE_USER = "There was an error saving the user.";
     @Resource
     private LoggedInUser loggedInUser;
 
     @Autowired
     private UserFacade userFacade;
+    private Logger logger = LoggerFactory.getLogger(UserRestService.class);
 
     @RequestMapping("/user/info")
     @ResponseBody
@@ -42,9 +49,20 @@ public class UserRestService {
         return userFacade.getUsers();
     }
 
-    @RequestMapping("/user/{id}")
+    @RequestMapping(value="/user/{id}", method = GET)
     @ResponseBody
     public UserTo getUser(@PathVariable("id") String userId){
         return userFacade.getUser(userId);
+    }
+    @RequestMapping(value = "/user", method = POST)
+    @ResponseBody
+    public ResponseEntity saveUser(@RequestBody UserTo userTO) {
+        try {
+            userFacade.updateUser(userTO);
+        } catch (Exception e) {
+            logger.error(THERE_WAS_AN_ERROR_SAVING_THE_USER, e);
+            new ResponseEntity<String>(THERE_WAS_AN_ERROR_SAVING_THE_USER, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>("success", HttpStatus.OK);
     }
 }

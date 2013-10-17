@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,7 +48,6 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-//    @PreAuthorize("hasAuthority('"+ADMIN_ROLE+"')")
     @Secured(ADMIN_ROLE)
     public List<UserTo> getUsers() {
         return UserToMapper.from(userRepository.findAll());
@@ -57,6 +57,7 @@ public class UserFacadeImpl implements UserFacade {
     public UserTo getUser(String userId) {
         return UserToMapper.toTo(userRepository.findOne(userId));
     }
+
 
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -69,4 +70,21 @@ public class UserFacadeImpl implements UserFacade {
     public void setUserRoleRepository(UserRoleRepository userRoleRepository) {
         this.userRoleRepository = userRoleRepository;
     }
+
+    @Override
+    @Transactional
+    public void updateUser(UserTo userTO) {
+        UserEntity userEntity = userRepository.findOne(userTO.getId());
+        if(userEntity != null){
+            userEntity.setEmail(userTO.getEmail());
+            userEntity.getProfile().setFirstName(userTO.getFirstName());
+            userEntity.getProfile().setLastName(userTO.getLastName());
+            userEntity.setConfirmed(userTO.getConfirmed());
+
+            userRepository.save(userEntity);
+        }else{
+            throw new IllegalArgumentException("invalid user id");
+        }
+    }
+
 }

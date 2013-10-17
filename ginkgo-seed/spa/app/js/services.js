@@ -25,9 +25,14 @@ angular.module('userAdmin.services', [])
                 });
         }
 
+        function updateUser(user) {
+            return $http.post(URL_USER, user);
+        }
+
         return {
             getUsers: getUsers,
-            getUser: getUser
+            getUser: getUser,
+            updateUser: updateUser
         };
     })
 

@@ -50,6 +50,15 @@ function UserController(Users, $scope, $routeParams) {
             var x = 0;
             // for now do nothing. feel free to add here error messages on scope if you want/need to
         });
+
+    $scope.updateUser = function(){
+         Users.updateUser($scope.user)
+         .then(function(){
+
+         }, function error(){
+
+         })
+    }
 }
 
 
