@@ -3,9 +3,6 @@ package com.cegeka.ginkgo.application;
 
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
 import com.cegeka.ginkgo.domain.users.*;
-import com.cegeka.ginkgo.application.UserFacade;
-import com.cegeka.ginkgo.application.UserProfileTo;
-import com.cegeka.ginkgo.application.UserTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +15,6 @@ public class UserFacadeImpl implements UserFacade {
     private ConfirmationService confirmationService;
     @Autowired
     private UserRoleRepository userRoleRepository;
-
 
     @Override
     public void registerUser(UserTo user) {
@@ -34,7 +30,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public UserProfileTo getProfile(Long userId) {
+    public UserProfileTo getProfile(String userId) {
         UserEntity userEntity = userRepository.findOne(userId);
         return UserProfileMapper.fromUserProfileEntity(userEntity.getProfile());
     }

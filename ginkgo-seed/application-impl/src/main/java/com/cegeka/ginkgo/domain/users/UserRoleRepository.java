@@ -4,9 +4,10 @@ import com.cegeka.ginkgo.domain.DelegatingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import java.util.UUID;
 
 @Repository
-public class UserRoleRepository extends DelegatingRepository<UserRoleEntity, Long> {
+public class UserRoleRepository extends DelegatingRepository<UserRoleEntity, String> {
 
     public UserRoleEntity findByRoleName(String roleName) {
         UserRoleEntity role = null;

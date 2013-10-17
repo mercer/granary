@@ -4,34 +4,33 @@ import java.util.Collection;
 import java.util.Locale;
 
 public class UserTo {
-    private Long id;
+    private String id;
     private String password;
     private String email;
     private String firstName;
     private String lastName;
     private String retypePassword;
-
     private Collection<String> roles;
     private boolean confirmed;
     private Locale locale;
 
-    public UserTo(){
-    }
-
-    public Long getId() {
-        return id;
+    public UserTo() {
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Collection<String> getRoles() {

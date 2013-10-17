@@ -1,14 +1,17 @@
 package com.cegeka.ginkgo.domain.users;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "USER_PROFILE")
-@SequenceGenerator(sequenceName = "user_prof_seq", name = "user_prof_seq")
 public class UserProfileEntity {
     @Id
-    @GeneratedValue(generator = "user_prof_seq", strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    private String id;
 
     private String pictureUrl;
     private String firstName;
@@ -38,6 +41,14 @@ public class UserProfileEntity {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFullName() {
