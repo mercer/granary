@@ -38,7 +38,13 @@ angular.module('userAdmin.services', [])
     }])
 
     .factory('Auth', ['$http', 'LOGIN_REST_URL', function ($http, LOGIN_REST_URL) {
-        var user = {name : '', roles : []};
+        var user = {name: '', roles: []};
+
+        function authorize() {
+        }
+
+        function isLoggedIn() {
+        }
 
         function authenticate(credentials) {
             $http.post(LOGIN_REST_URL, credentials)
@@ -48,8 +54,10 @@ angular.module('userAdmin.services', [])
         }
 
         return {
+            authorize: authorize,
             authenticate: authenticate,
-            user: user
+            user: user,
+            isLoggedIn: isLoggedIn
         };
     }])
 
