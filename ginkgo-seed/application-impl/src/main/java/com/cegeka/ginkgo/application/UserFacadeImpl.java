@@ -22,6 +22,7 @@ public class UserFacadeImpl implements UserFacade {
     @Autowired
     private UserRoleRepository userRoleRepository;
 
+
     @Override
     public void registerUser(UserTo user) {
         UserEntity userEntity = UserToMapper.toEntity(user);
