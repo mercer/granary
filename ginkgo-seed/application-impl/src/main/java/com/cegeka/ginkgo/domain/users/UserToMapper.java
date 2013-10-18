@@ -31,12 +31,14 @@ public class UserToMapper {
         return userTo;
     }
 
-    public static UserEntity toEntity(UserTo userTo) {
+    public static UserEntity toNewEntity(UserTo userTo) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userTo.getEmail());
         userEntity.setPassword(userTo.getPassword());
         userEntity.getProfile().setFirstName(userTo.getFirstName());
         userEntity.getProfile().setLastName(userTo.getLastName());
+        userEntity.setConfirmed(userTo.getConfirmed());
+        //TODO: map roles
         return userEntity;
     }
 

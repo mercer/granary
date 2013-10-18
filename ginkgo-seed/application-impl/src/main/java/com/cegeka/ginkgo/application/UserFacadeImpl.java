@@ -25,7 +25,7 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public void registerUser(UserTo user) {
-        UserEntity userEntity = UserToMapper.toEntity(user);
+        UserEntity userEntity = UserToMapper.toNewEntity(user);
         userEntity.addRole(userRoleRepository.findByRoleName(USER_ROLE));
         userRepository.saveAndFlush(userEntity);
         confirmationService.sendConfirmationEmailTo(userEntity);
@@ -75,7 +75,7 @@ public class UserFacadeImpl implements UserFacade {
     public void updateUser(UserTo userTO) {
         UserEntity userEntity = null;
         if (userTO.getId() == null) {
-            userEntity = UserToMapper.toEntity(userTO);
+            userEntity = UserToMapper.toNewEntity(userTO);
         } else {
             userEntity = userRepository.findOne(userTO.getId());
             if (userEntity != null) {

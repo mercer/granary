@@ -28,7 +28,7 @@ public class UserEntity {
     private String email;
     @Transient
     private Locale locale = Locale.ENGLISH; //TODO: who should provide this?
-    private boolean confirmed;
+    private boolean confirmed = false; //TODO: there should be enabled and confirmed, security on enabled (user admin too), confirmed for email confirmation
     @OneToOne(cascade = ALL)
     @JoinColumn(referencedColumnName = "ID", nullable = false)
     private UserProfileEntity profile = new UserProfileEntity();
