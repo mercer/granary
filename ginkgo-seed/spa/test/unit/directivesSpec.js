@@ -31,7 +31,7 @@ describe('directives', function () {
             $compile = _$compile_;
             scope = _$rootScope_.$new();
 
-            formElement = angular.element("<login url='" + loginUrl + "' afterlogin=\"doAfterLogin()\"></login>");
+            formElement = angular.element("<login url='" + loginUrl + "' after-login=\"doAfterLogin()\"></login>");
             compiledElement = $compile(formElement)(scope);
             scope = compiledElement.scope();
             scope.$digest();
@@ -41,7 +41,7 @@ describe('directives', function () {
         it('shuld be compiled to right html', function () {
 
             expect(compiledElement.attr('url')).toEqual(loginUrl);
-            expect(compiledElement.attr('afterlogin')).toEqual('doAfterLogin()');
+            expect(compiledElement.attr('after-login')).toEqual('doAfterLogin()');
             expect($(compiledElement.children()[0]).attr('ng-model')).toEqual('username');
             expect($(compiledElement.children()[1]).attr('ng-model')).toEqual('password');
             expect($(compiledElement.children()[2]).attr('ng-click')).toEqual('login()');

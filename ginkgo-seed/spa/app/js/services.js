@@ -5,7 +5,7 @@
 angular.module('userAdmin.services', [])
     .value('version', '0.1')
 
-    .factory('Users', function ($http, URL_ALL_USERS,URL_USER) {
+    .factory('Users', ['$http', 'URL_ALL_USERS', 'URL_USER', function ($http, URL_ALL_USERS, URL_USER) {
         function getUsers(successCallback, errorCallback) {
             $http.post(URL_ALL_USERS)
                 .success(function (data) {
@@ -34,7 +34,13 @@ angular.module('userAdmin.services', [])
             getUser: getUser,
             updateUser: updateUser
         };
-    })
+    }])
+
+    .factory('Auth', ['$http', function($http){
+        return {
+
+        };
+    }])
 
     .constant('URL_ALL_USERS', '../rest/users')
     .constant('URL_USER', '../rest/user')
