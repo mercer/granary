@@ -15,8 +15,9 @@ angular.module('userAdmin.services', [])
                     errorCallback(error);
                 });
         }
-        function getUser(userId,successCallback, errorCallback) {
-            $http.get(URL_USER+ '/' + userId)
+
+        function getUser(userId, successCallback, errorCallback) {
+            $http.get(URL_USER + '/' + userId)
                 .success(function (data) {
                     successCallback(data);
                 })
@@ -36,14 +37,24 @@ angular.module('userAdmin.services', [])
         };
     }])
 
-    .factory('Auth', ['$http', function($http){
-        return {
+    .factory('Auth', ['$http', 'LOGIN_REST_URL', function ($http, LOGIN_REST_URL) {
+        var user = {name : '', roles : []};
 
+        function authenticate(credentials) {
+            $http.post(LOGIN_REST_URL, credentials)
+                .success(function (response) {
+                    angular.copy(response, user);
+                });
+        }
+
+        return {
+            authenticate: authenticate,
+            user: user
         };
     }])
 
     .constant('URL_ALL_USERS', '../rest/users')
     .constant('URL_USER', '../rest/user')
-    .constant('LOGIN_REST_URL','j_spring_security_check');
+    .constant('LOGIN_REST_URL', 'j_spring_security_check');
 ;
 

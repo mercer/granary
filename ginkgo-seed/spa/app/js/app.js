@@ -4,8 +4,8 @@
 angular.module('userAdmin', ['ngRoute', 'ui.bootstrap', 'userAdmin.filters', 'userAdmin.services', 'userAdmin.directives', 'userAdmin.controllers'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});
-        $routeProvider.when('/users', {templateUrl: 'partials/users.html', controller: 'UsersController'});
-        $routeProvider.when('/user/:id', {templateUrl: 'partials/user.html', controller: 'UserController'});
+        $routeProvider.when('/users', {templateUrl: 'partials/users.html', controller: 'UsersController', role : 'ROLE_ADMIN'});
+        $routeProvider.when('/user/:id', {templateUrl: 'partials/user.html', controller: 'UserController', role : 'ROLE_ADMIN'});
         $routeProvider.otherwise({redirectTo: '/'});
     }])
     .run(function ($rootScope) {
