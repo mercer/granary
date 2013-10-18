@@ -14,48 +14,47 @@
                         <label for="inputFirstName" class="col-lg-2 control-label">First Name</label>
 
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" ng-model="user.firstName">
+                            <input type="text" class="form-control" id="inputFirstName" placeholder="First Name"
+                                   ng-model="user.firstName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputLastName" class="col-lg-2 control-label">Last Name</label>
 
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputLastName" placeholder="Last name" ng-model="user.lastName">
+                            <input type="text" class="form-control" id="inputLastName" placeholder="Last name"
+                                   ng-model="user.lastName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputEmail" class="col-lg-2 control-label">Email</label>
 
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="user.email">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email"
+                                   ng-model="user.email">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputPassword" class="col-lg-2 control-label">Password</label>
 
                         <div class="col-lg-10">
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password" ng-model="user.password">
+                            <input type="password" class="form-control" id="inputPassword" placeholder="Password"
+                                   ng-model="user.password">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="select" class="col-lg-2 control-label">Role</label>
+                        <label class="col-lg-2 control-label">Roles</label>
 
                         <div class="col-lg-10">
-                            <select class="form-control" id="select">
-                                <option>USER</option>
-                                <option>MEDIATOR</option>
-                                <option>JUDGE</option>
-                            </select>
+                            <label for="role-user" class="col-lg-2 control-label">User</label>
+                            <input type="checkbox" class="form-control" id="role-user"
+                                   ng-model="rolesModel['ROLE_USER']"/>
+                            <label for="role-admin" class="col-lg-2 control-label">Admin</label>
+                            <input type="checkbox" class="form-control" id="role-admin"
+                                   ng-model="rolesModel['ROLE_ADMIN']"/>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="inputEnabled" class="col-lg-2 control-label">Confirmed</label>
-                        <div class="col-lg-1">
-                            <input type="checkbox" class="form-control" id="inputEnabled" ng-model= "user.confirmed">
-                        </div>
-                    </div>
                     <div class="form-group">
                         <div class="col-lg-10 col-lg-offset-2">
                             <a class="btn btn-default" href="#/users">Cancel</a>

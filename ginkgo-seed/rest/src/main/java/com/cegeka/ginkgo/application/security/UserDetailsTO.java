@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Set;
 
+// TODO: let's throw this away
 public class UserDetailsTO {
     private String userId;
     private String username;

@@ -23,7 +23,7 @@ function LoginDirectiveController($http, $scope) {
         //TODO: should we do rest calls from controller?
         $http.post($scope.url, {username: $scope.username, password: $scope.password})
             .success($scope.redirectTo)
-            .error(function(error){
+            .error(function (error) {
                 $scope.loginErrorMessage = error;
             });
     };
@@ -41,22 +41,44 @@ function UsersController(Users, $scope) {
 
 
 function UserController(Users, $scope, $routeParams) {
+
+    $scope.rolesModel = {'ROLE_ADMIN': false, 'ROLE_USER': false};
+    function updateRolesViewModelFromUser(model, user) {
+        user.roles.forEach(function (role) {
+            model[role] = true;
+        });
+
+    }
+
+    function updateUserFromRolesViewModel(user, model) {
+        var roles = [];
+        _.keys(model).forEach(function (role) {
+            if(model[role] === true){
+                roles.push(role);
+            }
+        });
+        user.roles = roles;
+
+    }
+
     Users.getUser($routeParams.id,
         function success(responseData) {
             $scope.user = responseData;
+            updateRolesViewModelFromUser($scope.rolesModel, $scope.user);
         },
         function error(error) {
             var x = 0;
             // for now do nothing. feel free to add here error messages on scope if you want/need to
         });
 
-    $scope.updateUser = function(){
-         Users.updateUser($scope.user)
-         .then(function(){
+    $scope.updateUser = function () {
+        updateUserFromRolesViewModel($scope.user, $scope.rolesModel);
+        Users.updateUser($scope.user)
+            .then(function () {
 
-         }, function error(){
+            }, function error() {
 
-         })
+            })
     }
 }
 
