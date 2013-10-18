@@ -1,17 +1,18 @@
 package com.cegeka.ginkgo.application;
 
-
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
-import com.cegeka.ginkgo.domain.users.*;
+import com.cegeka.ginkgo.domain.users.UserEntity;
+import com.cegeka.ginkgo.domain.users.UserProfileMapper;
+import com.cegeka.ginkgo.domain.users.UserRepository;
+import com.cegeka.ginkgo.domain.users.UserToMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.cegeka.ginkgo.application.UserRolesConstants.ADMIN_ROLE;
-import static com.cegeka.ginkgo.application.UserRolesConstants.USER_ROLE;
+import static com.cegeka.ginkgo.application.Role.USER;
 
 @Service
 public class UserFacadeImpl implements UserFacade {
@@ -19,14 +20,11 @@ public class UserFacadeImpl implements UserFacade {
     private UserRepository userRepository;
     @Autowired
     private ConfirmationService confirmationService;
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
 
     @Override
     public void registerUser(UserTo user) {
         UserEntity userEntity = UserToMapper.toNewEntity(user);
-        userEntity.addRole(userRoleRepository.findByRoleName(USER_ROLE));
+        userEntity.addRole(USER);
         userRepository.saveAndFlush(userEntity);
         confirmationService.sendConfirmationEmailTo(userEntity);
     }
@@ -48,7 +46,7 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    @Secured(ADMIN_ROLE)
+    @PreAuthorize("hasRole(T(com.cegeka.ginkgo.application.Role).ADMIN)")
     public List<UserTo> getUsers() {
         return UserToMapper.from(userRepository.findAll());
     }
@@ -64,10 +62,6 @@ public class UserFacadeImpl implements UserFacade {
 
     public void setConfirmationService(ConfirmationService confirmationService) {
         this.confirmationService = confirmationService;
-    }
-
-    public void setUserRoleRepository(UserRoleRepository userRoleRepository) {
-        this.userRoleRepository = userRoleRepository;
     }
 
     @Override

@@ -1,8 +1,7 @@
 package com.cegeka.ginkgo.domain.users;
 
+import com.cegeka.ginkgo.application.Role;
 import com.cegeka.ginkgo.application.UserProfileTo;
-import com.cegeka.ginkgo.application.UserRolesConstants;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -10,10 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import java.util.List;
 
-import static com.cegeka.ginkgo.application.UserRolesConstants.*;
 import static com.google.common.collect.Lists.newArrayList;
 
 @Service
@@ -24,8 +21,6 @@ public class InitialConfiguration {
     private static String adminEmail = "admin@mailinator.com";
     @Resource
     private UserRepository userRepository;
-    @Resource
-    private UserRoleRepository userRoleRepository;
     @Autowired
     private org.springframework.context.ApplicationContext applicationContext;
 
@@ -39,25 +34,25 @@ public class InitialConfiguration {
     public void createTestUsersIfNeeded() {
         for (String email : emails) {
             if (!userExists(email)) {
-                createUserWithRole(email, newArrayList(USER_ROLE));
+                createUserWithRole(email, newArrayList(Role.USER));
             }
         }
     }
 
     public void createAdminUserIfNeeded() {
         if (!userExists(adminEmail)) {
-            createUserWithRole(adminEmail, newArrayList(ADMIN_ROLE, USER_ROLE));
+            createUserWithRole(adminEmail, newArrayList(Role.ADMIN, Role.USER));
         }
     }
 
-    private void createUserWithRole(String email, List<String> roles) {
+    private void createUserWithRole(String email, List<Role> roles) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(email);
         setProfileForEmail(email, userEntity);
         userEntity.setPassword(TEST_USER_PASSWORD);
 
-        for(String role: roles){
-            userEntity.addRole(createOrFindRole(role));
+        for (Role role : roles) {
+            userEntity.addRole(role);
         }
         userEntity.setConfirmed(true);
         userRepository.saveAndFlush(userEntity);
@@ -68,15 +63,6 @@ public class InitialConfiguration {
         userEntity.getProfile().setFirstName(userProfileTo.getFirstName());
         userEntity.getProfile().setLastName(userProfileTo.getLastName());
         userEntity.getProfile().setPictureUrl(userProfileTo.getPictureUrl());
-    }
-
-    private UserRoleEntity createOrFindRole(String roleName) {
-        UserRoleEntity role = userRoleRepository.findByRoleName(roleName);
-        if (role == null) {
-            role = new UserRoleEntity(roleName);
-            role = userRoleRepository.saveAndFlush(role);
-        }
-        return role;
     }
 
     private boolean userExists(String email) {

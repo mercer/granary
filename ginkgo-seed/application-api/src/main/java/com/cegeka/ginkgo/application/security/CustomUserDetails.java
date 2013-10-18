@@ -1,5 +1,6 @@
 package com.cegeka.ginkgo.application.security;
 
+import com.cegeka.ginkgo.application.Role;
 import com.cegeka.ginkgo.application.UserTo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,8 +29,8 @@ public class CustomUserDetails implements UserDetails {
         details.enabled = userTo.getConfirmed();
         details.locale = userTo.getLocale();
 
-        for (String role : userTo.getRoles()) {
-            details.authorities.add(new SimpleGrantedAuthority(role));
+        for (Role role : userTo.getRoles()) {
+            details.authorities.add(new SimpleGrantedAuthority(role.toString()));
         }
 
         return details;

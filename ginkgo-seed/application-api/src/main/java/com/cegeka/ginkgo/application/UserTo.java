@@ -1,5 +1,8 @@
 package com.cegeka.ginkgo.application;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.Collection;
 import java.util.Locale;
 
@@ -10,7 +13,7 @@ public class UserTo {
     private String firstName;
     private String lastName;
     private String retypePassword; //TODO: we don't need this here
-    private Collection<String> roles; //TODO: List<Role>
+    private Collection<Role> roles;
     private boolean confirmed;
     private Locale locale;
 
@@ -21,6 +24,10 @@ public class UserTo {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getId() {
         return id;
     }
@@ -29,15 +36,11 @@ public class UserTo {
         this.id = id;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Collection<String> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Collection<String> roles) {
+    public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
 
@@ -87,5 +90,15 @@ public class UserTo {
 
     public void setLocale(Locale locale) {
         this.locale = locale;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        return EqualsBuilder.reflectionEquals(this, that);
     }
 }

@@ -9,7 +9,7 @@ public class UserToTestFixture {
 
     public static final String ID = UUID.randomUUID().toString();
     private static final String FIRST_NAME = "FIRST_NAME";
-    private static final String ROLE = "role";
+    private static final Role ROLE = Role.USER;
     private static final Locale LOCALE = Locale.CHINA;
     private static final String LAST_NAME = "LAST_NAME";
     private static final String EMAIL = "email@domain.com";

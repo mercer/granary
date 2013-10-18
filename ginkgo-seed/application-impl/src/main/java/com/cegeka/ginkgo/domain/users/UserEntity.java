@@ -1,5 +1,6 @@
 package com.cegeka.ginkgo.domain.users;
 
+import com.cegeka.ginkgo.application.Role;
 import com.google.common.collect.Sets;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -8,7 +9,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import static javax.persistence.CascadeType.ALL;
-import static javax.persistence.FetchType.EAGER;
 
 @Entity
 @Table(name = "USERS")
@@ -19,11 +19,11 @@ public class UserEntity {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private String password;
-    @ManyToMany(fetch = EAGER, cascade = ALL)
-    @JoinTable(name = "USER_ROLES",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
-    private Set<UserRoleEntity> roles = Sets.newHashSet();
+    @ElementCollection(targetClass = Role.class)
+    @CollectionTable(name = "USERS_ROLES")
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = Sets.newHashSet();
     @Column(unique = true)
     private String email;
     @Transient
@@ -49,15 +49,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Set<String> getRoles() {
-        Set<String> rolesNames = Sets.newHashSet();
-        for (UserRoleEntity roleEntity : roles) {
-            rolesNames.add(roleEntity.getName());
-        }
-        return rolesNames;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void addRole(UserRoleEntity role) {
+    public void addRole(Role role) {
         this.roles.add(role);
     }
 
@@ -87,6 +83,20 @@ public class UserEntity {
 
     public UserProfileEntity getProfile() {
         return profile;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserEntity that = (UserEntity) o;
+        return !(id != null ? !id.equals(that.id) : that.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }
 

@@ -11,7 +11,6 @@ public interface UserFacade {
 
     void confirmToken(String token);
 
-
     List<UserTo> getUsers();
 
     UserTo getUser(String userId);

@@ -3,7 +3,6 @@ package com.cegeka.ginkgo.application;
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
 import com.cegeka.ginkgo.domain.users.UserEntity;
 import com.cegeka.ginkgo.domain.users.UserRepository;
-import com.cegeka.ginkgo.domain.users.UserRoleRepository;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,23 +26,20 @@ public class UserFacadeImplTest {
     private UserRepository userRepositoryMock;
     @Mock
     private ConfirmationService confirmationServiceMock;
-    @Mock
-    private UserRoleRepository userRoleRepositoryMock;
 
     @Before
     public void setUp() {
         userFacade.setUserRepository(userRepositoryMock);
         userFacade.setConfirmationService(confirmationServiceMock);
-        userFacade.setUserRoleRepository(userRoleRepositoryMock);
     }
 
     @Test
     public void testIfFindByEmailCallsUserRepositoryFindByEmail() {
-        when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(aUserEntity());
+        when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(aUserEntity());
 
-        UserTo user = userFacade.findByEmail(USER_EMAIL);
+        UserTo user = userFacade.findByEmail(EMAIL);
 
-        verify(userRepositoryMock).findByEmail(USER_EMAIL);
+        verify(userRepositoryMock).findByEmail(EMAIL);
     }
 
     @Test
@@ -63,8 +59,8 @@ public class UserFacadeImplTest {
     }
 
     @Test
-    public void givenTwoUsersWereAdded_thenRepositoryFindAllIsCalled(){
-        when(userRepositoryMock.findAll()).thenReturn(Lists.newArrayList(aUserEntity(),aUserEntity()));
+    public void givenTwoUsersWereAdded_thenRepositoryFindAllIsCalled() {
+        when(userRepositoryMock.findAll()).thenReturn(Lists.newArrayList(aUserEntity(), aUserEntity()));
 
         List<UserTo> users = userFacade.getUsers();
 

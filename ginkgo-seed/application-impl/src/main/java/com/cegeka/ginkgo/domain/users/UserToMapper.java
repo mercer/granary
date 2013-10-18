@@ -3,7 +3,6 @@ package com.cegeka.ginkgo.domain.users;
 import com.cegeka.ginkgo.application.UserTo;
 import com.google.common.base.Function;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 import static com.google.common.collect.Collections2.transform;
@@ -49,7 +48,7 @@ public class UserToMapper {
     private static Function<UserEntity, UserTo> userEntityToUserToTransform() {
         return new Function<UserEntity, UserTo>() {
             @Override
-            public UserTo apply(@Nullable UserEntity input) {
+            public UserTo apply(UserEntity input) {
                 return toTo(input);
             }
         };
