@@ -8,20 +8,20 @@ import com.cegeka.ginkgo.domain.users.UserToMapper;
 import java.util.UUID;
 
 public class UserEntityTestFixture {
-    public static final String TEST_USER_ENTITY_ID = UUID.randomUUID().toString();
-    public static final String TEST_USER_EMAIL = "test@mailinator.com";
-    public static final String TEST_ROLE = "testRole";
-    public static final String TEST_PASSWORD = "testPassword";
+    public static final String USER_ENTITY_ID = UUID.randomUUID().toString();
+    public static final String USER_EMAIL = "test@mailinator.com";
+    public static final String ROLE = "testRole";
+    public static final String PASSWORD = "testPassword";
 
     private UserEntityTestFixture() {
     }
 
     public static UserEntity aUserEntity() {
         UserEntity entity = new UserEntity();
-        entity.setId(TEST_USER_ENTITY_ID);
-        entity.setPassword(TEST_PASSWORD);
-        entity.setEmail(TEST_USER_EMAIL);
-        entity.addRole(new UserRoleEntity(TEST_ROLE));
+        entity.setId(USER_ENTITY_ID);
+        entity.setPassword(PASSWORD);
+        entity.setEmail(USER_EMAIL);
+        entity.addRole(new UserRoleEntity(ROLE));
         return entity;
     }
 

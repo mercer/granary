@@ -2,8 +2,6 @@ package com.cegeka.ginkgo.domain.users;
 
 import com.cegeka.ginkgo.application.UserTo;
 import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -19,7 +17,6 @@ public class UserToMapper {
         UserTo userTo = new UserTo();
         userTo.setId(userEntity.getId());
         userTo.setEmail(userEntity.getEmail());
-        //userTo.setPassword(userEntity.getPassword());
         userTo.setRoles(userEntity.getRoles());
         userTo.setConfirmed(userEntity.isConfirmed());
         userTo.setFirstName(userEntity.getProfile().getFirstName());
@@ -29,24 +26,19 @@ public class UserToMapper {
     }
 
     public static UserTo toToWithPassword(UserEntity userEntity) {
-        UserTo userTo = new UserTo();
-        userTo.setId(userEntity.getId());
-        userTo.setEmail(userEntity.getEmail());
+        UserTo userTo = toTo(userEntity);
         userTo.setPassword(userEntity.getPassword());
-        userTo.setRoles(userEntity.getRoles());
-        userTo.setConfirmed(userEntity.isConfirmed());
-        userTo.setFirstName(userEntity.getProfile().getFirstName());
-        userTo.setLastName(userEntity.getProfile().getLastName());
-        userTo.setLocale(userEntity.getLocale());
         return userTo;
     }
 
-    public static UserEntity toEntity(UserTo userTo) {
+    public static UserEntity toNewEntity(UserTo userTo) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userTo.getEmail());
         userEntity.setPassword(userTo.getPassword());
         userEntity.getProfile().setFirstName(userTo.getFirstName());
         userEntity.getProfile().setLastName(userTo.getLastName());
+        userEntity.setConfirmed(userTo.getConfirmed());
+        //TODO: map roles
         return userEntity;
     }
 

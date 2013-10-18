@@ -41,9 +41,30 @@ function UsersController(Users, $scope) {
 
 
 function UserController(Users, $scope, $routeParams) {
+
+    $scope.rolesModel = {'ROLE_ADMIN': false, 'ROLE_USER': false};
+    function updateRolesViewModelFromUser(model, user) {
+        user.roles.forEach(function (role) {
+            model[role] = true;
+        });
+
+    }
+
+    function updateUserFromRolesViewModel(user, model) {
+        var roles = [];
+        _.keys(model).forEach(function (role) {
+            if(model[role] === true){
+                roles.push(role);
+            }
+        });
+        user.roles = roles;
+
+    }
+
     Users.getUser($routeParams.id,
         function success(responseData) {
             $scope.user = responseData;
+            updateRolesViewModelFromUser($scope.rolesModel, $scope.user);
         },
         function error(error) {
             var x = 0;
@@ -51,6 +72,7 @@ function UserController(Users, $scope, $routeParams) {
         });
 
     $scope.updateUser = function () {
+        updateUserFromRolesViewModel($scope.user, $scope.rolesModel);
         Users.updateUser($scope.user)
             .then(function () {
 

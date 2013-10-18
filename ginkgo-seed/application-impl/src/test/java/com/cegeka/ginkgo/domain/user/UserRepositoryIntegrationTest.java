@@ -31,8 +31,8 @@ public class UserRepositoryIntegrationTest extends IntegrationTest {
 
     @Test
     public void testFindByEmail() {
-        UserEntity user = userRepository.findByEmail(UserEntityTestFixture.TEST_USER_EMAIL);
-        assertThat(user.getEmail()).isEqualTo(UserEntityTestFixture.TEST_USER_EMAIL);
+        UserEntity user = userRepository.findByEmail(UserEntityTestFixture.USER_EMAIL);
+        assertThat(user.getEmail()).isEqualTo(UserEntityTestFixture.USER_EMAIL);
     }
 
     @Test

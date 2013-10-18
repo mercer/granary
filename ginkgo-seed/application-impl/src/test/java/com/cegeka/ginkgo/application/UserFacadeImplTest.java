@@ -5,8 +5,6 @@ import com.cegeka.ginkgo.domain.users.UserEntity;
 import com.cegeka.ginkgo.domain.users.UserRepository;
 import com.cegeka.ginkgo.domain.users.UserRoleRepository;
 import com.google.common.collect.Lists;
-import org.fest.assertions.Assertions;
-import org.fest.assertions.ListAssert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +12,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import static com.cegeka.ginkgo.domain.user.UserEntityTestFixture.*;
@@ -42,11 +39,11 @@ public class UserFacadeImplTest {
 
     @Test
     public void testIfFindByEmailCallsUserRepositoryFindByEmail() {
-        when(userRepositoryMock.findByEmail(TEST_USER_EMAIL)).thenReturn(aUserEntity());
+        when(userRepositoryMock.findByEmail(USER_EMAIL)).thenReturn(aUserEntity());
 
-        UserTo user = userFacade.findByEmail(TEST_USER_EMAIL);
+        UserTo user = userFacade.findByEmail(USER_EMAIL);
 
-        verify(userRepositoryMock).findByEmail(TEST_USER_EMAIL);
+        verify(userRepositoryMock).findByEmail(USER_EMAIL);
     }
 
     @Test

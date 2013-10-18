@@ -9,8 +9,8 @@ public class UserTo {
     private String email;
     private String firstName;
     private String lastName;
-    private String retypePassword;
-    private Collection<String> roles;
+    private String retypePassword; //TODO: we don't need this here
+    private Collection<String> roles; //TODO: List<Role>
     private boolean confirmed;
     private Locale locale;
 
