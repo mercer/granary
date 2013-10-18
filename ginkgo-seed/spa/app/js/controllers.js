@@ -22,8 +22,8 @@ function LoginDirectiveController($http, $scope) {
     $scope.login = function () {
         //TODO: should we do rest calls from controller?
         $http.post($scope.url, {username: $scope.username, password: $scope.password})
-            .success($scope.redirectTo)
-            .error(function(error){
+            .success($scope.afterLogin)
+            .error(function (error) {
                 $scope.loginErrorMessage = error;
             });
     };
@@ -50,13 +50,13 @@ function UserController(Users, $scope, $routeParams) {
             // for now do nothing. feel free to add here error messages on scope if you want/need to
         });
 
-    $scope.updateUser = function(){
-         Users.updateUser($scope.user)
-         .then(function(){
+    $scope.updateUser = function () {
+        Users.updateUser($scope.user)
+            .then(function () {
 
-         }, function error(){
+            }, function error() {
 
-         })
+            })
     }
 }
 

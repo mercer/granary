@@ -51,7 +51,7 @@ describe('controllers', function () {
             });
             inject(function ($controller, $rootScope, $httpBackend) {
                 scope = $rootScope.$new();
-                scope.redirectTo = function (route) {}
+                scope.afterLogin = function (route) {}
                 scope.url = url
                 scope.username = 'username';
                 scope.password = 'password';
@@ -68,12 +68,12 @@ describe('controllers', function () {
 
         it('should call redirectTo method given a successful login', inject(function ($httpBackend) {
             $httpBackend.expectPOST(url, {username: scope.username, password: scope.password}).respond(200, '');
-            spyOn(scope, 'redirectTo');
+            spyOn(scope, 'afterLogin');
 
             scope.login();
             $httpBackend.flush();
 
-            expect(scope.redirectTo).toHaveBeenCalled();
+            expect(scope.afterLogin).toHaveBeenCalled();
         }));
 
         it('should add error message on scope given a failed login', inject(function ($httpBackend) {
