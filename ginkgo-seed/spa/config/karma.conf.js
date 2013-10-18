@@ -5,6 +5,8 @@ module.exports = function (config) {
         files: [
             'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
             'app/lib/angular/angular.js',
+            'http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.min.js',
+            'http://angular-ui.github.io/ui-utils/build/ui-utils.min.js',
             'app/lib/angular/angular-*.js',
             'test/lib/angular/angular-mocks.js',
             'app/js/**/*.js',

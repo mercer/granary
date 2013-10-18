@@ -43,6 +43,48 @@ describe('service', function () {
     });
 
 
+    describe('Auth service', function(){
+        var credentials = {
+            username : 'username',
+            password : 'password'
+        }
+        var authService;
+
+        beforeEach(function(){
+            module('userAdmin.services');
+            inject(function(Auth){
+                authService = Auth;
+            })
+        });
+
+        it('user from Auth should be initialized; otherwise values used in templates before http calls are finished will not be bounded to scope', inject(function($httpBackend, LOGIN_REST_URL){
+            expect(authService.user).not.toBeUndefined();
+            expect(authService.user.name).not.toBeUndefined();
+            expect(authService.user.roles).not.toBeUndefined();
+        }))
+
+        it('should call login url', inject(function($httpBackend, LOGIN_REST_URL){
+            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, '');
+
+            authService.authenticate(credentials);
+
+            $httpBackend.verifyNoOutstandingExpectation();
+        }))
+
+
+        it('should call login url', inject(function($httpBackend, LOGIN_REST_URL){
+            var user = {name: 'name', roles: ['USER']};
+            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
+
+            authService.authenticate(credentials);
+            $httpBackend.flush();
+
+            expect(authService.user).not.toBeUndefined();
+            expect(authService.user).toEqual(user);
+        }))
+    });
+
+
     describe('CONSTANTS DEFINITIONS', function(){
         it('URL_ALL_USERS shuold point to "rest/users"', inject(function(URL_ALL_USERS){
             expect(URL_ALL_USERS).toBe('../rest/users');
