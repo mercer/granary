@@ -3,6 +3,7 @@ package com.cegeka.ginkgo.domain.users;
 import com.cegeka.ginkgo.application.Role;
 import com.cegeka.ginkgo.application.UserProfileTo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,8 @@ public class InitialConfiguration {
     private static String adminEmail = "admin@mailinator.com";
     @Resource
     private UserRepository userRepository;
+    @Resource
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private org.springframework.context.ApplicationContext applicationContext;
 
@@ -49,7 +52,7 @@ public class InitialConfiguration {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(email);
         setProfileForEmail(email, userEntity);
-        userEntity.setPassword(TEST_USER_PASSWORD);
+        userEntity.setPassword(passwordEncoder.encode(TEST_USER_PASSWORD));
 
         for (Role role : roles) {
             userEntity.addRole(role);

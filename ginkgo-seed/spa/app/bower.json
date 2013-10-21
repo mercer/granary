@@ -1,0 +1,25 @@
+{
+  "name": "ginkgo-seed",
+  "version": "0.1.0",
+  "authors": [
+    "cegeka.be"
+  ],
+  "description": "ginkgo-seed",
+  "license": "private",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "1.2.0-rc.2",
+    "angular-ui-bootstrap-bower": "~0.6.0",
+    "angular-ui-utils": "~0.0.4",
+    "jquery": "1.10.2",
+    "lodash": "~2.2.1",
+    "bootstrap": "3.0.0"
+  }
+}

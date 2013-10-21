@@ -11,6 +11,8 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
+    <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="passwordEncoder" />
+
     <jdbc:embedded-database id="dataSource" type="H2">
         <jdbc:script location="classpath:schema.sql"/>
     </jdbc:embedded-database>
@@ -55,5 +57,4 @@
     <jpa:repositories base-package="com.cegeka.ginkgo.domain"/>
 
     <security:global-method-security pre-post-annotations="enabled" />
-
 </beans>

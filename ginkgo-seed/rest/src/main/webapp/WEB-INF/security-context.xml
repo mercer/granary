@@ -36,7 +36,9 @@
 
 
     <authentication-manager alias="restAuthenticationManager">
-        <authentication-provider user-service-ref="userDetailService" />
+        <authentication-provider user-service-ref="userDetailService">
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
     </authentication-manager>
 
     <beans:bean id="userDetailService" class="com.cegeka.ginkgo.application.security.UserDetailsService"/>

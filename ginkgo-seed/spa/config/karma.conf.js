@@ -3,14 +3,14 @@ module.exports = function (config) {
         basePath: '../',
 
         files: [
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js',
-            'app/lib/angular/angular.js',
-            'http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.min.js',
-            'http://angular-ui.github.io/ui-utils/build/ui-utils.min.js',
+            'app/bower_components/jquery/jquery.min.js',
+            'app/bower_components/angular/angular.js',
+            'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js',
+            'app/bower_components/angular-ui-utils/modules/utils.js',
             'app/lib/angular/angular-*.js',
             'test/lib/angular/angular-mocks.js',
             'app/js/**/*.js',
-            'app/lib/lodash/lodash.min.js',
+            'app/bower_components/lodash/dist/lodash.min.js',
             'test/unit/**/*.js',
 
             //include directives templates
