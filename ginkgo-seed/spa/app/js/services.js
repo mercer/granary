@@ -5,9 +5,9 @@
 angular.module('userAdmin.services', [])
     .value('version', '0.1')
 
-    .factory('Users', ['$http', 'URL_ALL_USERS', 'URL_USER', function ($http, URL_ALL_USERS, URL_USER) {
+    .factory('Users', ['$http', 'REST_URLS', function ($http, REST_URLS) {
         function getUsers(successCallback, errorCallback) {
-            $http.post(URL_ALL_USERS)
+            $http.post(REST_URLS.USERS)
                 .success(function (data) {
                     successCallback(data);
                 })
@@ -16,8 +16,9 @@ angular.module('userAdmin.services', [])
                 });
         }
 
+        //TODO: test me pls
         function getUser(userId, successCallback, errorCallback) {
-            $http.get(URL_USER + '/' + userId)
+            $http.get(REST_URLS.USER + '/' + userId)
                 .success(function (data) {
                     successCallback(data);
                 })
@@ -26,8 +27,9 @@ angular.module('userAdmin.services', [])
                 });
         }
 
+        //TODO: test me pls
         function updateUser(user) {
-            return $http.post(URL_USER, user);
+            return $http.post(REST_URLS.USER, user);
         }
 
         return {
@@ -37,7 +39,7 @@ angular.module('userAdmin.services', [])
         };
     }])
 
-    .factory('Auth', ['$http', 'LOGIN_REST_URL', function ($http, LOGIN_REST_URL) {
+    .factory('Auth', ['$http', 'REST_URLS', function ($http, REST_URLS) {
         var user = {name: '', roles: []};
 
         function isAuthorizedToAccess(route) {
@@ -49,7 +51,7 @@ angular.module('userAdmin.services', [])
         }
 
         function authenticate(credentials) {
-            $http.post(LOGIN_REST_URL, credentials)
+            $http.post(REST_URLS.LOGIN, credentials)
                 .success(function (response) {
                     angular.copy(response, user);
                 });
@@ -69,7 +71,10 @@ angular.module('userAdmin.services', [])
         };
     }])
 
-    .constant('URL_ALL_USERS', '../rest/users')
-    .constant('URL_USER', '../rest/user')
-    .constant('LOGIN_REST_URL', 'j_spring_security_check');
+
+    .constant('REST_URLS', {
+        LOGIN: 'http://localhost:8080/rest/j_spring_security_check',
+        USERS: 'http://localhost:8080/rest/users',
+        USER: 'http://localhost:8080/rest/user'
+    });
 
