@@ -21,13 +21,15 @@ public class UserFacadeIntegrationTest extends IntegrationTest {
     private UserFacade userFacade;
     @Resource
     private UserRepository userRepository;
+    @Resource
+    private UserToMapper userToMapper;
 
     @Test
     public void givenAUserWithAdminRole_thenGetUsersReturnsAListOfUsers() {
         UserEntity user = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.ADMIN));
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
         List<UserTo> users = userFacade.getUsers();
-        Assertions.assertThat(users).containsOnly(UserToMapper.toTo(user));
+        Assertions.assertThat(users).containsOnly(userToMapper.toTo(user));
     }
 
     @Test(expected = AccessDeniedException.class)

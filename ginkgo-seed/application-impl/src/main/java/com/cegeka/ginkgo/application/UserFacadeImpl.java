@@ -10,6 +10,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+import java.security.interfaces.RSAKey;
 import java.util.List;
 
 import static com.cegeka.ginkgo.application.Role.USER;
@@ -20,10 +22,12 @@ public class UserFacadeImpl implements UserFacade {
     private UserRepository userRepository;
     @Autowired
     private ConfirmationService confirmationService;
+    @Resource
+    private UserToMapper userToMapper;
 
     @Override
     public void registerUser(UserTo user) {
-        UserEntity userEntity = UserToMapper.toNewEntity(user);
+        UserEntity userEntity = userToMapper.toNewEntity(user);
         userEntity.addRole(USER);
         userRepository.saveAndFlush(userEntity);
         confirmationService.sendConfirmationEmailTo(userEntity);
@@ -31,7 +35,7 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     public UserTo findByEmail(String email) {
-        return UserToMapper.toToWithPassword(userRepository.findByEmail(email));
+        return userToMapper.toToWithPassword(userRepository.findByEmail(email));
     }
 
     @Override
@@ -48,12 +52,12 @@ public class UserFacadeImpl implements UserFacade {
     @Override
     @PreAuthorize("hasRole(T(com.cegeka.ginkgo.application.Role).ADMIN)")
     public List<UserTo> getUsers() {
-        return UserToMapper.from(userRepository.findAll());
+        return userToMapper.from(userRepository.findAll());
     }
 
     @Override
     public UserTo getUser(String userId) {
-        return UserToMapper.toTo(userRepository.findOne(userId));
+        return userToMapper.toTo(userRepository.findOne(userId));
     }
 
     public void setUserRepository(UserRepository userRepository) {
@@ -66,23 +70,31 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     @Transactional
-    public void updateUser(UserTo userTO) {
-        UserEntity userEntity = null;
-        if (userTO.getId() == null) {
-            userEntity = UserToMapper.toNewEntity(userTO);
+    public void updateOrCreateNewUser(UserTo userTo) {
+        if (userTo.getId() == null) {
+            createNewUser(userTo);
         } else {
-            userEntity = userRepository.findOne(userTO.getId());
-            if (userEntity != null) {
-                userEntity.setEmail(userTO.getEmail());
-                userEntity.getProfile().setFirstName(userTO.getFirstName());
-                userEntity.getProfile().setLastName(userTO.getLastName());
-                userEntity.setConfirmed(userTO.getConfirmed());
-            } else {
-                throw new IllegalArgumentException("invalid user id");
-            }
+            updateUser(userTo);
         }
+    }
+
+    public void createNewUser(UserTo userTo) {
+        UserEntity userEntity = userToMapper.toNewEntity(userTo);
         userRepository.save(userEntity);
 
     }
 
+    public void updateUser(UserTo userTo) {
+        UserEntity userEntity = userRepository.findOne(userTo.getId());
+        if (userEntity != null) {
+            userToMapper.toExistingEntity(userEntity, userTo);
+        } else {
+            throw new IllegalArgumentException("invalid user id");
+        }
+        userRepository.save(userEntity);
+    }
+
+    public void setUserToMapper(UserToMapper userToMapper) {
+        this.userToMapper = userToMapper;
+    }
 }

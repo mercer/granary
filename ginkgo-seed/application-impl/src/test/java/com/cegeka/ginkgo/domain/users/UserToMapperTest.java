@@ -1,5 +1,6 @@
 package com.cegeka.ginkgo.domain.users;
 
+import com.cegeka.ginkgo.application.Role;
 import com.cegeka.ginkgo.application.UserTo;
 import com.cegeka.ginkgo.application.UserToTestFixture;
 import com.cegeka.ginkgo.domain.user.UserEntityTestFixture;
@@ -7,16 +8,20 @@ import org.junit.Test;
 
 import java.util.Locale;
 
+import static com.cegeka.ginkgo.application.UserToTestFixture.aUserTo;
 import static com.cegeka.ginkgo.domain.user.UserEntityTestFixture.aUserEntity;
+import static com.cegeka.ginkgo.domain.user.UserEntityTestFixture.asUserTO;
+import static com.cegeka.ginkgo.domain.users.UserToMapper.*;
 import static org.fest.assertions.Assertions.assertThat;
 
 public class UserToMapperTest {
+    private UserToMapper userToMapper = new UserToMapper();
 
     @Test
     public void toToCorrectlyMapsFields() {
         UserEntity given = aUserEntity();
 
-        UserTo actual = UserToMapper.toTo(given);
+        UserTo actual = userToMapper.toTo(given);
 
         assertMappedTo(given, actual);
         assertThat(actual.getPassword()).isNull();
@@ -26,7 +31,7 @@ public class UserToMapperTest {
     public void mapperShouldCopyPasswordTo_whenToToWithPasswordIsCalled() {
         UserEntity given = aUserEntity();
 
-        UserTo actual = UserToMapper.toToWithPassword(given);
+        UserTo actual = userToMapper.toToWithPassword(given);
 
         assertMappedTo(given, actual);
         assertThat(actual.getPassword()).isEqualTo(UserEntityTestFixture.PASSWORD);
@@ -34,13 +39,26 @@ public class UserToMapperTest {
 
     @Test
     public void mapToNewEntityFromToShouldMapFields() {
-        UserTo given = UserToTestFixture.aUserTo();
+        UserTo given = aUserTo();
 
-        UserEntity actual = UserToMapper.toNewEntity(given);
+        UserEntity actual = userToMapper.toNewEntity(given);
 
         assertMappedEntity(given, actual);
         assertThat(actual.getId()).isNull();
         assertThat(actual.getLocale()).isEqualTo(Locale.ENGLISH);
+    }
+
+    @Test
+    public void mapToExistingEntity_ShouldMapRoles(){
+        UserEntity userEntity = aUserEntity();
+
+        UserTo userTo = aUserTo();
+        userTo.getRoles().remove(Role.USER);
+        userTo.getRoles().add(Role.ADMIN);
+
+        userToMapper.toExistingEntity(userEntity,userTo);
+
+        assertThat(userEntity.getRoles()).isEqualTo(userTo.getRoles());
     }
 
     private void assertMappedEntity(UserTo given, UserEntity actual) {

@@ -32,6 +32,6 @@ public class UserEntityTestFixture {
     }
 
     public static UserTo asUserTO() {
-        return UserToMapper.toTo(aUserEntity());
+        return new UserToMapper().toTo(aUserEntity());
     }
 }

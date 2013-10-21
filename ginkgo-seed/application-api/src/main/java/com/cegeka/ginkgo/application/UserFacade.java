@@ -15,5 +15,5 @@ public interface UserFacade {
 
     UserTo getUser(String userId);
 
-    void updateUser(UserTo userTO);
+    void updateOrCreateNewUser(UserTo userTO);
 }
