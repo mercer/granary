@@ -54,11 +54,17 @@ angular.module('userAdmin.services', [])
                 });
         }
 
+        function getAuthenticatedUser() {
+            var copiedUser = {};
+            angular.copy(user, copiedUser);
+            return copiedUser;
+        }
+
         return {
             isAuthorizedToAccess: isAuthorizedToAccess,
             authenticate: authenticate,
             //TODO: var user should not be accessible from outside
-            user: user,
+            getAuthenticatedUser: getAuthenticatedUser,
             isLoggedIn: isLoggedIn
         };
     }])
@@ -66,5 +72,4 @@ angular.module('userAdmin.services', [])
     .constant('URL_ALL_USERS', '../rest/users')
     .constant('URL_USER', '../rest/user')
     .constant('LOGIN_REST_URL', 'j_spring_security_check');
-;
 

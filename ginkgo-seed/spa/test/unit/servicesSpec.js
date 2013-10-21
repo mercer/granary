@@ -60,9 +60,9 @@ describe('service', function () {
         });
 
         it('user from Auth should be initialized; otherwise values used in templates before http calls are finished will not be bounded to scope', inject(function ($httpBackend, LOGIN_REST_URL) {
-            expect(authService.user).not.toBeUndefined();
-            expect(authService.user.name).not.toBeUndefined();
-            expect(authService.user.roles).not.toBeUndefined();
+            expect(authService.getAuthenticatedUser()).not.toBeUndefined();
+            expect(authService.getAuthenticatedUser().name).not.toBeUndefined();
+            expect(authService.getAuthenticatedUser().roles).not.toBeUndefined();
         }));
 
         it('should call login url', inject(function ($httpBackend, LOGIN_REST_URL) {
@@ -81,20 +81,35 @@ describe('service', function () {
             authService.authenticate(credentials);
             $httpBackend.flush();
 
-            expect(authService.user).not.toBeUndefined();
-            expect(authService.user).toEqual(user);
+            expect(authService.getAuthenticatedUser()).not.toBeUndefined();
+            expect(authService.getAuthenticatedUser()).not.toBe(user);
+            expect(authService.getAuthenticatedUser()).toEqual(user);
         }));
 
         it('should return false if user does not have role for given route', function () {
             expect(authService.isAuthorizedToAccess({role: 'ADMIN'})).toBeFalsy();
         });
 
-
-        it('should return true if user has role for given route', function () {
-            authService.user.roles.push('ADMIN');
+        it('should return true if user has role for given route',inject(function ($httpBackend, LOGIN_REST_URL) {
+            var user = {name: 'name', roles: ['ADMIN']};
+            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
+            authService.authenticate(credentials);
+            $httpBackend.flush();
 
             expect(authService.isAuthorizedToAccess({role: 'ADMIN'})).toBeTruthy();
-        });
+        }));
+
+        it('should return a copy of user when getAuthenticatedUser is called', inject(function ($httpBackend, LOGIN_REST_URL) {
+            var authenticatedUserBeforeStateChanges = authService.getAuthenticatedUser();
+            var user = {name: 'name', roles: ['USER']};
+            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
+            authService.authenticate(credentials);
+            $httpBackend.flush();
+
+            var authenticatedUserAfterStateChanges = authService.getAuthenticatedUser();
+
+            expect(authenticatedUserBeforeStateChanges).not.toEqual(authenticatedUserAfterStateChanges);
+        }));
 
     });
 
