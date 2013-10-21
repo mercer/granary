@@ -17,7 +17,7 @@ angular.module('userAdmin', ['ngRoute', 'ui.bootstrap', 'userAdmin.filters', 'us
 
         $rootScope.$on('$routeChangeStart', function (event, next, current) {
             if (!Auth.isAuthorizedToAccess(next)) {
-                if (!Auth.isLoggedIn()) {
+                if (!Auth.isAuthenticated()) {
                     $location.path('login');
                 }
                 $location.path('/')

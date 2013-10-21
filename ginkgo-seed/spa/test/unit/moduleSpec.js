@@ -1,6 +1,6 @@
 'use strict';
 
-describe('auth module', function () {
+describe('auth and user management modules', function () {
     var rootScope;
 
     beforeEach(function () {
@@ -15,7 +15,7 @@ describe('auth module', function () {
 
         beforeEach(function () {
             module(function ($provide) {
-                authServiceMock = jasmine.createSpyObj('Auth', ['isAuthorizedToAccess', 'isLoggedIn']);
+                authServiceMock = jasmine.createSpyObj('Auth', ['isAuthorizedToAccess', 'isAuthenticated']);
                 locationMock = jasmine.createSpyObj('$location', ['path']);
 
                 $provide.value('Auth', authServiceMock);
@@ -37,7 +37,7 @@ describe('auth module', function () {
 
         it('should redirect to home when user is not authorized to access route but is logged in', function () {
             authServiceMock.isAuthorizedToAccess.andCallFake(function () {return false;});
-            authServiceMock.isLoggedIn.andCallFake(function(){ return true; });
+            authServiceMock.isAuthenticated.andCallFake(function(){ return true; });
 
             rootScope.$broadcast('$routeChangeStart', nextRoute, currentRoute);
 
@@ -46,7 +46,7 @@ describe('auth module', function () {
 
         it('should redirect to login when user is not authorized and is not logged in', function () {
             authServiceMock.isAuthorizedToAccess.andCallFake(function () {return false;});
-            authServiceMock.isLoggedIn.andCallFake(function(){ return false; });
+            authServiceMock.isAuthenticated.andCallFake(function(){ return false; });
 
             rootScope.$broadcast('$routeChangeStart', nextRoute, currentRoute);
 

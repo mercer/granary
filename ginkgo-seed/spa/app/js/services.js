@@ -44,7 +44,8 @@ angular.module('userAdmin.services', [])
             return _.indexOf(user.roles, route.role) !== -1;
         }
 
-        function isLoggedIn() {
+        function isAuthenticated() {
+            return !_.isEmpty(user.name.trim());
         }
 
         function authenticate(credentials) {
@@ -63,9 +64,8 @@ angular.module('userAdmin.services', [])
         return {
             isAuthorizedToAccess: isAuthorizedToAccess,
             authenticate: authenticate,
-            //TODO: var user should not be accessible from outside
             getAuthenticatedUser: getAuthenticatedUser,
-            isLoggedIn: isLoggedIn
+            isAuthenticated: isAuthenticated
         };
     }])
 
