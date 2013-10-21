@@ -70,6 +70,7 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     @Transactional
+    @PreAuthorize("hasRole(T(com.cegeka.ginkgo.application.Role).ADMIN)")
     public void updateOrCreateNewUser(UserTo userTo) {
         if (userTo.getId() == null) {
             createNewUser(userTo);
