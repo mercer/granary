@@ -2,17 +2,21 @@ package com.cegeka.ginkgo.domain.users;
 
 import com.cegeka.ginkgo.application.UserTo;
 import com.google.common.base.Function;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static com.google.common.collect.Collections2.transform;
 import static com.google.common.collect.Lists.newArrayList;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_SINGLETON;
 
+@Service
+@Scope(value = SCOPE_SINGLETON)
 public class UserToMapper {
-    private UserToMapper() {
-    }
-
-    public static UserTo toTo(UserEntity userEntity) {
+    public UserTo toTo(UserEntity userEntity) {
         UserTo userTo = new UserTo();
         userTo.setId(userEntity.getId());
         userTo.setEmail(userEntity.getEmail());
@@ -24,13 +28,13 @@ public class UserToMapper {
         return userTo;
     }
 
-    public static UserTo toToWithPassword(UserEntity userEntity) {
+    public UserTo toToWithPassword(UserEntity userEntity) {
         UserTo userTo = toTo(userEntity);
         userTo.setPassword(userEntity.getPassword());
         return userTo;
     }
 
-    public static UserEntity toNewEntity(UserTo userTo) {
+    public UserEntity toNewEntity(UserTo userTo) {
         UserEntity userEntity = new UserEntity();
         userEntity.setEmail(userTo.getEmail());
         userEntity.setPassword(userTo.getPassword());
@@ -41,16 +45,25 @@ public class UserToMapper {
         return userEntity;
     }
 
-    public static List<UserTo> from(List<UserEntity> all) {
+    public List<UserTo> from(List<UserEntity> all) {
         return newArrayList(transform(all, userEntityToUserToTransform()));
     }
 
-    private static Function<UserEntity, UserTo> userEntityToUserToTransform() {
+    private  Function<UserEntity, UserTo> userEntityToUserToTransform() {
         return new Function<UserEntity, UserTo>() {
             @Override
             public UserTo apply(UserEntity input) {
                 return toTo(input);
             }
         };
+    }
+
+    public void toExistingEntity(UserEntity userEntity, UserTo userTo) {
+        userEntity.setEmail(userTo.getEmail());
+        userEntity.getProfile().setFirstName(userTo.getFirstName());
+        userEntity.getProfile().setLastName(userTo.getLastName());
+        userEntity.setConfirmed(userTo.getConfirmed());
+        userEntity.getRoles().clear();
+        userEntity.getRoles().addAll(userTo.getRoles());
     }
 }

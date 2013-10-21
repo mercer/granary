@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +57,7 @@ public class UserRestService {
     @ResponseBody
     public ResponseEntity saveUser(@RequestBody UserTo userTO) {
         try {
-            userFacade.updateUser(userTO);
+            userFacade.updateOrCreateNewUser(userTO);
         } catch (Exception e) {
             logger.error(THERE_WAS_AN_ERROR_SAVING_THE_USER, e);
             new ResponseEntity<String>(THERE_WAS_AN_ERROR_SAVING_THE_USER, HttpStatus.BAD_REQUEST);

@@ -21,7 +21,7 @@ public class UserEntity {
 
     private String password;
 
-    @ElementCollection(targetClass = Role.class)
+    @ElementCollection(targetClass = Role.class,fetch = FetchType.EAGER)
     @CollectionTable(name = "USERS_ROLES")
     @Column(name = "role")
     @Enumerated(EnumType.STRING)

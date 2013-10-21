@@ -3,6 +3,7 @@ package com.cegeka.ginkgo.application;
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
 import com.cegeka.ginkgo.domain.users.UserEntity;
 import com.cegeka.ginkgo.domain.users.UserRepository;
+import com.cegeka.ginkgo.domain.users.UserToMapper;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,11 +27,15 @@ public class UserFacadeImplTest {
     private UserRepository userRepositoryMock;
     @Mock
     private ConfirmationService confirmationServiceMock;
+    @Mock
+    private UserToMapper userToMapperMock;
+
 
     @Before
     public void setUp() {
         userFacade.setUserRepository(userRepositoryMock);
         userFacade.setConfirmationService(confirmationServiceMock);
+        userFacade.setUserToMapper(new UserToMapper());
     }
 
     @Test
@@ -67,4 +72,19 @@ public class UserFacadeImplTest {
         verify(userRepositoryMock).findAll();
         assertThat(users).hasSize(2);
     }
+
+    @Test
+    public void givenAnExistingUserEntity_whenUpdateUserToForEntity_thenMaptoExistingUserAndSaveIsCalled(){
+        userFacade.setUserToMapper(userToMapperMock);
+        UserEntity userEntity = aUserEntity();
+        when(userRepositoryMock.findOne(ID)).thenReturn(userEntity);
+
+        UserTo userTo = new UserToMapper().toTo(userEntity);
+        userTo.setId(ID);
+        userFacade.updateUser(userTo);
+
+        verify(userRepositoryMock).findOne(ID);
+        verify(userToMapperMock).toExistingEntity(userEntity,userTo);
+    }
+
 }
