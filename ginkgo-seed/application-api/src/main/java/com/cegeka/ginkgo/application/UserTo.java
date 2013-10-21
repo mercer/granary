@@ -37,7 +37,7 @@ public class UserTo {
         this.id = id;
     }
 
-    public Collection<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 

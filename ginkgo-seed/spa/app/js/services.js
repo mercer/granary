@@ -41,6 +41,7 @@ angular.module('userAdmin.services', [])
         var user = {name: '', roles: []};
 
         function isAuthorizedToAccess(route) {
+            return _.indexOf(user.roles, route.role) !== -1;
         }
 
         function isLoggedIn() {
@@ -53,10 +54,17 @@ angular.module('userAdmin.services', [])
                 });
         }
 
+        function getAuthenticatedUser() {
+            var copiedUser = {};
+            angular.copy(user, copiedUser);
+            return copiedUser;
+        }
+
         return {
             isAuthorizedToAccess: isAuthorizedToAccess,
             authenticate: authenticate,
-            user: user,
+            //TODO: var user should not be accessible from outside
+            getAuthenticatedUser: getAuthenticatedUser,
             isLoggedIn: isLoggedIn
         };
     }])
@@ -64,5 +72,4 @@ angular.module('userAdmin.services', [])
     .constant('URL_ALL_USERS', '../rest/users')
     .constant('URL_USER', '../rest/user')
     .constant('LOGIN_REST_URL', 'j_spring_security_check');
-;
 
