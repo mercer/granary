@@ -7,17 +7,19 @@ import com.cegeka.ginkgo.domain.users.UserRepository;
 import com.cegeka.ginkgo.domain.users.UserToMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.security.interfaces.RSAKey;
 import java.util.List;
 
 import static com.cegeka.ginkgo.application.Role.USER;
 
 @Service
 public class UserFacadeImpl implements UserFacade {
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -29,6 +31,7 @@ public class UserFacadeImpl implements UserFacade {
     public void registerUser(UserTo user) {
         UserEntity userEntity = userToMapper.toNewEntity(user);
         userEntity.addRole(USER);
+        userEntity.setPassword( passwordEncoder.encode(user.getPassword()));
         userRepository.saveAndFlush(userEntity);
         confirmationService.sendConfirmationEmailTo(userEntity);
     }

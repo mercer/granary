@@ -55,5 +55,6 @@
     <jpa:repositories base-package="com.cegeka.ginkgo.domain"/>
 
     <security:global-method-security pre-post-annotations="enabled" />
+    <bean class="org.springframework.security.authentication.encoding.ShaPasswordEncoder" id="passwordEncoder" />
 
 </beans>
