@@ -6,7 +6,7 @@ module.exports = function (config) {
             'app/bower_components/jquery/jquery.min.js',
             'app/bower_components/angular/angular.js',
             'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js',
-            'http://angular-ui.github.io/ui-utils/build/ui-utils.min.js',
+            'app/bower_components/angular-ui-utils/modules/utils.js',
             'app/lib/angular/angular-*.js',
             'test/lib/angular/angular-mocks.js',
             'app/js/**/*.js',
