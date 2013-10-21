@@ -41,6 +41,7 @@ angular.module('userAdmin.services', [])
         var user = {name: '', roles: []};
 
         function isAuthorizedToAccess(route) {
+            return _.indexOf(user.roles, route.role) !== -1;
         }
 
         function isLoggedIn() {
@@ -56,6 +57,7 @@ angular.module('userAdmin.services', [])
         return {
             isAuthorizedToAccess: isAuthorizedToAccess,
             authenticate: authenticate,
+            //TODO: var user should not be accessible from outside
             user: user,
             isLoggedIn: isLoggedIn
         };

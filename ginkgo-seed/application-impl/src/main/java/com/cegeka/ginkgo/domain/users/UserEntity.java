@@ -18,17 +18,23 @@ public class UserEntity {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
+
     private String password;
+
     @ElementCollection(targetClass = Role.class)
     @CollectionTable(name = "USERS_ROLES")
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = Sets.newHashSet();
+
     @Column(unique = true)
     private String email;
+
     @Transient
     private Locale locale = Locale.ENGLISH; //TODO: who should provide this?
+
     private boolean confirmed = false; //TODO: there should be enabled and confirmed, security on enabled (user admin too), confirmed for email confirmation
+
     @OneToOne(cascade = ALL)
     @JoinColumn(referencedColumnName = "ID", nullable = false)
     private UserProfileEntity profile = new UserProfileEntity();

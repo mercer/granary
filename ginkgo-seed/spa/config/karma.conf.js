@@ -10,6 +10,7 @@ module.exports = function (config) {
             'app/lib/angular/angular-*.js',
             'test/lib/angular/angular-mocks.js',
             'app/js/**/*.js',
+            'app/lib/lodash/lodash.min.js',
             'test/unit/**/*.js',
 
             //include directives templates
