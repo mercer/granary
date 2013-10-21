@@ -6,7 +6,7 @@ angular.module('userAdmin.controllers', [])
     .controller('HomeCtrl', ['$scope', function ($scope) {
     }])
     .controller('LoginController', ['$scope', LoginController])
-    .controller('LoginDirectiveController', ['$http', '$scope', 'LOGIN_REST_URL', LoginDirectiveController])
+    .controller('LoginDirectiveController', ['$scope', 'Auth', LoginDirectiveController])
     .controller('UsersController', ['Users', '$scope', UsersController])
     .controller('UserCtrl', [function () {
     }]);
@@ -18,13 +18,13 @@ function LoginController($scope, $location) {
     }
 }
 
-function LoginDirectiveController($http, $scope) {
+function LoginDirectiveController($scope, Auth) {
     $scope.login = function () {
-        //TODO: should we do rest calls from controller?
-        $http.post($scope.url, {username: $scope.username, password: $scope.password})
-            .success($scope.afterLogin)
-            .error(function (error) {
-                $scope.loginErrorMessage = error;
+        var credentials = {username: $scope.username, password: $scope.password};
+        Auth.authenticate(credentials, function () {
+                $scope.afterLogin();
+            }, function (error) {
+                $scope.alerts.push({ type: 'danger', msg: 'Login failed: ' + error });
             });
     };
 }
@@ -53,7 +53,7 @@ function UserController(Users, $scope, $routeParams) {
     function updateUserFromRolesViewModel(user, model) {
         var roles = [];
         _.keys(model).forEach(function (role) {
-            if(model[role] === true){
+            if (model[role] === true) {
                 roles.push(role);
             }
         });

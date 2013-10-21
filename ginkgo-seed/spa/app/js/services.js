@@ -64,9 +64,9 @@ angular.module('userAdmin.services', [])
         }
 
         return {
-            isAuthorizedToAccess: isAuthorizedToAccess,
             authenticate: authenticate,
             getAuthenticatedUser: getAuthenticatedUser,
+            isAuthorizedToAccess: isAuthorizedToAccess,
             isAuthenticated: isAuthenticated
         };
     }])
