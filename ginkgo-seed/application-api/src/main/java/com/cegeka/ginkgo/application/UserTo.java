@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Set;
 
 public class UserTo {
     private String id;
@@ -13,7 +14,7 @@ public class UserTo {
     private String firstName;
     private String lastName;
     private String retypePassword; //TODO: we don't need this here
-    private Collection<Role> roles;
+    private Set<Role> roles;
     private boolean confirmed;
     private Locale locale;
 
@@ -40,7 +41,7 @@ public class UserTo {
         return roles;
     }
 
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 
