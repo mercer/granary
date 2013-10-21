@@ -90,7 +90,7 @@ describe('service', function () {
             expect(authService.isAuthorizedToAccess({role: 'ADMIN'})).toBeFalsy();
         });
 
-        it('should return true if user has role for given route',inject(function ($httpBackend, LOGIN_REST_URL) {
+        it('should return true if user has role for given route', inject(function ($httpBackend, LOGIN_REST_URL) {
             var user = {name: 'name', roles: ['ADMIN']};
             $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
             authService.authenticate(credentials);
@@ -109,6 +109,20 @@ describe('service', function () {
             var authenticatedUserAfterStateChanges = authService.getAuthenticatedUser();
 
             expect(authenticatedUserBeforeStateChanges).not.toEqual(authenticatedUserAfterStateChanges);
+        }));
+
+
+        it('should return false if the user is not authenticated', function () {
+            expect(authService.isAuthenticated()).toEqual(false);
+        });
+
+        it('should return true if the user is authenticated', inject(function ($httpBackend, LOGIN_REST_URL) {
+            var user = {name: 'name', roles: ['USER']};
+            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
+            authService.authenticate(credentials);
+            $httpBackend.flush();
+
+            expect(authService.isAuthenticated()).toEqual(true);
         }));
 
     });
