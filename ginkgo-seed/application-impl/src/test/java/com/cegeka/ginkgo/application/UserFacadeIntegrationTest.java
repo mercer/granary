@@ -37,4 +37,5 @@ public class UserFacadeIntegrationTest extends IntegrationTest {
         userFacade.getUsers();
     }
 
+
 }

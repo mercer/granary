@@ -18,7 +18,6 @@ public class UserEntityTestFixture {
 
     public static UserEntity aUserEntity() {
         UserEntity entity = new UserEntity();
-        entity.setId(ID);
         entity.setPassword(PASSWORD);
         entity.setEmail(EMAIL);
         entity.addRole(ROLE);
