@@ -109,7 +109,7 @@ public class UserFacadeImpl implements UserFacade {
 
     private void doesTheLoggedInUserHaveTheRightToEdit(UserTo userTo) {
         //obtain the loggedIn spring-security user
-        System.out.println("Principal: "+  SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+       // System.out.println("Principal: "+  SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         //check that the logged in user is either an ADMIN or a regular user that has the sane id
 
     }
