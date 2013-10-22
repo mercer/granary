@@ -62,7 +62,7 @@ describe('service', function () {
 
         it('user from Auth should be initialized; otherwise values used in templates before http calls are finished will not be bounded to scope', function () {
             expect(authService.getAuthenticatedUser()).not.toBeUndefined();
-            expect(authService.getAuthenticatedUser().name).not.toBeUndefined();
+            expect(authService.getAuthenticatedUser().id).not.toBeUndefined();
             expect(authService.getAuthenticatedUser().roles).not.toBeUndefined();
         });
 
@@ -121,8 +121,7 @@ describe('service', function () {
 
         it('should return a copy of user when getAuthenticatedUser is called', inject(function ($httpBackend, REST_URLS) {
             var authenticatedUserBeforeStateChanges = authService.getAuthenticatedUser();
-            var user = {name: 'name', roles: ['USER']};
-            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, '');
             authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();
 
@@ -137,7 +136,7 @@ describe('service', function () {
         });
 
         it('should return true if the user is authenticated', inject(function ($httpBackend, REST_URLS) {
-            var user = {name: 'name', roles: ['USER']};
+            var user = {id: 'id', roles: ['USER']};
             $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
             authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();
