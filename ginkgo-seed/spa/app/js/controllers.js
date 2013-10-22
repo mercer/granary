@@ -44,7 +44,7 @@ function UsersController(Users, $scope) {
 }
 
 
-function UserController(Users, $scope, $routeParams) {
+function UserController(Users, $scope, $routeParams,$location) {
 
     $scope.rolesModel = {'ADMIN': false, 'USER': false};
     function updateRolesViewModelFromUser(model, user) {
@@ -79,6 +79,7 @@ function UserController(Users, $scope, $routeParams) {
         updateUserFromRolesViewModel($scope.user, $scope.rolesModel);
         Users.updateUser($scope.user)
             .then(function () {
+                $location.path('/users');
 
             }, function error() {
 
