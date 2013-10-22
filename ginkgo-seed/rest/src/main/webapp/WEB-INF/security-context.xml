@@ -25,8 +25,8 @@
         <beans:property name="authenticationFailureHandler" ref="restAuthenticationFailureHandler"/>
         <beans:property name="authenticationSuccessHandler" ref="restAuthenticationSuccessHandler"/>
         <beans:property name="filterProcessesUrl" value="/j_spring_security_check"/>
-        <beans:property name="usernameParameter" value="ng-user"/>
-        <beans:property name="passwordParameter" value="ng-password"/>
+        <beans:property name="usernameParameter" value="username"/>
+        <beans:property name="passwordParameter" value="password"/>
         <beans:property name="postOnly" value="true"/>
     </beans:bean>
 

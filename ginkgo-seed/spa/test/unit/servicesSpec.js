@@ -19,9 +19,9 @@ describe('service', function () {
             {id: 1, name: 'user'}
         ];
 
-        it('can get all users given a success rest call', inject(function (Users, $httpBackend, URL_ALL_USERS) {
+        it('can get all users given a success rest call', inject(function (Users, $httpBackend, REST_URLS) {
             var callbacks = jasmine.createSpyObj('callbacks', ['success', 'error']);
-            $httpBackend.expectPOST(URL_ALL_USERS).respond(200, users);
+            $httpBackend.expectPOST(REST_URLS.USERS).respond(200, users);
 
             Users.getUsers(callbacks.success, callbacks.error);
             $httpBackend.flush();
@@ -30,10 +30,10 @@ describe('service', function () {
         }));
 
 
-        it('can get all users given a success rest call', inject(function (Users, $httpBackend, URL_ALL_USERS) {
+        it('can get all users given a success rest call', inject(function (Users, $httpBackend, REST_URLS) {
             var callbacks = jasmine.createSpyObj('callbacks', ['success', 'error']);
             var error = 'error object';
-            $httpBackend.expectPOST(URL_ALL_USERS).respond(400, error);
+            $httpBackend.expectPOST(REST_URLS.USERS).respond(400, error);
 
             Users.getUsers(callbacks.success, callbacks.error);
             $httpBackend.flush();
@@ -46,39 +46,59 @@ describe('service', function () {
 
 
     describe('Auth service', function () {
-        var credentials = {
+        var credentials =  {
             username: 'username',
             password: 'password'
         };
-        var authService;
+        var authService, callbacks;
 
         beforeEach(function () {
             module('userAdmin.services');
             inject(function (Auth) {
                 authService = Auth;
             })
+            callbacks = jasmine.createSpyObj('callbacks', ['success', 'error']);
         });
 
-        it('user from Auth should be initialized; otherwise values used in templates before http calls are finished will not be bounded to scope', inject(function ($httpBackend, LOGIN_REST_URL) {
+        it('user from Auth should be initialized; otherwise values used in templates before http calls are finished will not be bounded to scope', function () {
             expect(authService.getAuthenticatedUser()).not.toBeUndefined();
             expect(authService.getAuthenticatedUser().name).not.toBeUndefined();
             expect(authService.getAuthenticatedUser().roles).not.toBeUndefined();
-        }));
+        });
 
-        it('should call login url', inject(function ($httpBackend, LOGIN_REST_URL) {
-            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, '');
+        it('should call login url when authenticating', inject(function ($httpBackend, REST_URLS) {
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, '');
 
-            authService.authenticate(credentials);
+            authService.authenticate(credentials, callbacks.success, callbacks.error);
 
             $httpBackend.verifyNoOutstandingExpectation();
         }));
 
+        it('should call successCallback on successful authentication ', inject(function ($httpBackend, REST_URLS) {
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, '');
 
-        it('should call login url', inject(function ($httpBackend, LOGIN_REST_URL) {
+            authService.authenticate(credentials, callbacks.success, callbacks.error);
+            $httpBackend.flush();
+
+            expect(callbacks.success).toHaveBeenCalled();
+        }));
+
+        it('should call errorCallback on failed authentication ', inject(function ($httpBackend, REST_URLS) {
+            var responseErrorMessage = 'BAD-CREDENTIALS';
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(401, responseErrorMessage);
+
+            authService.authenticate(credentials, callbacks.success, callbacks.error);
+            $httpBackend.flush();
+
+            expect(callbacks.error).toHaveBeenCalledWith(responseErrorMessage);
+        }));
+
+
+        it('should provide a copy of authenticated user rest response, when getAuthenticatedUser is called', inject(function ($httpBackend, REST_URLS) {
             var user = {name: 'name', roles: ['USER']};
-            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
 
-            authService.authenticate(credentials);
+            authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();
 
             expect(authService.getAuthenticatedUser()).not.toBeUndefined();
@@ -90,20 +110,20 @@ describe('service', function () {
             expect(authService.isAuthorizedToAccess({role: 'ADMIN'})).toBeFalsy();
         });
 
-        it('should return true if user has role for given route', inject(function ($httpBackend, LOGIN_REST_URL) {
+        it('should return true if user has role for given route', inject(function ($httpBackend, REST_URLS) {
             var user = {name: 'name', roles: ['ADMIN']};
-            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
-            authService.authenticate(credentials);
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
+            authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();
 
             expect(authService.isAuthorizedToAccess({role: 'ADMIN'})).toBeTruthy();
         }));
 
-        it('should return a copy of user when getAuthenticatedUser is called', inject(function ($httpBackend, LOGIN_REST_URL) {
+        it('should return a copy of user when getAuthenticatedUser is called', inject(function ($httpBackend, REST_URLS) {
             var authenticatedUserBeforeStateChanges = authService.getAuthenticatedUser();
             var user = {name: 'name', roles: ['USER']};
-            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
-            authService.authenticate(credentials);
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
+            authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();
 
             var authenticatedUserAfterStateChanges = authService.getAuthenticatedUser();
@@ -116,10 +136,10 @@ describe('service', function () {
             expect(authService.isAuthenticated()).toEqual(false);
         });
 
-        it('should return true if the user is authenticated', inject(function ($httpBackend, LOGIN_REST_URL) {
+        it('should return true if the user is authenticated', inject(function ($httpBackend, REST_URLS) {
             var user = {name: 'name', roles: ['USER']};
-            $httpBackend.expectPOST(LOGIN_REST_URL, credentials).respond(200, user);
-            authService.authenticate(credentials);
+            $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
+            authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();
 
             expect(authService.isAuthenticated()).toEqual(true);
@@ -129,8 +149,14 @@ describe('service', function () {
 
 
     describe('CONSTANTS DEFINITIONS', function () {
-        it('URL_ALL_USERS shuold point to "rest/users"', inject(function (URL_ALL_USERS) {
-            expect(URL_ALL_USERS).toBe('../rest/users');
+        /*
+        it('REST_URLS should have a certain structure', inject(function (REST_URLS) {
+            expect(REST_URLS).toEqual({
+                LOGIN: 'http://localhost:8080/rest/j_spring_security_check',
+                USERS: 'http://localhost:8080/rest/users',
+                USER: 'http://localhost:8080/rest/user'
+            });
         }));
+        */
     });
 });

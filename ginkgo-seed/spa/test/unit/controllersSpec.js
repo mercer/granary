@@ -44,15 +44,41 @@ describe('controllers', function () {
 
     describe('LoginDirectiveController', function () {
         var url = 'scope-url-value';
+        var callbacks = {
+            success: function () {
+            },
+            error: function () {
+            }
+        };
+
 
         beforeEach(function () {
             module(function ($provide) {
-                $provide.value('LOGIN_REST_URL', 'LOGIN_REST_URL');
+                //jasmine.createSpyObj('Auth', ['authenticate', 'getAuthenticatedUser', 'isAuthorizedToAccess', 'isAuthenticated'])
+                $provide.factory('Auth', function () {
+                    var credentials = {};
+
+                    function authenticate(credentials, successCallback, errorCallback) {
+                        this.credentials = credentials;
+                        if (credentials.username != '') {
+                            successCallback();
+                        } else {
+                            errorCallback('ERROR-MESSAGE-FROM-REST');
+                        }
+                    }
+
+                    return {
+                        authenticate: authenticate,
+                        credentials: credentials
+                    }
+                });
             });
-            inject(function ($controller, $rootScope, $httpBackend) {
+            inject(function ($controller, $rootScope) {
                 scope = $rootScope.$new();
-                scope.afterLogin = function (route) {}
-                scope.url = url
+                scope.url = url;
+                scope.afterLogin = function () {
+                };
+                scope.alerts = [];
                 scope.username = 'username';
                 scope.password = 'password';
 
@@ -60,31 +86,27 @@ describe('controllers', function () {
             });
         });
 
-        it('should post username/password to url given in scope', inject(function ($httpBackend) {
-            $httpBackend.expectPOST(url, {username: scope.username, password: scope.password}).respond(200, '');
+        it('should delegate authentication to Auth', inject(function (Auth) {
             scope.login();
-            $httpBackend.verifyNoOutstandingExpectation();
+            expect(Auth.credentials).toEqual({username: scope.username, password: scope.password});
         }));
 
-        it('should call redirectTo method given a successful login', inject(function ($httpBackend) {
-            $httpBackend.expectPOST(url, {username: scope.username, password: scope.password}).respond(200, '');
+        it('should call afterLogin method given a successful login', inject(function (Auth) {
             spyOn(scope, 'afterLogin');
 
             scope.login();
-            $httpBackend.flush();
 
+            expect(Auth.credentials).toEqual({username: scope.username, password: scope.password});
             expect(scope.afterLogin).toHaveBeenCalled();
         }));
 
         it('should add error message on scope given a failed login', inject(function ($httpBackend) {
             var responseErrorMessage = 'ERROR-MESSAGE-FROM-REST';
-            $httpBackend.expectPOST(url, {username: scope.username, password: scope.password})
-                .respond(401, responseErrorMessage);
+            scope.username = '';
 
             scope.login();
-            $httpBackend.flush();
 
-            expect(scope.loginErrorMessage).toEqual(responseErrorMessage);
+            expect(scope.alerts).toContain({ type: 'danger', msg: 'Login failed: ' + responseErrorMessage });
         }));
     });
 
