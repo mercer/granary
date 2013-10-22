@@ -51,7 +51,13 @@ angular.module('userAdmin.services', [])
         }
 
         function authenticate(credentials) {
-            $http.post(REST_URLS.LOGIN, credentials)
+            $http.post(REST_URLS.LOGIN, credentials,
+                {
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+                    transformRequest: function(data){
+                        return $.param(data);
+                    }
+                })
                 .success(function (response) {
                     angular.copy(response, user);
                 });
@@ -74,7 +80,7 @@ angular.module('userAdmin.services', [])
 
     .constant('REST_URLS', {
         LOGIN: 'http://localhost:8080/rest/j_spring_security_check',
-        USERS: 'http://localhost:8080/rest/users',
-        USER: 'http://localhost:8080/rest/user'
+        USERS: 'http://localhost:8080/rest/rest/users',
+        USER: 'http://localhost:8080/rest/rest/user'
     });
 
