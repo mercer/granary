@@ -1,5 +1,6 @@
 package com.cegeka.ginkgo.domain.users;
 
+import com.cegeka.ginkgo.application.Role;
 import com.cegeka.ginkgo.application.UserTo;
 import com.google.common.base.Function;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -7,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 import static com.google.common.collect.Collections2.transform;
@@ -20,7 +22,7 @@ public class UserToMapper {
         UserTo userTo = new UserTo();
         userTo.setId(userEntity.getId());
         userTo.setEmail(userEntity.getEmail());
-        userTo.setRoles(userEntity.getRoles());
+        userTo.setRoles( new HashSet<Role>(userEntity.getRoles()));
         userTo.setConfirmed(userEntity.isConfirmed());
         userTo.setFirstName(userEntity.getProfile().getFirstName());
         userTo.setLastName(userEntity.getProfile().getLastName());

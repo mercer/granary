@@ -27,29 +27,25 @@ public class UserFacadeIntegrationTest extends IntegrationTest {
 
     @Test
     public void givenAUserWithAdminRole_thenGetUsersReturnsAListOfUsers() {
-        UserEntity user = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.ADMIN));
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
+        UserEntity user =createUserAndAttachToSecurityContext(Role.ADMIN);
         List<UserTo> users = userFacade.getUsers();
         Assertions.assertThat(users).containsOnly(userToMapper.toTo(user));
     }
 
     @Test(expected = AccessDeniedException.class)
     public void roleAdminIsNeededForListingAllUsers() {
-        userRepository.saveAndFlush(aUserEntity());
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
+        createUserAndAttachToSecurityContext(Role.USER);
         userFacade.getUsers();
     }
 
     @Test(expected = AccessDeniedException.class)
     public void regularUsersShouldNotBeAbleToCreateNewUsers(){
-        UserEntity normalUser = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.USER));
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
+        UserEntity loggedInUser =createUserAndAttachToSecurityContext(Role.USER);
         userFacade.createNewUser(new UserTo());
     }
     @Test
     public void adminsShouldBeAbleToCreateNewUsers(){
-        UserEntity normalUser = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.ADMIN));
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
+        UserEntity admin =createUserAndAttachToSecurityContext(Role.ADMIN);
         UserTo userTo = aUserTo();
 
         Assertions.assertThat(userRepository.findByEmail(userTo.getEmail())).isNull();
@@ -58,16 +54,35 @@ public class UserFacadeIntegrationTest extends IntegrationTest {
     }
 
     @Test
-    public void regularUsersShouldOnlyEditTheirOwnAccount(){
-        UserEntity normalUser = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.USER));
+    public void regularUsersCanEditTheirOwnAccount(){
+        UserEntity loggedInUser = createUserAndAttachToSecurityContext(Role.USER);
+        UserTo loggedInUserTo = new UserToMapper().toTo(loggedInUser);
+        userFacade.updateUser(loggedInUserTo);
+    }
+
+    @Test(expected = AccessDeniedException.class)
+    public void regularUsersCanNotChangeTheirRights(){
+        UserEntity loggedInUser = createUserAndAttachToSecurityContext(Role.USER);
+        UserTo loggedInUserTo = new UserToMapper().toTo(loggedInUser);
+        loggedInUserTo.getRoles().add(Role.ADMIN);
+        userFacade.updateUser(loggedInUserTo);
+    }
+
+
+    @Test(expected = AccessDeniedException.class)
+    public void regularUsersCannotEditOtherAccounts(){
+        UserEntity loggedInUser = createUserAndAttachToSecurityContext(Role.USER);
+        UserEntity otherUser = aUserEntity();
+        otherUser.setEmail("other@email.com");
+        otherUser =  userRepository.saveAndFlush(otherUser);
+        UserTo otherUserTo = new UserToMapper().toTo(otherUser);
+        userFacade.updateUser(otherUserTo);
+    }
+
+    private UserEntity createUserAndAttachToSecurityContext(Role role) {
+        UserEntity normalUser = userRepository.saveAndFlush(aUserEntityWithExtraRole(role));
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
-
-        Assertions.assertThat(normalUser.getEmail()).isEqualTo(EMAIL);
-
-        UserTo userBeingEdited = aUserTo();
-        userBeingEdited.setId(normalUser.getId());
-        userFacade.updateUser(userBeingEdited);
-
+        return normalUser;
     }
 
 

@@ -28,6 +28,16 @@ public class UserToMapperTest {
     }
 
     @Test
+    public void toToUsesASafeCopyOfRoles(){
+        UserEntity given = aUserEntity();
+        UserTo actual = userToMapper.toTo(given);
+        actual.getRoles().add(Role.ADMIN);
+
+        assertThat(actual.getRoles()).isNotEqualTo(given.getRoles());
+
+    }
+
+    @Test
     public void mapperShouldCopyPasswordTo_whenToToWithPasswordIsCalled() {
         UserEntity given = aUserEntity();
 
