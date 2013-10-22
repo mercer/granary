@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -29,13 +30,15 @@ public class UserFacadeImplTest {
     private ConfirmationService confirmationServiceMock;
     @Mock
     private UserToMapper userToMapperMock;
-
+    @Mock
+    private PasswordEncoder passwordEncoderMock;
 
     @Before
     public void setUp() {
         userFacade.setUserRepository(userRepositoryMock);
         userFacade.setConfirmationService(confirmationServiceMock);
         userFacade.setUserToMapper(new UserToMapper());
+        userFacade.setPasswordEncoder(passwordEncoderMock);
     }
 
     @Test
@@ -74,7 +77,7 @@ public class UserFacadeImplTest {
     }
 
     @Test
-    public void givenAnExistingUserEntity_whenUpdateUserToForEntity_thenMaptoExistingUserAndSaveIsCalled(){
+    public void givenAnExistingUserEntity_whenUpdateUserToForEntity_thenMaptoExistingUserAndSaveIsCalled() {
         userFacade.setUserToMapper(userToMapperMock);
         UserEntity userEntity = aUserEntity();
         when(userRepositoryMock.findOne(ID)).thenReturn(userEntity);
@@ -84,7 +87,7 @@ public class UserFacadeImplTest {
         userFacade.updateUser(userTo);
 
         verify(userRepositoryMock).findOne(ID);
-        verify(userToMapperMock).toExistingEntity(userEntity,userTo);
+        verify(userToMapperMock).toExistingEntity(userEntity, userTo);
     }
 
 }
