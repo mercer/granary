@@ -50,7 +50,7 @@ angular.module('userAdmin.services', [])
             return !_.isEmpty(user.name.trim());
         }
 
-        function authenticate(credentials) {
+        function authenticate(credentials, successCallback, errorCallback) {
             $http.post(REST_URLS.LOGIN, credentials,
                 {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
@@ -60,6 +60,9 @@ angular.module('userAdmin.services', [])
                 })
                 .success(function (response) {
                     angular.copy(response, user);
+                    successCallback();
+                }).error(function(error){
+                    errorCallback(error);
                 });
         }
 

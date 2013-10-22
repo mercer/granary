@@ -5,7 +5,7 @@
 angular.module('userAdmin.controllers', [])
     .controller('HomeCtrl', ['$scope', function ($scope) {
     }])
-    .controller('LoginController', ['$scope', LoginController])
+    .controller('LoginController', ['$scope', '$location', LoginController])
     .controller('LoginDirectiveController', ['$scope', 'Auth', LoginDirectiveController])
     .controller('UsersController', ['Users', '$scope', UsersController])
     .controller('UserCtrl', [function () {
