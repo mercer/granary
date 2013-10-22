@@ -80,7 +80,7 @@ public class UserFacadeImpl implements UserFacade {
     @Transactional
     @PreAuthorize("hasAnyRole(T(com.cegeka.ginkgo.application.Role).ADMIN,T(com.cegeka.ginkgo.application.Role).USER )")
     public void updateOrCreateNewUser(UserTo userTo) {
-        UserFacadeImpl userFacadeBean = applicationContext.getBean(this.getClass());
+        UserFacade userFacadeBean = applicationContext.getBean(UserFacade.class);
         if (userTo.getId() == null) {
             userFacadeBean.createNewUser(userTo);
         } else {

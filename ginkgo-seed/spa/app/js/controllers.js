@@ -42,7 +42,7 @@ function UsersController(Users, $scope) {
 
 function UserController(Users, $scope, $routeParams) {
 
-    $scope.rolesModel = {'ROLE_ADMIN': false, 'ROLE_USER': false};
+    $scope.rolesModel = {'ADMIN': false, 'USER': false};
     function updateRolesViewModelFromUser(model, user) {
         user.roles.forEach(function (role) {
             model[role] = true;
