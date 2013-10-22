@@ -98,6 +98,10 @@ public class UserFacadeImpl implements UserFacade {
         userRepository.save(userEntity);
     }
 
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public void setUserToMapper(UserToMapper userToMapper) {
         this.userToMapper = userToMapper;
     }
