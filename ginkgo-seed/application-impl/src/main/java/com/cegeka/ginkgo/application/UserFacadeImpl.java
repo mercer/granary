@@ -1,5 +1,6 @@
 package com.cegeka.ginkgo.application;
 
+import com.cegeka.ginkgo.application.security.CustomUserDetails;
 import com.cegeka.ginkgo.domain.confirmation.ConfirmationService;
 import com.cegeka.ginkgo.domain.users.UserEntity;
 import com.cegeka.ginkgo.domain.users.UserProfileMapper;
@@ -7,6 +8,9 @@ import com.cegeka.ginkgo.domain.users.UserRepository;
 import com.cegeka.ginkgo.domain.users.UserToMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,13 +86,18 @@ public class UserFacadeImpl implements UserFacade {
         }
     }
 
+    @Override
+    @Transactional
+    @PreAuthorize("hasRole(T(com.cegeka.ginkgo.application.Role).ADMIN)")
     public void createNewUser(UserTo userTo) {
         UserEntity userEntity = userToMapper.toNewEntity(userTo);
         userRepository.save(userEntity);
 
     }
 
+    @Override
     public void updateUser(UserTo userTo) {
+        doesTheLoggedInUserHaveTheRightToEdit(userTo);
         UserEntity userEntity = userRepository.findOne(userTo.getId());
         if (userEntity != null) {
             userToMapper.toExistingEntity(userEntity, userTo);
@@ -96,6 +105,13 @@ public class UserFacadeImpl implements UserFacade {
             throw new IllegalArgumentException("invalid user id");
         }
         userRepository.save(userEntity);
+    }
+
+    private void doesTheLoggedInUserHaveTheRightToEdit(UserTo userTo) {
+        //obtain the loggedIn spring-security user
+        System.out.println("Principal: "+  SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        //check that the logged in user is either an ADMIN or a regular user that has the sane id
+
     }
 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {

@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import javax.annotation.Resource;
 import java.util.List;
 
+import static com.cegeka.ginkgo.application.UserToTestFixture.*;
 import static com.cegeka.ginkgo.domain.user.UserEntityTestFixture.*;
 
 public class UserFacadeIntegrationTest extends IntegrationTest {
@@ -37,6 +38,36 @@ public class UserFacadeIntegrationTest extends IntegrationTest {
         userRepository.saveAndFlush(aUserEntity());
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
         userFacade.getUsers();
+    }
+
+    @Test(expected = AccessDeniedException.class)
+    public void regularUsersShouldNotBeAbleToCreateNewUsers(){
+        UserEntity normalUser = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.USER));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
+        userFacade.createNewUser(new UserTo());
+    }
+    @Test
+    public void adminsShouldBeAbleToCreateNewUsers(){
+        UserEntity normalUser = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.ADMIN));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
+        UserTo userTo = aUserTo();
+
+        Assertions.assertThat(userRepository.findByEmail(userTo.getEmail())).isNull();
+        userFacade.createNewUser(userTo);
+        Assertions.assertThat(userRepository.findByEmail(userTo.getEmail())).isNotNull();
+    }
+
+    @Test
+    public void regularUsersShouldOnlyEditTheirOwnAccount(){
+        UserEntity normalUser = userRepository.saveAndFlush(aUserEntityWithExtraRole(Role.USER));
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
+
+        Assertions.assertThat(normalUser.getEmail()).isEqualTo(EMAIL);
+
+        UserTo userBeingEdited = aUserTo();
+        userBeingEdited.setId(normalUser.getId());
+        userFacade.updateUser(userBeingEdited);
+
     }
 
 
