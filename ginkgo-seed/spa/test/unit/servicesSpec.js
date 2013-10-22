@@ -62,7 +62,7 @@ describe('service', function () {
 
         it('user from Auth should be initialized; otherwise values used in templates before http calls are finished will not be bounded to scope', function () {
             expect(authService.getAuthenticatedUser()).not.toBeUndefined();
-            expect(authService.getAuthenticatedUser().id).not.toBeUndefined();
+            expect(authService.getAuthenticatedUser().userId).not.toBeUndefined();
             expect(authService.getAuthenticatedUser().roles).not.toBeUndefined();
         });
 
@@ -95,7 +95,7 @@ describe('service', function () {
 
 
         it('should provide a copy of authenticated user rest response, when getAuthenticatedUser is called', inject(function ($httpBackend, REST_URLS) {
-            var user = {name: 'name', roles: ['USER']};
+            var user = {userId: 'userId', roles: ['USER']};
             $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
 
             authService.authenticate(credentials, callbacks.success, callbacks.error);
@@ -111,7 +111,7 @@ describe('service', function () {
         });
 
         it('should return true if user has role for given route', inject(function ($httpBackend, REST_URLS) {
-            var user = {name: 'name', roles: ['ADMIN']};
+            var user = {userId: 'userId', roles: ['ADMIN']};
             $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
             authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();
@@ -136,7 +136,7 @@ describe('service', function () {
         });
 
         it('should return true if the user is authenticated', inject(function ($httpBackend, REST_URLS) {
-            var user = {id: 'id', roles: ['USER']};
+            var user = {userId: 'userId', roles: ['USER']};
             $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
             authService.authenticate(credentials, callbacks.success, callbacks.error);
             $httpBackend.flush();

@@ -40,14 +40,14 @@ angular.module('userAdmin.services', [])
     }])
 
     .factory('Auth', ['$http', 'REST_URLS', function ($http, REST_URLS) {
-        var user = {id: '', roles: []};
+        var user = {userId: '', roles: []};
 
         function isAuthorizedToAccess(route) {
             return _.indexOf(user.roles, route.role) !== -1;
         }
 
         function isAuthenticated() {
-            return !_.isEmpty(user.id.trim());
+            return !_.isEmpty(user.userId.trim());
         }
 
         function authenticate(credentials, successCallback, errorCallback) {
