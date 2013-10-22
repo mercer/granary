@@ -22,11 +22,15 @@ function LoginDirectiveController($scope, Auth) {
     $scope.login = function () {
         var credentials = {username: $scope.username, password: $scope.password};
         Auth.authenticate(credentials, function () {
-                $scope.afterLogin();
-            }, function (error) {
-                $scope.alerts.push({ type: 'danger', msg: 'Login failed: ' + error });
-            });
+            $scope.afterLogin();
+        }, function (error) {
+            $scope.alerts.push({ type: 'danger', msg: 'Login failed: ' + error });
+        });
     };
+
+    $scope.isAuthenticated = function () {
+        return Auth.isAuthenticated();
+    }
 }
 
 function UsersController(Users, $scope) {
