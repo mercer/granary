@@ -1,5 +1,7 @@
 package com.cegeka.ginkgo.application;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import java.util.List;
 
 public interface UserFacade {
@@ -16,4 +18,8 @@ public interface UserFacade {
     UserTo getUser(String userId);
 
     void updateOrCreateNewUser(UserTo userTO);
+
+    void createNewUser(UserTo userTo);
+
+    void updateUser(UserTo userTo);
 }

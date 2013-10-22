@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -80,10 +82,14 @@ public class UserFacadeImplTest {
     public void givenAnExistingUserEntity_whenUpdateUserToForEntity_thenMaptoExistingUserAndSaveIsCalled() {
         userFacade.setUserToMapper(userToMapperMock);
         UserEntity userEntity = aUserEntity();
+        userEntity.setId(ID);
         when(userRepositoryMock.findOne(ID)).thenReturn(userEntity);
+        when(userRepositoryMock.findByEmail(EMAIL)).thenReturn(userEntity);
 
         UserTo userTo = new UserToMapper().toTo(userEntity);
         userTo.setId(ID);
+
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(EMAIL, PASSWORD));
         userFacade.updateUser(userTo);
 
         verify(userRepositoryMock).findOne(ID);

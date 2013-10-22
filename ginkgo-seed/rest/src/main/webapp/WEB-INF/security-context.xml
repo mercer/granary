@@ -9,7 +9,7 @@
     <http entry-point-ref="restAuthenticationEntryPoint" use-expressions="true" >
         <intercept-url pattern="/rest/register_user" access="true"  />
         <intercept-url pattern="/rest/confirm_token/**" access="true" />
-        <intercept-url pattern="/rest/**" access="hasRole('ROLE_USER')"  />
+        <intercept-url pattern="/rest/**" access="hasRole(T(com.cegeka.ginkgo.application.Role).USER)"  />
 
         <custom-filter ref="loginFilter" position="FORM_LOGIN_FILTER"/>
 

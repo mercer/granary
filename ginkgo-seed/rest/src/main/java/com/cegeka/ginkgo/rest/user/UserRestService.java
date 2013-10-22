@@ -60,7 +60,7 @@ public class UserRestService {
             userFacade.updateOrCreateNewUser(userTO);
         } catch (Exception e) {
             logger.error(THERE_WAS_AN_ERROR_SAVING_THE_USER, e);
-            new ResponseEntity<String>(THERE_WAS_AN_ERROR_SAVING_THE_USER, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<String>(THERE_WAS_AN_ERROR_SAVING_THE_USER + e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<String>("success", HttpStatus.OK);
     }

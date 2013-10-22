@@ -6,7 +6,10 @@ import com.cegeka.ginkgo.domain.users.UserProfileMapper;
 import com.cegeka.ginkgo.domain.users.UserRepository;
 import com.cegeka.ginkgo.domain.users.UserToMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +24,8 @@ public class UserFacadeImpl implements UserFacade {
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
+    ApplicationContext applicationContext;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     private ConfirmationService confirmationService;
@@ -31,7 +36,7 @@ public class UserFacadeImpl implements UserFacade {
     public void registerUser(UserTo user) {
         UserEntity userEntity = userToMapper.toNewEntity(user);
         userEntity.addRole(USER);
-        userEntity.setPassword( passwordEncoder.encode(user.getPassword()));
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.saveAndFlush(userEntity);
         confirmationService.sendConfirmationEmailTo(userEntity);
     }
@@ -73,22 +78,28 @@ public class UserFacadeImpl implements UserFacade {
 
     @Override
     @Transactional
-    @PreAuthorize("hasRole(T(com.cegeka.ginkgo.application.Role).ADMIN)")
+    @PreAuthorize("hasAnyRole(T(com.cegeka.ginkgo.application.Role).ADMIN,T(com.cegeka.ginkgo.application.Role).USER )")
     public void updateOrCreateNewUser(UserTo userTo) {
+        UserFacade userFacadeBean = applicationContext.getBean(UserFacade.class);
         if (userTo.getId() == null) {
-            createNewUser(userTo);
+            userFacadeBean.createNewUser(userTo);
         } else {
-            updateUser(userTo);
+            userFacadeBean.updateUser(userTo);
         }
     }
 
+    @Override
+    @Transactional
+    @PreAuthorize("hasRole(T(com.cegeka.ginkgo.application.Role).ADMIN)")
     public void createNewUser(UserTo userTo) {
         UserEntity userEntity = userToMapper.toNewEntity(userTo);
         userRepository.save(userEntity);
 
     }
 
+    @Override
     public void updateUser(UserTo userTo) {
+        checkThatLoggedInUserHasTheRightToEdit(userTo);
         UserEntity userEntity = userRepository.findOne(userTo.getId());
         if (userEntity != null) {
             userToMapper.toExistingEntity(userEntity, userTo);
@@ -96,6 +107,30 @@ public class UserFacadeImpl implements UserFacade {
             throw new IllegalArgumentException("invalid user id");
         }
         userRepository.save(userEntity);
+    }
+
+    private void checkThatLoggedInUserHasTheRightToEdit(UserTo userTo) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (email == null) {
+            throw new AccessDeniedException("no user is logged in");
+        }
+        UserEntity loggedInUser = userRepository.findByEmail(email);
+        if (loggedInUser == null) {
+            throw new AccessDeniedException("Could not find user: " + email + " this is unexpeted...");
+        }
+
+        if (loggedInUser.getRoles().contains(Role.ADMIN)) {
+            return;
+        } else if (loggedInUser.getRoles().contains(Role.USER) && loggedInUser.getId().equals(userTo.getId())) {
+            if(loggedInUser.getRoles().equals(userTo.getRoles())){
+                return;
+            }else{
+                throw new AccessDeniedException("You are not allowed to change roles");
+            }
+        } else {
+            throw new AccessDeniedException("You are not logged in or you are trying to edit another user's profile");
+        }
+
     }
 
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
