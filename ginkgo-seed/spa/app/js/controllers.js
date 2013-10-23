@@ -6,8 +6,8 @@ angular.module('userAdmin.controllers', [])
     .controller('HomeCtrl', ['$scope', function ($scope) {
     }])
     .controller('LoginController', ['$scope', '$location', LoginController])
-    .controller('LoginDirectiveController', ['$scope', 'Auth', LoginDirectiveController])
-    .controller('UsersController', ['Users', '$scope', UsersController])
+    .controller('LoginDirectiveController', ['$rootScope', '$scope', 'Auth', LoginDirectiveController])
+    .controller('UsersController', ['$rootScope', 'Users', '$scope', UsersController])
     .controller('UserCtrl', [function () {
     }]);
 
@@ -18,13 +18,13 @@ function LoginController($scope, $location) {
     }
 }
 
-function LoginDirectiveController($scope, Auth) {
+function LoginDirectiveController($rootScope, $scope, Auth) {
     $scope.login = function () {
         var credentials = {username: $scope.username, password: $scope.password};
         Auth.authenticate(credentials, function () {
             $scope.afterLogin();
         }, function (error) {
-            $scope.alerts.push({ type: 'danger', msg: 'Login failed: ' + error });
+            $rootScope.alerts.push({ type: 'danger', msg: 'Login failed: ' + error });
         });
     };
 
@@ -33,18 +33,18 @@ function LoginDirectiveController($scope, Auth) {
     }
 }
 
-function UsersController(Users, $scope) {
+function UsersController($rootScope, Users, $scope) {
     Users.getUsers(
         function success(responseData) {
             $scope.users = responseData;
         },
         function error(error) {
-            $scope.alerts.push({ type: 'danger', msg: 'There was an error: ' + error });
+            $rootScope.alerts.push({ type: 'danger', msg: 'There was an error: ' + error });
         });
 }
 
 
-function UserController(Users, $scope, $routeParams,$location) {
+function UserController(Users, $scope, $routeParams, $location) {
 
     $scope.rolesModel = {'ADMIN': false, 'USER': false};
     function updateRolesViewModelFromUser(model, user) {
