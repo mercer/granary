@@ -4,3 +4,5 @@
 *.orig
 *.log
 test_out
+logs/*
+!.gitkeep
