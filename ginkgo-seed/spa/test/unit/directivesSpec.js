@@ -42,7 +42,6 @@ describe('directives', function () {
             formElement = angular.element("<login url='" + loginUrl + "' after-login=\"doAfterLogin()\"></login>");
             compiledElement = $compile(formElement)(scope);
             scope = compiledElement.scope();
-
         }));
 
 

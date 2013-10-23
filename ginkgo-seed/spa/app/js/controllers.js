@@ -7,7 +7,7 @@ angular.module('userAdmin.controllers', [])
     }])
     .controller('LoginController', ['$scope', '$location', LoginController])
     .controller('LoginDirectiveController', ['$rootScope', '$scope', 'Auth', LoginDirectiveController])
-    .controller('UsersController', ['$rootScope', 'Users', '$scope', UsersController])
+    .controller('UsersController', ['$rootScope','Users', '$scope', UsersController])
     .controller('UserCtrl', [function () {
     }]);
 
@@ -44,7 +44,7 @@ function UsersController($rootScope, Users, $scope) {
 }
 
 
-function UserController(Users, $scope, $routeParams, $location) {
+function UserController(Users, $scope, $routeParams,$location) {
 
     $scope.rolesModel = {'ADMIN': false, 'USER': false};
     function updateRolesViewModelFromUser(model, user) {
