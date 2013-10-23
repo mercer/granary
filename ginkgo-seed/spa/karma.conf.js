@@ -1,6 +1,6 @@
 module.exports = function (config) {
     config.set({
-        basePath: '../',
+        basePath: '',
 
         files: [
             'app/bower_components/jquery/jquery.min.js',
