@@ -6,3 +6,7 @@
 test_out
 logs/*
 !.gitkeep
+node_modules
+dist
+.tmp
+.sass-cache
