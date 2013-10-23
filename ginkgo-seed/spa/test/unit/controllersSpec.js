@@ -74,14 +74,13 @@ describe('controllers', function () {
                 });
             });
             inject(function ($controller, $rootScope) {
+                $rootScope.alerts = [];
                 scope = $rootScope.$new();
                 scope.url = url;
                 scope.afterLogin = function () {
                 };
-                scope.alerts = [];
                 scope.username = 'username';
                 scope.password = 'password';
-
                 $controller('LoginDirectiveController', {$scope: scope});
             });
         });
