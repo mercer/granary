@@ -10,14 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+
 public class RestAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException, ServletException {
         if (exception instanceof DisabledException) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Email not yet confirmed");
+            response.setStatus(SC_UNAUTHORIZED);
+            response.getWriter().write("Email not yet confirmed");
         } else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Bad credentials");
+            response.setStatus(SC_UNAUTHORIZED);
+            response.getWriter().write("Bad credentials");
         }
     }
 }
