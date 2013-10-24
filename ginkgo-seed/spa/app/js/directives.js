@@ -11,6 +11,7 @@ angular.module('userAdmin.directives', []).
         return {
             restrict: 'E',
             replace: true,
+            controller: LoginDirectiveController,
             templateUrl: 'directive/login.html',
             scope: {
                 url: "@restUrl",
