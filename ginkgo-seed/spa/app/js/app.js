@@ -9,6 +9,12 @@ angular.module('userAdmin', ['ngRoute', 'ui.bootstrap', 'userAdmin.filters', 'us
             .when('/user/:id', {templateUrl: 'partials/user.html', controller: 'UserController', role: 'ADMIN'})
             .otherwise({redirectTo: '/'});
     }])
+    .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        $httpProvider.defaults.withCredentials = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+    ])
     .run(function ($rootScope, $location, Auth) {
         $rootScope.alerts = [];
         $rootScope.closeAlert = function (index) {
