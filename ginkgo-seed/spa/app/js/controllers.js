@@ -31,6 +31,10 @@ function LoginDirectiveController($rootScope, $scope, Auth) {
     $scope.isAuthenticated = function () {
         return Auth.isAuthenticated();
     }
+
+    $scope.logout = function (){
+        Auth.logout();
+    }
 }
 
 function UsersController($rootScope, Users, $scope) {

@@ -72,11 +72,16 @@ angular.module('userAdmin.services', [])
             return copiedUser;
         }
 
+        function logout(){
+            user.userId = '';
+        }
+
         return {
             authenticate: authenticate,
             getAuthenticatedUser: getAuthenticatedUser,
             isAuthorizedToAccess: isAuthorizedToAccess,
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            logout: logout
         };
     }])
 
