@@ -32,6 +32,10 @@
     <filter>
         <filter-name>cors</filter-name>
         <filter-class>com.zhentao.CorsFilter</filter-class>
+        <init-param>
+            <param-name>allow-origin</param-name>
+            <param-value>http://localhost:8081</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>cors</filter-name>
@@ -46,8 +50,6 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
-
 
     <servlet>
         <servlet-name>rest</servlet-name>
