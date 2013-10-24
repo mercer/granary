@@ -55,6 +55,17 @@
                                     <arg line="npm install"/>
                                 </exec>
                                 <echo>
+                                    <!-- BOWER  -->
+                                </echo>
+                                <exec executable="cmd" dir="${project.basedir}"
+                                      osfamily="windows" resultproperty="cmdresult">
+                                    <arg line="/c bower install --no-color"/>
+                                </exec>
+                                <exec executable="bash" dir="${project.basedir}"
+                                      osfamily="unix" resultproperty="cmdresult">
+                                    <arg line="bower install --no-color"/>
+                                </exec>
+                                <echo>
                                     <!-- GRUNT  -->
                                 </echo>
                                 <exec executable="cmd" dir="${project.basedir}"
