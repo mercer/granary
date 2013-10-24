@@ -25,8 +25,7 @@ public class CorsFilter extends OncePerRequestFilter {
             replyThatCorsIsEnabled(response);
             return;
         }else if(regularCorsCall(request)){
-            response.addHeader("Access-Control-Allow-Origin", allowOrigin);
-            response.addHeader("Access-Control-Allow-Credentials","true");
+            allowCredentialsFromOrigin(response);
         }
         filterChain.doFilter(request, response);
 
@@ -34,12 +33,16 @@ public class CorsFilter extends OncePerRequestFilter {
 
     private void replyThatCorsIsEnabled(HttpServletResponse response) {
         // CORS "pre-flight" request
-        response.addHeader("Access-Control-Allow-Origin", allowOrigin);
-        response.addHeader("Access-Control-Allow-Credentials","true");
+        allowCredentialsFromOrigin(response);
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
         response.addHeader("Access-Control-Allow-Headers", "Content-Type");
         response.addHeader("Access-Control-Max-Age", "1");// 30 min
         response.setStatus(200);
+    }
+
+    private void allowCredentialsFromOrigin(HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", allowOrigin);
+        response.addHeader("Access-Control-Allow-Credentials","true");
     }
 
     private boolean regularCorsCall(HttpServletRequest request) {
