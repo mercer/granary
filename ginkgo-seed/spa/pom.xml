@@ -35,9 +35,7 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <target name="building">
-                                <echo>
-                                    <!--  NPM INSTALL  -->
-                                </echo>
+                                <echo>Starting npm install ...</echo>
                                 <exec executable="cmd" dir="${project.basedir}"
                                       osfamily="windows" failonerror="true">
                                     <arg line="/c npm config set color false"/>
@@ -63,36 +61,25 @@
                                     <arg line="npm install"/>
                                 </exec>
 
-                                <echo>
-                                    <!-- BOWER  -->
-                                </echo>
+                                <echo>Starting bower install ...</echo>
                                 <exec executable="cmd" dir="${project.basedir}"
-                                      osfamily="windows" resultproperty="cmdresult">
+                                      osfamily="windows" failonerror="true">
                                     <arg line="/c bower install --no-color"/>
                                 </exec>
                                 <exec executable="bash" dir="${project.basedir}"
-                                      osfamily="unix" resultproperty="cmdresult">
+                                      osfamily="unix" failonerror="true">
                                     <arg line="bower install --no-color"/>
                                 </exec>
-                                <echo>
-                                    <!-- GRUNT  -->
-                                </echo>
+
+                                <echo>Starting grunt ...</echo>
                                 <exec executable="cmd" dir="${project.basedir}"
-                                      osfamily="windows" resultproperty="cmdresult">
+                                      osfamily="windows" failonerror="true">
                                     <arg line="/c grunt --no-color "/>
                                 </exec>
                                 <exec executable="bash" dir="${project.basedir}"
-                                      osfamily="unix" resultproperty="cmdresult">
+                                      osfamily="unix" failonerror="true">
                                     <arg line="grunt --no-color"/>
                                 </exec>
-
-
-
-                                <condition property="cmdsuccess">
-                                    <equals arg1="${cmdresult}" arg2="0"/>
-                                </condition>
-                                <echo>The result of the build: ${cmdresult}</echo>
-                                <fail unless="cmdsuccess"/>
                             </target>
                         </configuration>
                         <goals>
