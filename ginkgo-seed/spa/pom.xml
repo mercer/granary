@@ -48,20 +48,21 @@
                                 </exec>
                                 <exec executable="cmd" dir="${project.basedir}"
                                       osfamily="windows" failonerror="true">
-                                    <arg line="/c npm install"/>
-                                </exec>
-                                <exec executable="bash" dir="${project.basedir}"
-                                      osfamily="unix" failonerror="true">
-                                    <arg line="npm install"/>
-                                </exec>
-                                <exec executable="cmd" dir="${project.basedir}"
-                                      osfamily="windows" failonerror="true">
                                     <arg line="/c npm install -g bower grunt-cli"/>
                                 </exec>
                                 <exec executable="bash" dir="${project.basedir}"
                                       osfamily="unix" failonerror="true">
                                     <arg line="npm install -g bower grunt-cli"/>
                                 </exec>
+                                <exec executable="cmd" dir="${project.basedir}"
+                                      osfamily="windows" failonerror="true">
+                                    <arg line="/c npm install"/>
+                                </exec>
+                                <exec executable="bash" dir="${project.basedir}"
+                                      osfamily="unix" failonerror="true">
+                                    <arg line="npm install"/>
+                                </exec>
+
                                 <echo>
                                     <!-- BOWER  -->
                                 </echo>
