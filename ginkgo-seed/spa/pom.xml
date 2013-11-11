@@ -79,19 +79,19 @@
                                 </echo>
                                 <exec executable="cmd" dir="${project.basedir}"
                                       osfamily="windows" resultproperty="cmdresult">
-                                    <arg line="/c grunt --no-color > grunt.status "/>
+                                    <arg line="/c grunt --no-color "/>
                                 </exec>
                                 <exec executable="bash" dir="${project.basedir}"
                                       osfamily="unix" resultproperty="cmdresult">
-                                    <arg line="grunt --no-color > grunt.status"/>
+                                    <arg line="grunt --no-color"/>
                                 </exec>
-                                <loadfile property="grunt.status"
-                                          srcFile="grunt.status"/>
-                                <echo>${grunt.status}</echo>
-                                <delete file="grunt.status" quiet="true"/>
+
+
+
                                 <condition property="cmdsuccess">
                                     <equals arg1="${cmdresult}" arg2="0"/>
                                 </condition>
+                                <echo>The result of the build: ${cmdresult}</echo>
                                 <fail unless="cmdsuccess"/>
                             </target>
                         </configuration>
