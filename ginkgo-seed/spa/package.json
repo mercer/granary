@@ -37,8 +37,9 @@
     "karma-phantomjs-launcher": "~0.1.0",
     "karma": "~0.10.2",
     "karma-ng-html2js-preprocessor": "~0.1.0",
-	"karma-junit-reporter": "~0.1.0",
-	"jpegtran-bin": "0.2.0"
+    "karma-junit-reporter": "~0.1.0",
+    "karma-coverage": "~0.1.2",
+    "jpegtran-bin": "0.2.0"
   },
   "engines": {
     "node": ">=0.8.0"

@@ -18,7 +18,8 @@ module.exports = function (config) {
         ],
 
         preprocessors: {
-            'app/directive/**/*.html': ['ng-html2js']
+            'app/directive/**/*.html': ['ng-html2js'],
+            'app/js/*.js': 'coverage'
         },
 
         autoWatch: true,
@@ -32,12 +33,20 @@ module.exports = function (config) {
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-jasmine',
-            'karma-ng-html2js-preprocessor'
+            'karma-ng-html2js-preprocessor',
+            'karma-coverage'
         ],
 
         junitReporter: {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
+        },
+
+        reporters:  ['coverage'],
+
+        coverageReporter: {
+            type : 'lcov',
+            dir : 'coverage/'
         }
     })
 }
