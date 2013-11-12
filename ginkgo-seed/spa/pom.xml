@@ -22,6 +22,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <warSourceDirectory>app</warSourceDirectory>
                     <webXml>app/WEB-INF/web.xml</webXml>
@@ -91,6 +92,7 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
             </plugin>
         </plugins>
     </build>
