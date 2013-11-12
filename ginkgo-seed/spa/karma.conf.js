@@ -23,6 +23,8 @@ module.exports = function (config) {
         },
 
         autoWatch: true,
+        
+        port: 9999,
 
         frameworks: ['jasmine'],
 
