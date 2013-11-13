@@ -1,4 +1,4 @@
-package com.zhentao;
+package com.cegeka.ginkgo.application.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class CorsFilter extends OncePerRequestFilter {
+public class CrossDomainRequestFilter extends OncePerRequestFilter {
 
-    private static Logger logger = LoggerFactory.getLogger(CorsFilter.class);
+    private static Logger logger = LoggerFactory.getLogger(CrossDomainRequestFilter.class);
 
     private FilterConfig filterConfig = null;
     private String allowOrigin;
