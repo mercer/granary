@@ -31,10 +31,10 @@
 
     <filter>
         <filter-name>cors</filter-name>
-        <filter-class>com.zhentao.CorsFilter</filter-class>
+        <filter-class>com.cegeka.ginkgo.application.security.CrossDomainRequestFilter</filter-class>
         <init-param>
             <param-name>allow-origin</param-name>
-            <param-value>http://localhost:8081</param-value>
+            <param-value>http://localhost:8000</param-value>
         </init-param>
     </filter>
     <filter-mapping>

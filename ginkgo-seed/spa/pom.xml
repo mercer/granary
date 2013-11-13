@@ -16,9 +16,11 @@
 
     <properties>
         <test.browsers>Firefox</test.browsers>
+        <sonar.language>js</sonar.language>
     </properties>
 
     <build>
+        <sourceDirectory>app/js</sourceDirectory>
         <plugins>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
