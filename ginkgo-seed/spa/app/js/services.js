@@ -39,8 +39,12 @@ angular.module('userAdmin.services', [])
         };
     }])
 
-    .factory('Auth', ['$http', 'REST_URLS', function ($http, REST_URLS) {
+    .factory('Auth', ['$http', 'REST_URLS','$cookieStore', function ($http, REST_URLS,$cookieStore) {
         var user = {userId: '', roles: []};
+
+        if ( $cookieStore.get('user') !== undefined) {
+            angular.extend(user, $cookieStore.get('user'));
+        }
 
         function isAuthorizedToAccess(route) {
             return _.indexOf(user.roles, route.role) !== -1;
@@ -60,6 +64,7 @@ angular.module('userAdmin.services', [])
                 })
                 .success(function (response) {
                     angular.copy(response, user);
+                    $cookieStore.put('user', user);
                     successCallback();
                 }).error(function(error){
                     errorCallback(error);
