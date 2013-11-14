@@ -4,7 +4,7 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>Rechtwijzer Admin</display-name>
+    <display-name>Ginkgo Frontend</display-name>
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>

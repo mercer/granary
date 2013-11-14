@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EmailComposerTest {
 
-    public static final String SUBJECT = "Welcome to rechtwijzer, ${user_name}";
+    public static final String SUBJECT = "Welcome to ginkgo, ${user_name}";
     public static final String BODY = "Hello, ${user_name}";
     public static final String FROM_EMAIL_ADDRESS = "test@test123.com";
     public static final String TO_EMAIL_ADDRESS = "to@test123.com";

@@ -4,7 +4,7 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>Rechtwijzer</display-name>
+    <display-name>Ginkgo REST backend</display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
