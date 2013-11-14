@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<archetype-descriptor xsi:schemaLocation="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0 http://maven.apache.org/xsd/archetype-descriptor-1.0.0.xsd" name="ginkgo-seed"
+    xmlns="http://maven.apache.org/plugins/maven-archetype-plugin/archetype-descriptor/1.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	
+		<requiredProperties>
+        <requiredProperty key="applicationUrl">
+            <defaultValue>${applicationUrl}</defaultValue>
+        </requiredProperty>
+    </requiredProperties>
+	
+  <fileSets>
+      <fileSet encoding="UTF-8">
+      <directory></directory>
+      <includes>
+        <include>readme.MD</include>
+      </includes>
+    </fileSet>
+  </fileSets>
+  <modules>
+    <module id="application-api" dir="application-api" name="application-api">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        </fileSets>
+    </module>
+	
+    <module id="application-impl" dir="application-impl" name="application-impl">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/main/resources</directory>
+          <includes>
+            <include>**/*.xml</include>
+            <include>**/*.properties</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory>src/main/resources</directory>
+          <includes>
+            <include>**/*.sql</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/test/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/test/resources</directory>
+          <includes>
+            <include>**/*.xml</include>
+            <include>**/*.properties</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory>src/test/resources</directory>
+          <includes>
+            <include>**/*.ftl</include>
+          </includes>
+        </fileSet>
+       </fileSets>
+    </module>
+	
+    <module id="rest" dir="rest" name="rest">
+      <fileSets>
+        <fileSet filtered="true" packaged="true" encoding="UTF-8">
+          <directory>src/main/java</directory>
+          <includes>
+            <include>**/*.java</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>src/main/webapp</directory>
+          <includes>
+            <include>**/*.xml</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+	
+    <module id="spa" dir="spa" name="spa">
+      <fileSets>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>app/lib</directory>
+          <includes>
+            <include>**/*.txt</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>app/WEB-INF</directory>
+          <includes>
+            <include>**/*.xml</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>test/e2e</directory>
+          <includes>
+            <include>**/*.html</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>test/lib</directory>
+          <includes>
+            <include>**/*.txt</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>app/partials</directory>
+          <includes>
+            <include>**/*.html</include>
+          </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>app/directive</directory>
+          <includes>
+            <include>**/*.html</include>
+          </includes>
+        </fileSet>
+       
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>app</directory>
+          <includes>
+            <include>**/*.html</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet filtered="true" encoding="UTF-8">
+          <directory>test_out</directory>
+          <includes>
+            <include>**/*.xml</include>
+          </includes>
+        </fileSet>
+       
+        <fileSet encoding="UTF-8">
+          <directory>app/lib</directory>
+          <includes>
+            <include>**/*.json</include>
+            <include>**/*.js</include>
+            <include>**/*.map</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory>app/css</directory>
+          <includes>
+            <include>**/*.css</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet encoding="UTF-8">
+          <directory>scripts</directory>
+          <includes>
+            <include>**/*.js</include>
+            <include>**/*.bat</include>
+            <include>**/*.sh</include>
+            <include>**/*.rb</include>
+          </includes>
+        </fileSet>
+       
+        
+        
+        <fileSet encoding="UTF-8">
+          <directory>app/js</directory>
+          <includes>
+            <include>**/*.js</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet encoding="UTF-8">
+          <directory>test/e2e</directory>
+          <includes>
+            <include>**/*.js</include>
+          </includes>
+        </fileSet>
+        <fileSet encoding="UTF-8">
+          <directory>test/lib</directory>
+          <includes>
+            <include>**/*.js</include>
+          </includes>
+        </fileSet>
+       
+        <fileSet encoding="UTF-8">
+          <directory>app/img</directory>
+          <includes>
+            <include>**/*.gitkeep</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet encoding="UTF-8">
+          <directory>logs</directory>
+          <includes>
+            <include>**/*.gitkeep</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet encoding="UTF-8">
+          <directory>test/unit</directory>
+          <includes>
+            <include>**/*.js</include>
+          </includes>
+        </fileSet>
+        
+        <fileSet encoding="UTF-8">
+          <directory></directory>
+          <includes>
+            <include>.bowerrc</include>
+            <include>.editorconfig</include>
+            <include>.jshintrc</include>
+            <include>.travis.yml</include>
+            <include>bower.json</include>
+            <include>Gruntfile.js</include>
+            <include>karma-e2e.conf.js</include>
+            <include>karma.conf.js</include>
+            <include>package.json</include>
+            <include>spa.iml</include>
+          </includes>
+        </fileSet>
+      </fileSets>
+    </module>
+	
+  </modules>
+</archetype-descriptor>

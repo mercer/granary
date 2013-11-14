@@ -12,4 +12,4 @@ dist
 .tmp
 .sass-cache
 coverage
-archetype.properties
+*.class
