@@ -39,12 +39,12 @@ angular.module('userAdmin.services', [])
     };
   }])
 
-  .factory('Auth', ['$http', 'REST_URLS','$cookieStore', function ($http, REST_URLS,$cookieStore) {
+  .factory('Auth', ['$http', 'REST_URLS', '$cookieStore', function ($http, REST_URLS, $cookieStore) {
     var user = {userId: '', roles: []};
 
-        if ( $cookieStore.get('user') !== undefined) {
-            angular.extend(user, $cookieStore.get('user'));
-        }
+    if ($cookieStore.get('user') !== undefined) {
+      angular.extend(user, $cookieStore.get('user'));
+    }
 
     function isAuthorizedToAccess(route) {
       return _.indexOf(user.roles, route.role) !== -1;
@@ -64,7 +64,7 @@ angular.module('userAdmin.services', [])
         })
         .success(function (response) {
           angular.copy(response, user);
-                    $cookieStore.put('user', user);
+          $cookieStore.put('user', user);
           successCallback();
         }).error(function (error) {
           errorCallback(error);
@@ -78,6 +78,7 @@ angular.module('userAdmin.services', [])
     }
 
     function logout(successCallback, errorCallback) {
+      $cookieStore.remove('user');
       $http.post(REST_URLS.LOGOUT).success(
         function () {
           user.userId = '';
@@ -85,8 +86,10 @@ angular.module('userAdmin.services', [])
           if (!_.isUndefined(successCallback)) {
             successCallback();
           }
-        }).error(function(error) {
-          errorCallback(error);
+        }).error(function (error) {
+          if (!_.isUndefined(errorCallback)) {
+            errorCallback(error);
+          }
         });
     }
 
