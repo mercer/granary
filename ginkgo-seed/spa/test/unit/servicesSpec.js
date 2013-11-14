@@ -115,7 +115,6 @@ describe('service', function () {
       expect(callbacks.error).toHaveBeenCalledWith(responseErrorMessage);
     }));
 
-
     it('should provide a copy of authenticated user rest response, when getAuthenticatedUser is called', inject(function ($httpBackend, REST_URLS) {
       var user = {userId: 'userId', roles: ['USER']};
       $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
@@ -152,7 +151,6 @@ describe('service', function () {
       expect(authenticatedUserBeforeStateChanges).not.toEqual(authenticatedUserAfterStateChanges);
     }));
 
-
     it('should return false if the user is not authenticated', function () {
       expect(authService.isAuthenticated()).toEqual(false);
     });
@@ -165,6 +163,29 @@ describe('service', function () {
 
       expect(authService.isAuthenticated()).toEqual(true);
     }));
+
+    it('should call successCallback on successful logout',
+      inject(function($httpBackend, REST_URLS) {
+        $httpBackend.expectPOST(REST_URLS.LOGOUT).respond(200, '');
+
+        authService.logout(callbacks.success, callbacks.error);
+        $httpBackend.flush();
+
+        expect(callbacks.success).toHaveBeenCalled();
+      })
+    );
+
+    it('should call errorCallback on errors while logging out',
+      inject(function($httpBackend, REST_URLS) {
+        $httpBackend.expectPOST(REST_URLS.LOGOUT).respond(401, '');
+
+        authService.logout(callbacks.success, callbacks.error);
+        $httpBackend.flush();
+
+        expect(callbacks.error).toHaveBeenCalled();
+      })
+    );
+
 
   });
 
