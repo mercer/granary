@@ -29,11 +29,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>ginkgo-seed</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>application-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>ginkgo-seed</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>application-impl</artifactId>
             <scope>runtime</scope>
         </dependency>

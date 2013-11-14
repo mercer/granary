@@ -17,7 +17,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>ginkgo-seed</groupId>
+            <groupId>${project.parent.groupId}</groupId>
             <artifactId>application-api</artifactId>
         </dependency>
 
