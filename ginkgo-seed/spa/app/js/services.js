@@ -73,7 +73,12 @@ angular.module('userAdmin.services', [])
         }
 
         function logout(){
-            user.userId = '';
+          $http.post(REST_URLS.LOGOUT).success(
+            function() {
+              user.userId = '';
+              user.roles = [];
+            });
+
         }
 
         return {
@@ -88,6 +93,7 @@ angular.module('userAdmin.services', [])
 
     .constant('REST_URLS', {
         LOGIN: 'http://localhost:8080/backend/j_spring_security_check',
+        LOGOUT: 'http://localhost:8080/backend/j_spring_security_logout',
         USERS: 'http://localhost:8080/backend/rest/users',
         USER: 'http://localhost:8080/backend/rest/user'
     });
