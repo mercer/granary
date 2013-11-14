@@ -1,54 +1,48 @@
 module.exports = function (config) {
-    config.set({
-        basePath: '',
+  config.set({
+    basePath: '',
 
-        files: [
-            'app/bower_components/jquery/jquery.min.js',
-            'app/bower_components/angular/angular.js',
-            'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js',
-            'app/bower_components/angular-ui-utils/modules/utils.js',
-            'app/lib/angular/angular-*.js',
-            'test/lib/angular/angular-mocks.js',
-            'app/js/**/*.js',
-            'app/bower_components/lodash/dist/lodash.min.js',
-            'test/unit/**/*.js',
+    files: [
+      'app/bower_components/jquery/jquery.min.js',
+      'app/bower_components/angular/angular.js',
+      'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js',
+      'app/bower_components/angular-ui-utils/modules/utils.js',
+      'app/lib/angular/angular-*.js',
+      'test/lib/angular/angular-mocks.js',
+      'app/js/**/*.js',
+      'app/bower_components/lodash/dist/lodash.min.js',
+      'test/unit/**/*.js',
 
-            //include directives templates
-            'app/directive/**/*.html'
-        ],
+      //include directives templates
+      'app/directive/**/*.html'
+    ],
 
-        preprocessors: {
-            'app/directive/**/*.html': ['ng-html2js'],
-            'app/js/*.js': 'coverage'
-        },
+    preprocessors: {
+      'app/directive/**/*.html': ['ng-html2js'],
+      'app/js/*.js': 'coverage'
+    },
 
-        autoWatch: true,
-        
-        port: 9999,
+    autoWatch: true,
 
-        frameworks: ['jasmine'],
+    port: 9999,
 
-        browsers: ['Chrome'],
+    frameworks: ['jasmine'],
 
-        plugins: [
-            'karma-junit-reporter',
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-jasmine',
-            'karma-ng-html2js-preprocessor',
-            'karma-coverage'
-        ],
+    browsers: ['Chrome'],
 
-        junitReporter: {
-            outputFile: 'test_out/unit.xml',
-            suite: 'unit'
-        },
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine',
+      'karma-ng-html2js-preprocessor',
+      'karma-coverage'
+    ],
 
-        reporters:  ['coverage'],
+    reporters: ['coverage'],
 
-        coverageReporter: {
-            type : 'lcov',
-            dir : 'coverage/'
-        }
-    })
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage/'
+    }
+  })
 }
