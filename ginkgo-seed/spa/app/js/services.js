@@ -87,8 +87,8 @@ angular.module('userAdmin.services', [])
 
 
     .constant('REST_URLS', {
-        LOGIN: 'http://localhost:8080/rest/j_spring_security_check',
-        USERS: 'http://localhost:8080/rest/rest/users',
-        USER: 'http://localhost:8080/rest/rest/user'
+        LOGIN: 'http://localhost:8080/backend/j_spring_security_check',
+        USERS: 'http://localhost:8080/backend/rest/users',
+        USER: 'http://localhost:8080/backend/rest/user'
     });
 
