@@ -4,25 +4,11 @@
          http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <display-name>Rechtwijzer</display-name>
+    <display-name>Ginkgo REST backend</display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>WEB-INF/rest-servlet.xml</param-value>
-    </context-param>
-
-    <!-- These params are needed to exclude Jboss's RestEasy which clashes with our JAX-RS impl -->
-    <context-param>
-        <param-name>resteasy.scan</param-name>
-        <param-value>false</param-value>
-    </context-param>
-    <context-param>
-        <param-name>resteasy.scan.providers</param-name>
-        <param-value>false</param-value>
-    </context-param>
-    <context-param>
-        <param-name>resteasy.scan.resources</param-name>
-        <param-value>false</param-value>
     </context-param>
 
     <listener>
@@ -30,7 +16,7 @@
     </listener>
 
     <filter>
-        <filter-name>cors</filter-name>
+        <filter-name>CrossDomainRequestFilter</filter-name>
         <filter-class>com.cegeka.ginkgo.application.security.CrossDomainRequestFilter</filter-class>
         <init-param>
             <param-name>allow-origin</param-name>
@@ -38,7 +24,7 @@
         </init-param>
     </filter>
     <filter-mapping>
-        <filter-name>cors</filter-name>
+        <filter-name>CrossDomainRequestFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
