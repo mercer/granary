@@ -5,6 +5,7 @@ module.exports = function (config) {
     files: [
       'app/bower_components/jquery/jquery.min.js',
       'app/bower_components/angular/angular.js',
+      'app/bower_components/angular-cookies/angular-cookies.js',
       'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js',
       'app/bower_components/angular-ui-utils/modules/utils.js',
       'app/lib/angular/angular-*.js',

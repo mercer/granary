@@ -2,7 +2,7 @@
 
 /* Services */
 
-angular.module('userAdmin.services', [])
+angular.module('userAdmin.services', ['ngCookies'])
   .value('version', '0.1')
 
   .factory('Users', ['$http', 'REST_URLS', function ($http, REST_URLS) {

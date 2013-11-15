@@ -53,4 +53,9 @@ describe('auth and user management modules', function () {
             expect(locationMock.path).toHaveBeenCalledWith('login');
         })
     });
+
+
+  describe('event:auth-loginConfirmed', function () {
+
+  });
 });
