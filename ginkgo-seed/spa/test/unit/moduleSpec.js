@@ -1,30 +1,34 @@
 'use strict';
 
 describe('auth and user management modules', function () {
-    var rootScope;
+    var rootScope, locationMock;
 
     beforeEach(function () {
-        module('userAdmin');
+        module('userAdmin')
 
-    });
+        module(function ($provide) {
+          locationMock = jasmine.createSpyObj('$location', ['path']);
+          $provide.value('$location', locationMock);
+        })
+
+
+
+    })
 
     describe('$onRouteChangeStart', function () {
         var authServiceMock;
-        var locationMock;
         var nextRoute = {roles: ""}, currentRoute;
 
         beforeEach(function () {
             module(function ($provide) {
                 authServiceMock = jasmine.createSpyObj('Auth', ['isAuthorizedToAccess', 'isAuthenticated']);
-                locationMock = jasmine.createSpyObj('$location', ['path']);
-
                 $provide.value('Auth', authServiceMock);
-                $provide.value('$location', locationMock);
             })
 
-            inject(function ($rootScope) {
-                rootScope = $rootScope;
-            })
+          inject(function ($rootScope) {
+            rootScope = $rootScope;
+          })
+
         })
 
         it('should do nothing when user is authorized to access route', function () {
@@ -52,10 +56,28 @@ describe('auth and user management modules', function () {
 
             expect(locationMock.path).toHaveBeenCalledWith('login');
         })
-    });
+    })
 
 
-  describe('event:auth-loginConfirmed', function () {
+    describe('event:auth-loginRequired', function () {
+      var nextRoute = {roles: ""}, currentRoute;
 
-  });
-});
+      beforeEach(function () {
+        inject(function ($rootScope) {
+          rootScope = $rootScope;
+        })
+      })
+
+      it('should redirect to landing page when event:auth-loginRequired is triggered', function(){
+        var response = {
+          config : {},
+          status : 401
+        }
+
+        rootScope.$broadcast('event:auth-loginRequired', response);
+
+        expect(locationMock.path).toHaveBeenCalledWith('/');
+      })
+
+    })
+})

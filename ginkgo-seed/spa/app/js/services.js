@@ -2,7 +2,7 @@
 
 /* Services */
 
-angular.module('userAdmin.services', ['ngCookies'])
+angular.module('userAdmin.services', ['ngCookies','http-auth-interceptor'])
   .value('version', '0.1')
 
   .factory('Users', ['$http', 'REST_URLS', function ($http, REST_URLS) {
@@ -60,7 +60,8 @@ angular.module('userAdmin.services', ['ngCookies'])
           headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
           transformRequest: function (data) {
             return $.param(data);
-          }
+          },
+          ignoreAuthModule: true
         })
         .success(function (response) {
           angular.copy(response, user);
@@ -80,7 +81,7 @@ angular.module('userAdmin.services', ['ngCookies'])
 
     function logout(successCallback, errorCallback) {
       $cookieStore.remove('user');
-      $http.post(REST_URLS.LOGOUT).success(
+      $http.post(REST_URLS.LOGOUT,{},{ignoreAuthModule : true}).success(
         function () {
           user.userId = '';
           user.roles = [];

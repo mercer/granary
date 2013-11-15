@@ -21,12 +21,17 @@ angular.module('userAdmin', ['ngRoute', 'ui.bootstrap', 'userAdmin.filters', 'us
             $rootScope.alerts.splice(index, 1);
         };
 
-        $rootScope.$on('$routeChangeStart', function (event, next, current) {
+        $rootScope.$on('$routeChangeStart', function (event, next) {
             if (!Auth.isAuthorizedToAccess(next)) {
                 if (!Auth.isAuthenticated()) {
                     $location.path('login');
                 }
                 $location.path('/')
             }
-        })
+        });
+
+        $rootScope.$on('event:auth-loginRequired', function (event, response) {
+          console.log('Login required!. Response status: ' + response.status);
+          $location.path('/');
+        });
     });
