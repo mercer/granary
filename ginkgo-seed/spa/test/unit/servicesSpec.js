@@ -50,15 +50,46 @@ describe('service', function () {
       username: 'username',
       password: 'password'
     };
-    var authService, callbacks;
+    var authService,
+      callbacks,
+      cookieStore;
 
     beforeEach(function () {
       module('userAdmin.services');
+      module(function($provide){
+        $provide.factory('$cookieStore', function(){
+          cookieStore = jasmine.createSpyObj('$cookieStore', ['get', 'put', 'remove'])
+          return cookieStore;
+          }
+        );
+      });
+
       inject(function (Auth) {
         authService = Auth;
-      })
+      });
+
       callbacks = jasmine.createSpyObj('callbacks', ['success', 'error']);
     });
+
+
+    it('should set cookie with user details when successful login', inject(function($httpBackend, REST_URLS){
+      var user = {user: 'user'};
+      $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(200, user);
+
+      authService.authenticate(credentials, callbacks.success, callbacks.error);
+      $httpBackend.flush();
+
+      expect(cookieStore.put).toHaveBeenCalledWith('user', user);
+    }));
+
+    it('should not set any cookie when login fails', inject(function($httpBackend, REST_URLS){
+      $httpBackend.expectPOST(REST_URLS.LOGIN, $.param(credentials)).respond(401, 'error');
+
+      authService.authenticate(credentials, callbacks.success, callbacks.error);
+      $httpBackend.flush();
+
+      expect(cookieStore.put).not.toHaveBeenCalled();
+    }));
 
     it('user from Auth should be initialized; otherwise values used in templates before http calls are finished will not be bounded to scope', function () {
       expect(authService.getAuthenticatedUser()).not.toBeUndefined();
@@ -81,6 +112,17 @@ describe('service', function () {
 
       $httpBackend.verifyNoOutstandingExpectation();
     }));
+
+
+    it('should delete the cookie when logout is attempted', inject(function($httpBackend, REST_URLS){
+      $httpBackend.expectPOST(REST_URLS.LOGOUT).respond(200, '');
+
+      authService.logout();
+      $httpBackend.verifyNoOutstandingExpectation();
+
+      expect(cookieStore.remove).toHaveBeenCalledWith('user');
+    }));
+
 
     it('should remove user credentials when logging out successfully',
       inject(function ($httpBackend, REST_URLS) {

@@ -69,6 +69,7 @@ angular.module('userAdmin.services', ['ngCookies'])
         }).error(function (error) {
           errorCallback(error);
         });
+
     }
 
     function getAuthenticatedUser() {
