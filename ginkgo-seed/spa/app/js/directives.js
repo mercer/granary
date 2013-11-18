@@ -16,6 +16,16 @@ angular.module('userAdmin.directives', []).
             scope: {
                 url: "@restUrl",
                 afterLogin: '&afterLogin'
+            },
+            link: function(scope,elem,attrs){
+                var passwordField = $('#password');
+                passwordField.keypress(function (event) {
+                    if (event.keyCode == 13) {
+                        var loginButton = $('#login');
+                        loginButton.click();
+                    }
+                });
+
             }
         }
     }
