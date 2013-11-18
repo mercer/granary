@@ -17,9 +17,14 @@ Features
 Installation
 ------------
 1. Install node ( http://nodejs.org/ )
+
 2. Install grunt:
     cmd> npm install -g grunt
+
 3. Install Kama
     cmd> npm install -g karma
-4. Run grunt
+
+4. Add CHROME_BIN environment variable pointing to chrome.exe ( Chrome Browser)
+
+5. Run grunt
     cmd> grunt

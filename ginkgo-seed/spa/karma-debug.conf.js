@@ -3,16 +3,15 @@ module.exports = function (config) {
     basePath: '',
 
     files: [
-      'app/bower_components/jquery/jquery.min.js',
       'app/bower_components/angular/angular.js',
       'app/bower_components/angular-cookies/angular-cookies.js',
-      'app/js/http-auth-interceptor.js',
+      'app/bower_components/angular-mocks/angular-mocks.js',
+      'app/bower_components/angular-route/angular-route.js',
       'app/bower_components/angular-ui-bootstrap-bower/ui-bootstrap.min.js',
       'app/bower_components/angular-ui-utils/modules/utils.js',
-      'app/lib/angular/angular-*.js',
-      'test/lib/angular/angular-mocks.js',
-      'app/js/**/*.js',
+      'app/bower_components/jquery/jquery.min.js',
       'app/bower_components/lodash/dist/lodash.min.js',
+      'app/js/**/*.js',
       'test/unit/**/*.js',
 
       //include directives templates
