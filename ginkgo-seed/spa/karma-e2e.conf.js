@@ -8,6 +8,10 @@ module.exports = function (config) {
       'test/e2e/**/*.js'
     ],
 
+    preprocessors: {
+      'app/js/*.js': 'coverage'
+    },
+
     autoWatch: false,
 
     browsers: ['Chrome'],
@@ -24,8 +28,17 @@ module.exports = function (config) {
       'karma-chrome-launcher',
       'karma-firefox-launcher',
       'karma-jasmine',
-      'karma-ng-scenario'
-    ]
+      'karma-ng-scenario',
+      'karma-coverage'
+    ],
+
+    reporters: ['coverage','progress'],
+
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage/',
+      file: 'coverage.info'
+    }
 
   })
 }
