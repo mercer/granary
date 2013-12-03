@@ -86,12 +86,12 @@ angular.module('userAdmin.services', ['ngCookies','http-auth-interceptor'])
     }
 
     function logout(successCallback, errorCallback) {
-      $cookieStore.remove('user');
-      $http.post(REST_URLS.LOGOUT,{},{ignoreAuthModule : true}).success(
-        function () {
-          user.userId = '';
-          user.roles = [];
-          if (!_.isUndefined(successCallback)) {
+            $cookieStore.remove('user');
+            user.userId = '';
+            user.roles = [];
+            $http.post(REST_URLS.LOGOUT, {}, {ignoreAuthModule: true}).success(
+                function () {
+                    if (!_.isUndefined(successCallback)) {
             successCallback();
           }
         }).error(function (error) {
