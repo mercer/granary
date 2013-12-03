@@ -66,4 +66,35 @@ describe('directives', function () {
 
         }));
     })
+
+  describe('sidebar-actions directive', function () {
+    var $compile, scope, template, formElement, compiledElement;
+    var title="ACTIONS";
+    var items = [{id: 'ID', text: 'description' }];
+
+    beforeEach(module('app/directive/sidebar-actions.html'));
+
+    beforeEach(inject(function ($templateCache, _$compile_, _$rootScope_, $controller, Auth) {
+      //assign the template to the expected url called by the directive and put it in the cache
+      template = $templateCache.get('app/directive/sidebar-actions.html');
+      $templateCache.put('directive/sidebar-actions.html', template);
+
+      $compile = _$compile_;
+      scope = _$rootScope_.$new();
+      scope.items =  items;
+
+      formElement = angular.element("<sidebar-actions title=\'" + title + "' items=\"items\"  on-action=\"sidebarActionSelected(action)\"></sidebar-actions>");
+      compiledElement = $compile(formElement)(scope);
+      scope = compiledElement.scope();
+    }));
+
+    it('should show side bar menu items', function () {
+      scope.$digest();
+      expect($('ul li', compiledElement).length).toEqual(1);
+      expect($('ul li:first a', compiledElement).text()).toEqual('description');
+      expect($('ul li:first a', compiledElement).attr('ng-click')).toEqual('selectMenuItem($index);');
+    });
+
+  })
+
 });

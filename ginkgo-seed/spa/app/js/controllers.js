@@ -7,7 +7,7 @@ angular.module('userAdmin.controllers', [])
   }])
   .controller('LoginController', ['$scope', '$location', LoginController])
   .controller('LoginDirectiveController', ['$rootScope', '$scope', 'Auth', '$location', LoginDirectiveController])
-  .controller('UsersController', ['$rootScope', 'Users', '$scope', UsersController])
+  .controller('UsersController', ['$rootScope', 'Users', '$scope','$location', UsersController])
   .controller('UserCtrl', [function () {
   }]);
 
@@ -42,7 +42,7 @@ function LoginDirectiveController($rootScope, $scope, Auth, $location) {
   }
 }
 
-function UsersController($rootScope, Users, $scope) {
+function UsersController($rootScope, Users, $scope, $location) {
   Users.getUsers(
     function success(responseData) {
       $scope.users = responseData;
@@ -50,6 +50,21 @@ function UsersController($rootScope, Users, $scope) {
     function error(error) {
       $rootScope.alerts.push({ type: 'danger', msg: 'There was an error: ' + error });
     });
+
+
+  var MENU_ACTION_IDS = {
+    ACTION_1: 'ACTION_1'
+  }
+
+  $scope.sidebarMenuItems = [
+    {id: MENU_ACTION_IDS.ACTION_1, text: 'Action 1' }
+  ];
+
+
+  $scope.sidebarActionSelected = function (sidebarAction) {
+    console.log(sidebarAction);
+    alert(sidebarAction.text + " was clicked");
+  }
 }
 
 
@@ -60,7 +75,6 @@ function UserController(Users, $scope, $routeParams, $location) {
     user.roles.forEach(function (role) {
       model[role] = true;
     });
-
   }
 
   function updateUserFromRolesViewModel(user, model) {
