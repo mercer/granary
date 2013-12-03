@@ -7,7 +7,7 @@ angular.module('userAdmin.controllers', [])
   }])
   .controller('LoginController', ['$scope', '$location', LoginController])
   .controller('LoginDirectiveController', ['$rootScope', '$scope', 'Auth', '$location', LoginDirectiveController])
-  .controller('UsersController', ['$rootScope', 'Users', '$scope','$location', UsersController])
+  .controller('UsersController', ['$rootScope', 'Users', '$scope','$location','Alerts', UsersController])
   .controller('UserCtrl', [function () {
   }]);
 
@@ -42,14 +42,13 @@ function LoginDirectiveController($rootScope, $scope, Auth, $location) {
   }
 }
 
-function UsersController($rootScope, Users, $scope, $location) {
-  Users.getUsers(
-    function success(responseData) {
-      $scope.users = responseData;
-    },
-    function error(error) {
-      $rootScope.alerts.push({ type: 'danger', msg: 'There was an error: ' + error });
-    });
+function UsersController($rootScope, Users, $scope, $location, Alerts) {
+    Users.getUsers(
+        function success(responseData) {
+            $scope.users = responseData;
+        },
+        Alerts.handler
+    );
 
 
   var MENU_ACTION_IDS = {

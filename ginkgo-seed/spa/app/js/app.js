@@ -21,12 +21,19 @@ angular.module('userAdmin', ['ngRoute', 'ui.bootstrap', 'userAdmin.filters', 'us
             $rootScope.alerts.splice(index, 1);
         };
 
-        $rootScope.$on('$routeChangeStart', function (event, next) {
-            if (!Auth.isAuthorizedToAccess(next)) {
-                if (!Auth.isAuthenticated()) {
-                    $location.path('login');
+        $rootScope.$on('$routeChangeStart', function (event, next, previous, rejection) {
+            $rootScope.alerts = [];
+            var isAuthorized = Auth.isAuthorizedToAccess(next);
+            var isAuthenticated = Auth.isAuthenticated();
+            if (!isAuthenticated){
+                if (previous != undefined){
+                    $rootScope.alerts.push({msg: 'You need to login to access this page', type: 'danger'})
+                    $location.path('/')
                 }
+            }else
+            if(!isAuthorized ) {
                 $location.path('/')
+                $rootScope.alerts.push({msg:'You are not authorized to access this page', type: 'danger'})
             }
         });
 
