@@ -36,6 +36,7 @@ describe('ginkgo admin app', function () {
         });
 
     });
+
     describe('user', function () {
 
         beforeEach(function () {

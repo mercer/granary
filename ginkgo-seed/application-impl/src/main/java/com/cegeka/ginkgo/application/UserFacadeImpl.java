@@ -116,7 +116,7 @@ public class UserFacadeImpl implements UserFacade {
         }
         UserEntity loggedInUser = userRepository.findByEmail(email);
         if (loggedInUser == null) {
-            throw new AccessDeniedException("Could not find user: " + email + " this is unexpeted...");
+            throw new AccessDeniedException("Could not find user: " + email + " this is unexpected...");
         }
 
         if (loggedInUser.getRoles().contains(Role.ADMIN)) {
