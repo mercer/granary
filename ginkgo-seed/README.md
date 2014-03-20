@@ -16,5 +16,5 @@ You'll need to have these installed:
 Take these steps
 * git clone this repository
 * mvn clean install
-* mvn tomcat:run from /gingko/rest
-* mvn tomcat:run -Dmaven.tomcat.port=8081 from /spa/rest
+* mvn tomcat:run from /rest
+* mvn tomcat:run -Dmaven.tomcat.port=8081 from /spa
