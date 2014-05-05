@@ -6,6 +6,8 @@ jdk:
 before_script:
   - 'npm install -g bower grunt-cli'
   - 'bower install'
+before_script: 
+  - grunt build --base ginkgo-seed/spa
 script:
   - mvn clean install -f ginkgo-seed/pom.xml
-  - grunt
+  - grunt test --base ginkgo-seed/spa
