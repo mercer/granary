@@ -11,4 +11,5 @@ before_script:
   - grunt build
 script:
   - mvn clean install -f $TRAVIS_BUILD_DIR/ginkgo-seed/pom.xml
+  - cd $TRAVIS_BUILD_DIR/ginkgo-seed/spa
   - grunt test
