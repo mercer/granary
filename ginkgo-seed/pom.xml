@@ -20,7 +20,6 @@
         <module>application-api</module>
         <module>application-impl</module>
         <module>rest</module>
-        <module>spa</module>
     </modules>
 
     <build>

@@ -13,3 +13,4 @@ dist
 .sass-cache
 coverage
 *.class
+.DS_Store

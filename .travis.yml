@@ -1,0 +1,11 @@
+language: node_js java
+node_js:
+  - '0.10'
+jdk:
+  - oraclejdk7
+before_script:
+  - 'npm install -g bower grunt-cli'
+  - 'bower install'
+script:
+  - mvn clean install -f ginkgo-seed/pom.xml
+  - grunt
