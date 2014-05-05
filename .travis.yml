@@ -4,10 +4,11 @@ node_js:
 jdk:
   - oraclejdk7
 before_script:
+  - cd $TRAVIS_BUILD_DIR/ginkgo-seed/spa
   - npm install -g bower grunt-cli
   - npm install
   - bower install
-  - grunt --base ginkgo-seed/spa --gruntfile --base ginkgo-seed/spa/Gruntfile.js build
+  - grunt build
 script:
-  - mvn clean install -f ginkgo-seed/pom.xml
-  - grunt --base ginkgo-seed/spa --gruntfile --base ginkgo-seed/spa/Gruntfile.js test
+  - mvn clean install -f $TRAVIS_BUILD_DIR/ginkgo-seed/pom.xml
+  - grunt test
